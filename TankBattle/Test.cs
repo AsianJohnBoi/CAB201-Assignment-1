@@ -195,14 +195,14 @@ namespace TankBattleTestSuite
         private static Gameplay InitialiseGame()
         {
             Requires(TestGameplay0Gameplay);
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
             Requires(TestGameplay0SetPlayer);
 
             Gameplay game = new Gameplay(2, 1);
-            TankType tank = TankType.CreateTank(1);
-            Player player1 = new Human("player1", tank, Color.Orange);
-            Player player2 = new Human("player2", tank, Color.Purple);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player1 = new HumanOpponent("player1", tank, Color.Orange);
+            Opponent player2 = new HumanOpponent("player2", tank, Color.Purple);
             game.SetPlayer(1, player1);
             game.SetPlayer(2, player2);
             return game;
@@ -219,12 +219,12 @@ namespace TankBattleTestSuite
             Gameplay game = new Gameplay(2, 1);
             return true;
         }
-        private static bool TestGameplay0GetNumPlayers()
+        private static bool TestGameplay0PlayerCount()
         {
             Requires(TestGameplay0Gameplay);
 
             Gameplay game = new Gameplay(2, 1);
-            return game.GetNumPlayers() == 2;
+            return game.PlayerCount() == 2;
         }
         private static bool TestGameplay0GetTotalRounds()
         {
@@ -236,32 +236,32 @@ namespace TankBattleTestSuite
         private static bool TestGameplay0SetPlayer()
         {
             Requires(TestGameplay0Gameplay);
-            Requires(TestTankType0CreateTank);
+            Requires(TestTankModel0GetTank);
 
             Gameplay game = new Gameplay(2, 1);
-            TankType tank = TankType.CreateTank(1);
-            Player player = new Human("playerName", tank, Color.Orange);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player = new HumanOpponent("playerName", tank, Color.Orange);
             game.SetPlayer(1, player);
             return true;
         }
-        private static bool TestGameplay0GetPlayer()
+        private static bool TestGameplay0GetPlayerNumber()
         {
             Requires(TestGameplay0Gameplay);
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
 
             Gameplay game = new Gameplay(2, 1);
-            TankType tank = TankType.CreateTank(1);
-            Player player = new Human("playerName", tank, Color.Orange);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player = new HumanOpponent("playerName", tank, Color.Orange);
             game.SetPlayer(1, player);
-            return game.GetPlayer(1) == player;
+            return game.GetPlayerNumber(1) == player;
         }
-        private static bool TestGameplay0PlayerColour()
+        private static bool TestGameplay0GetTankColour()
         {
             Color[] arrayOfColours = new Color[8];
             for (int i = 0; i < 8; i++)
             {
-                arrayOfColours[i] = Gameplay.PlayerColour(i + 1);
+                arrayOfColours[i] = Gameplay.GetTankColour(i + 1);
                 for (int j = 0; j < i; j++)
                 {
                     if (arrayOfColours[j] == arrayOfColours[i]) return false;
@@ -269,9 +269,9 @@ namespace TankBattleTestSuite
             }
             return true;
         }
-        private static bool TestGameplay0GetPlayerLocations()
+        private static bool TestGameplay0CalculatePlayerPositions()
         {
-            int[] positions = Gameplay.GetPlayerLocations(8);
+            int[] positions = Gameplay.CalculatePlayerPositions(8);
             for (int i = 0; i < 8; i++)
             {
                 if (positions[i] < 0) return false;
@@ -307,45 +307,45 @@ namespace TankBattleTestSuite
 
             foreach (Form f in Application.OpenForms)
             {
-                if (f is SkirmishForm)
+                if (f is GameplayForm)
                 {
                     return true;
                 }
             }
             return false;
         }
-        private static bool TestGameplay0GetMap()
+        private static bool TestGameplay0GetLevel()
         {
             Requires(TestTerrain0Terrain);
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Terrain battlefield = game.GetMap();
+            Terrain battlefield = game.GetLevel();
             if (battlefield != null) return true;
 
             return false;
         }
-        private static bool TestGameplay0GetPlayerTank()
+        private static bool TestGameplay0GetCurrentGameplayTank()
         {
             Requires(TestGameplay0Gameplay);
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
             Requires(TestGameplay0SetPlayer);
-            Requires(TestBattleTank0GetPlayer);
+            Requires(TestControlledTank0GetPlayerNumber);
 
             Gameplay game = new Gameplay(2, 1);
-            TankType tank = TankType.CreateTank(1);
-            Player player1 = new Human("player1", tank, Color.Orange);
-            Player player2 = new Human("player2", tank, Color.Purple);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player1 = new HumanOpponent("player1", tank, Color.Orange);
+            Opponent player2 = new HumanOpponent("player2", tank, Color.Purple);
             game.SetPlayer(1, player1);
             game.SetPlayer(2, player2);
 
             game.NewGame();
-            BattleTank ptank = game.GetPlayerTank();
-            if (ptank.GetPlayer() != player1 && ptank.GetPlayer() != player2)
+            ControlledTank ptank = game.GetCurrentGameplayTank();
+            if (ptank.GetPlayerNumber() != player1 && ptank.GetPlayerNumber() != player2)
             {
                 return false;
             }
-            if (ptank.CreateTank() != tank)
+            if (ptank.GetTank() != tank)
             {
                 return false;
             }
@@ -353,16 +353,16 @@ namespace TankBattleTestSuite
             return true;
         }
 
-        private static bool TestTankType0CreateTank()
+        private static bool TestTankModel0GetTank()
         {
-            TankType tank = TankType.CreateTank(1);
+            TankModel tank = TankModel.GetTank(1);
             if (tank != null) return true;
             else return false;
         }
-        private static bool TestTankType0DisplayTank()
+        private static bool TestTankModel0DisplayTank()
         {
-            Requires(TestTankType0CreateTank);
-            TankType tank = TankType.CreateTank(1);
+            Requires(TestTankModel0GetTank);
+            TankModel tank = TankModel.GetTank(1);
 
             int[,] tankGraphic = tank.DisplayTank(45);
             if (tankGraphic.GetLength(0) != 12) return false;
@@ -393,7 +393,7 @@ namespace TankBattleTestSuite
             report += "0010\n";
             report += "0100\n";
             report += "1000\n";
-            report += "The one produced by TankType.LineDraw() looks like this:\n";
+            report += "The one produced by TankModel.DrawLine() looks like this:\n";
             for (int y = 0; y < 4; y++)
             {
                 for (int x = 0; x < 4; x++)
@@ -404,13 +404,13 @@ namespace TankBattleTestSuite
             }
             SetErrorDescription(report);
         }
-        private static bool TestTankType0LineDraw()
+        private static bool TestTankModel0DrawLine()
         {
             int[,] ar = new int[,] { { 0, 0, 0, 0 },
                                      { 0, 0, 0, 0 },
                                      { 0, 0, 0, 0 },
                                      { 0, 0, 0, 0 } };
-            TankType.LineDraw(ar, 3, 0, 0, 3);
+            TankModel.DrawLine(ar, 3, 0, 0, 3);
 
             // Ideally, the line we want to see here is:
             // 0001
@@ -467,113 +467,113 @@ namespace TankBattleTestSuite
 
             return true;
         }
-        private static bool TestTankType0GetTankHealth()
+        private static bool TestTankModel0GetArmour()
         {
-            Requires(TestTankType0CreateTank);
+            Requires(TestTankModel0GetTank);
             // As long as it's > 0 we're happy
-            TankType tank = TankType.CreateTank(1);
-            if (tank.GetTankHealth() > 0) return true;
+            TankModel tank = TankModel.GetTank(1);
+            if (tank.GetArmour() > 0) return true;
             return false;
         }
-        private static bool TestTankType0Weapons()
+        private static bool TestTankModel0WeaponList()
         {
-            Requires(TestTankType0CreateTank);
+            Requires(TestTankModel0GetTank);
             // As long as there's at least one result and it's not null / a blank string, we're happy
-            TankType tank = TankType.CreateTank(1);
-            if (tank.Weapons().Length == 0) return false;
-            if (tank.Weapons()[0] == null) return false;
-            if (tank.Weapons()[0] == "") return false;
+            TankModel tank = TankModel.GetTank(1);
+            if (tank.WeaponList().Length == 0) return false;
+            if (tank.WeaponList()[0] == null) return false;
+            if (tank.WeaponList()[0] == "") return false;
             return true;
         }
 
-        private static Player CreateTestingPlayer()
+        private static Opponent CreateTestingPlayer()
         {
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
 
-            TankType tank = TankType.CreateTank(1);
-            Player player = new Human("player1", tank, Color.Aquamarine);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player = new HumanOpponent("player1", tank, Color.Aquamarine);
             return player;
         }
 
-        private static bool TestPlayer0Human()
+        private static bool TestOpponent0HumanOpponent()
         {
-            Requires(TestTankType0CreateTank);
+            Requires(TestTankModel0GetTank);
 
-            TankType tank = TankType.CreateTank(1);
-            Player player = new Human("player1", tank, Color.Aquamarine);
+            TankModel tank = TankModel.GetTank(1);
+            Opponent player = new HumanOpponent("player1", tank, Color.Aquamarine);
             if (player != null) return true;
             return false;
         }
-        private static bool TestPlayer0CreateTank()
+        private static bool TestOpponent0GetTank()
         {
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
 
-            TankType tank = TankType.CreateTank(1);
-            Player p = new Human("player1", tank, Color.Aquamarine);
-            if (p.CreateTank() == tank) return true;
+            TankModel tank = TankModel.GetTank(1);
+            Opponent p = new HumanOpponent("player1", tank, Color.Aquamarine);
+            if (p.GetTank() == tank) return true;
             return false;
         }
-        private static bool TestPlayer0PlayerName()
+        private static bool TestOpponent0Name()
         {
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
 
             const string PLAYER_NAME = "kfdsahskfdajh";
-            TankType tank = TankType.CreateTank(1);
-            Player p = new Human(PLAYER_NAME, tank, Color.Aquamarine);
-            if (p.PlayerName() == PLAYER_NAME) return true;
+            TankModel tank = TankModel.GetTank(1);
+            Opponent p = new HumanOpponent(PLAYER_NAME, tank, Color.Aquamarine);
+            if (p.Name() == PLAYER_NAME) return true;
             return false;
         }
-        private static bool TestPlayer0PlayerColour()
+        private static bool TestOpponent0GetColour()
         {
-            Requires(TestTankType0CreateTank);
-            Requires(TestPlayer0Human);
+            Requires(TestTankModel0GetTank);
+            Requires(TestOpponent0HumanOpponent);
 
             Color playerColour = Color.Chartreuse;
-            TankType tank = TankType.CreateTank(1);
-            Player p = new Human("player1", tank, playerColour);
-            if (p.PlayerColour() == playerColour) return true;
+            TankModel tank = TankModel.GetTank(1);
+            Opponent p = new HumanOpponent("player1", tank, playerColour);
+            if (p.GetColour() == playerColour) return true;
             return false;
         }
-        private static bool TestPlayer0Winner()
+        private static bool TestOpponent0AddScore()
         {
-            Player p = CreateTestingPlayer();
-            p.Winner();
+            Opponent p = CreateTestingPlayer();
+            p.AddScore();
             return true;
         }
-        private static bool TestPlayer0GetScore()
+        private static bool TestOpponent0GetScore()
         {
-            Requires(TestPlayer0Winner);
+            Requires(TestOpponent0AddScore);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             int wins = p.GetScore();
-            p.Winner();
+            p.AddScore();
             if (p.GetScore() == wins + 1) return true;
             return false;
         }
-        private static bool TestHuman0StartRound()
+        private static bool TestHumanOpponent0StartRound()
         {
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             p.StartRound();
             return true;
         }
-        private static bool TestHuman0CommenceTurn()
+        private static bool TestHumanOpponent0BeginTurn()
         {
             Requires(TestGameplay0NewGame);
-            Requires(TestGameplay0GetPlayer);
+            Requires(TestGameplay0GetPlayerNumber);
             Gameplay game = InitialiseGame();
 
             game.NewGame();
 
             // Find the gameplay form
-            SkirmishForm gameplayForm = null;
+            GameplayForm gameplayForm = null;
             foreach (Form f in Application.OpenForms)
             {
-                if (f is SkirmishForm)
+                if (f is GameplayForm)
                 {
-                    gameplayForm = f as SkirmishForm;
+                    gameplayForm = f as GameplayForm;
                 }
             }
             if (gameplayForm == null)
@@ -600,14 +600,14 @@ namespace TankBattleTestSuite
 
             if (controlPanel == null)
             {
-                SetErrorDescription("Control panel was not found in SkirmishForm");
+                SetErrorDescription("Control panel was not found in GameplayForm");
                 return false;
             }
 
             // Disable the control panel to check that NewTurn enables it
             controlPanel.Enabled = false;
 
-            game.GetPlayer(1).CommenceTurn(gameplayForm, game);
+            game.GetPlayerNumber(1).BeginTurn(gameplayForm, game);
 
             if (!controlPanel.Enabled)
             {
@@ -617,116 +617,116 @@ namespace TankBattleTestSuite
             return true;
 
         }
-        private static bool TestHuman0ReportHit()
+        private static bool TestHumanOpponent0ProjectileHitPos()
         {
-            Player p = CreateTestingPlayer();
-            p.ReportHit(0, 0);
+            Opponent p = CreateTestingPlayer();
+            p.ProjectileHitPos(0, 0);
             return true;
         }
 
-        private static bool TestBattleTank0BattleTank()
+        private static bool TestControlledTank0ControlledTank()
         {
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
             return true;
         }
-        private static bool TestBattleTank0GetPlayer()
+        private static bool TestControlledTank0GetPlayerNumber()
         {
-            Requires(TestBattleTank0BattleTank);
-            Player p = CreateTestingPlayer();
+            Requires(TestControlledTank0ControlledTank);
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            if (playerTank.GetPlayer() == p) return true;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            if (playerTank.GetPlayerNumber() == p) return true;
             return false;
         }
-        private static bool TestBattleTank0CreateTank()
+        private static bool TestControlledTank0GetTank()
         {
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestPlayer0CreateTank);
-            Player p = CreateTestingPlayer();
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestOpponent0GetTank);
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            if (playerTank.CreateTank() == playerTank.GetPlayer().CreateTank()) return true;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            if (playerTank.GetTank() == playerTank.GetPlayerNumber().GetTank()) return true;
             return false;
         }
-        private static bool TestBattleTank0GetAngle()
+        private static bool TestControlledTank0GetAim()
         {
-            Requires(TestBattleTank0BattleTank);
-            Player p = CreateTestingPlayer();
+            Requires(TestControlledTank0ControlledTank);
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            float angle = playerTank.GetAngle();
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            float angle = playerTank.GetAim();
             if (angle >= -90 && angle <= 90) return true;
             return false;
         }
-        private static bool TestBattleTank0Aim()
+        private static bool TestControlledTank0SetAimingAngle()
         {
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestBattleTank0GetAngle);
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestControlledTank0GetAim);
             float angle = 75;
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            playerTank.Aim(angle);
-            if (FloatEquals(playerTank.GetAngle(), angle)) return true;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            playerTank.SetAimingAngle(angle);
+            if (FloatEquals(playerTank.GetAim(), angle)) return true;
             return false;
         }
-        private static bool TestBattleTank0GetTankPower()
+        private static bool TestControlledTank0GetCurrentPower()
         {
-            Requires(TestBattleTank0BattleTank);
-            Player p = CreateTestingPlayer();
+            Requires(TestControlledTank0ControlledTank);
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
 
-            playerTank.GetTankPower();
+            playerTank.GetCurrentPower();
             return true;
         }
-        private static bool TestBattleTank0SetTurretPower()
+        private static bool TestControlledTank0SetPower()
         {
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestBattleTank0GetTankPower);
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestControlledTank0GetCurrentPower);
             int power = 65;
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            playerTank.SetTurretPower(power);
-            if (playerTank.GetTankPower() == power) return true;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            playerTank.SetPower(power);
+            if (playerTank.GetCurrentPower() == power) return true;
             return false;
         }
-        private static bool TestBattleTank0GetWeapon()
+        private static bool TestControlledTank0GetWeaponIndex()
         {
-            Requires(TestBattleTank0BattleTank);
+            Requires(TestControlledTank0ControlledTank);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
 
-            playerTank.GetWeapon();
+            playerTank.GetWeaponIndex();
             return true;
         }
-        private static bool TestBattleTank0SelectWeapon()
+        private static bool TestControlledTank0SetWeaponIndex()
         {
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestBattleTank0GetWeapon);
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestControlledTank0GetWeaponIndex);
             int weapon = 3;
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            playerTank.SelectWeapon(weapon);
-            if (playerTank.GetWeapon() == weapon) return true;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            playerTank.SetWeaponIndex(weapon);
+            if (playerTank.GetWeaponIndex() == weapon) return true;
             return false;
         }
-        private static bool TestBattleTank0Paint()
+        private static bool TestControlledTank0Draw()
         {
-            Requires(TestBattleTank0BattleTank);
+            Requires(TestControlledTank0ControlledTank);
             Size bitmapSize = new Size(640, 480);
             Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             Graphics graphics = Graphics.FromImage(image);
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            playerTank.Paint(graphics, bitmapSize);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            playerTank.Draw(graphics, bitmapSize);
             graphics.Dispose();
 
             for (int y = 0; y < bitmapSize.Height; y++)
@@ -743,112 +743,112 @@ namespace TankBattleTestSuite
             SetErrorDescription("Nothing was drawn.");
             return false;
         }
-        private static bool TestBattleTank0XPos()
+        private static bool TestControlledTank0GetX()
         {
-            Requires(TestBattleTank0BattleTank);
+            Requires(TestControlledTank0ControlledTank);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             int x = 73;
             int y = 28;
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, x, y, game);
-            if (playerTank.XPos() == x) return true;
+            ControlledTank playerTank = new ControlledTank(p, x, y, game);
+            if (playerTank.GetX() == x) return true;
             return false;
         }
-        private static bool TestBattleTank0GetY()
+        private static bool TestControlledTank0GetYPos()
         {
-            Requires(TestBattleTank0BattleTank);
+            Requires(TestControlledTank0ControlledTank);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             int x = 73;
             int y = 28;
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, x, y, game);
-            if (playerTank.GetY() == y) return true;
+            ControlledTank playerTank = new ControlledTank(p, x, y, game);
+            if (playerTank.GetYPos() == y) return true;
             return false;
         }
-        private static bool TestBattleTank0Attack()
+        private static bool TestControlledTank0Attack()
         {
-            Requires(TestBattleTank0BattleTank);
+            Requires(TestControlledTank0ControlledTank);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
             playerTank.Attack();
             return true;
         }
-        private static bool TestBattleTank0DamageArmour()
+        private static bool TestControlledTank0InflictDamage()
         {
-            Requires(TestBattleTank0BattleTank);
-            Player p = CreateTestingPlayer();
+            Requires(TestControlledTank0ControlledTank);
+            Opponent p = CreateTestingPlayer();
 
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            playerTank.DamageArmour(10);
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            playerTank.InflictDamage(10);
             return true;
         }
-        private static bool TestBattleTank0Alive()
+        private static bool TestControlledTank0Exists()
         {
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestBattleTank0DamageArmour);
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestControlledTank0InflictDamage);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
-            BattleTank playerTank = new BattleTank(p, 32, 32, game);
-            if (!playerTank.Alive()) return false;
-            playerTank.DamageArmour(playerTank.CreateTank().GetTankHealth());
-            if (playerTank.Alive()) return false;
+            ControlledTank playerTank = new ControlledTank(p, 32, 32, game);
+            if (!playerTank.Exists()) return false;
+            playerTank.InflictDamage(playerTank.GetTank().GetArmour());
+            if (playerTank.Exists()) return false;
             return true;
         }
-        private static bool TestBattleTank0CalculateGravity()
+        private static bool TestControlledTank0Gravity()
         {
-            Requires(TestGameplay0GetMap);
-            Requires(TestTerrain0TerrainDestruction);
-            Requires(TestBattleTank0BattleTank);
-            Requires(TestBattleTank0DamageArmour);
-            Requires(TestBattleTank0Alive);
-            Requires(TestBattleTank0CreateTank);
-            Requires(TestTankType0GetTankHealth);
+            Requires(TestGameplay0GetLevel);
+            Requires(TestTerrain0DestroyGround);
+            Requires(TestControlledTank0ControlledTank);
+            Requires(TestControlledTank0InflictDamage);
+            Requires(TestControlledTank0Exists);
+            Requires(TestControlledTank0GetTank);
+            Requires(TestTankModel0GetArmour);
 
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
             game.NewGame();
             // Unfortunately we need to rely on DestroyTerrain() to get rid of any terrain that may be in the way
-            game.GetMap().TerrainDestruction(Terrain.WIDTH / 2.0f, Terrain.HEIGHT / 2.0f, 20);
-            BattleTank playerTank = new BattleTank(p, Terrain.WIDTH / 2, Terrain.HEIGHT / 2, game);
-            int oldX = playerTank.XPos();
-            int oldY = playerTank.GetY();
+            game.GetLevel().DestroyGround(Terrain.WIDTH / 2.0f, Terrain.HEIGHT / 2.0f, 20);
+            ControlledTank playerTank = new ControlledTank(p, Terrain.WIDTH / 2, Terrain.HEIGHT / 2, game);
+            int oldX = playerTank.GetX();
+            int oldY = playerTank.GetYPos();
 
-            playerTank.CalculateGravity();
+            playerTank.Gravity();
 
-            if (playerTank.XPos() != oldX)
+            if (playerTank.GetX() != oldX)
             {
                 SetErrorDescription("Caused X coordinate to change.");
                 return false;
             }
-            if (playerTank.GetY() != oldY + 1)
+            if (playerTank.GetYPos() != oldY + 1)
             {
                 SetErrorDescription("Did not cause Y coordinate to increase by 1.");
                 return false;
             }
 
-            int initialArmour = playerTank.CreateTank().GetTankHealth();
+            int initialArmour = playerTank.GetTank().GetArmour();
             // The tank should have lost 1 armour from falling 1 tile already, so do
             // (initialArmour - 2) damage to the tank then drop it again. That should kill it.
 
-            if (!playerTank.Alive())
+            if (!playerTank.Exists())
             {
                 SetErrorDescription("Tank died before we could check that fall damage worked properly");
                 return false;
             }
-            playerTank.DamageArmour(initialArmour - 2);
-            if (!playerTank.Alive())
+            playerTank.InflictDamage(initialArmour - 2);
+            if (!playerTank.Exists())
             {
                 SetErrorDescription("Tank died before we could check that fall damage worked properly");
                 return false;
             }
-            playerTank.CalculateGravity();
-            if (playerTank.Alive())
+            playerTank.Gravity();
+            if (playerTank.Exists())
             {
                 SetErrorDescription("Tank survived despite taking enough falling damage to destroy it");
                 return false;
@@ -861,7 +861,7 @@ namespace TankBattleTestSuite
             Terrain battlefield = new Terrain();
             return true;
         }
-        private static bool TestTerrain0TerrainAt()
+        private static bool TestTerrain0IsTileAt()
         {
             Requires(TestTerrain0Terrain);
 
@@ -872,7 +872,7 @@ namespace TankBattleTestSuite
             {
                 for (int x = 0; x < Terrain.WIDTH; x++)
                 {
-                    if (battlefield.TerrainAt(x, y))
+                    if (battlefield.IsTileAt(x, y))
                     {
                         foundTrue = true;
                     }
@@ -897,23 +897,23 @@ namespace TankBattleTestSuite
 
             return true;
         }
-        private static bool TestTerrain0TankCollisionAt()
+        private static bool TestTerrain0CheckTankCollision()
         {
             Requires(TestTerrain0Terrain);
-            Requires(TestTerrain0TerrainAt);
+            Requires(TestTerrain0IsTileAt);
 
             Terrain battlefield = new Terrain();
-            for (int y = 0; y <= Terrain.HEIGHT - TankType.HEIGHT; y++)
+            for (int y = 0; y <= Terrain.HEIGHT - TankModel.HEIGHT; y++)
             {
-                for (int x = 0; x <= Terrain.WIDTH - TankType.WIDTH; x++)
+                for (int x = 0; x <= Terrain.WIDTH - TankModel.WIDTH; x++)
                 {
                     int colTiles = 0;
-                    for (int iy = 0; iy < TankType.HEIGHT; iy++)
+                    for (int iy = 0; iy < TankModel.HEIGHT; iy++)
                     {
-                        for (int ix = 0; ix < TankType.WIDTH; ix++)
+                        for (int ix = 0; ix < TankModel.WIDTH; ix++)
                         {
 
-                            if (battlefield.TerrainAt(x + ix, y + iy))
+                            if (battlefield.IsTileAt(x + ix, y + iy))
                             {
                                 colTiles++;
                             }
@@ -921,7 +921,7 @@ namespace TankBattleTestSuite
                     }
                     if (colTiles == 0)
                     {
-                        if (battlefield.TankCollisionAt(x, y))
+                        if (battlefield.CheckTankCollision(x, y))
                         {
                             SetErrorDescription("Found collision where there shouldn't be one");
                             return false;
@@ -929,7 +929,7 @@ namespace TankBattleTestSuite
                     }
                     else
                     {
-                        if (!battlefield.TankCollisionAt(x, y))
+                        if (!battlefield.CheckTankCollision(x, y))
                         {
                             SetErrorDescription("Didn't find collision where there should be one");
                             return false;
@@ -940,24 +940,24 @@ namespace TankBattleTestSuite
 
             return true;
         }
-        private static bool TestTerrain0TankVerticalPosition()
+        private static bool TestTerrain0TankYPosition()
         {
             Requires(TestTerrain0Terrain);
-            Requires(TestTerrain0TerrainAt);
+            Requires(TestTerrain0IsTileAt);
 
             Terrain battlefield = new Terrain();
-            for (int x = 0; x <= Terrain.WIDTH - TankType.WIDTH; x++)
+            for (int x = 0; x <= Terrain.WIDTH - TankModel.WIDTH; x++)
             {
                 int lowestValid = 0;
-                for (int y = 0; y <= Terrain.HEIGHT - TankType.HEIGHT; y++)
+                for (int y = 0; y <= Terrain.HEIGHT - TankModel.HEIGHT; y++)
                 {
                     int colTiles = 0;
-                    for (int iy = 0; iy < TankType.HEIGHT; iy++)
+                    for (int iy = 0; iy < TankModel.HEIGHT; iy++)
                     {
-                        for (int ix = 0; ix < TankType.WIDTH; ix++)
+                        for (int ix = 0; ix < TankModel.WIDTH; ix++)
                         {
 
-                            if (battlefield.TerrainAt(x + ix, y + iy))
+                            if (battlefield.IsTileAt(x + ix, y + iy))
                             {
                                 colTiles++;
                             }
@@ -969,7 +969,7 @@ namespace TankBattleTestSuite
                     }
                 }
 
-                int placedY = battlefield.TankVerticalPosition(x);
+                int placedY = battlefield.TankYPosition(x);
                 if (placedY != lowestValid)
                 {
                     SetErrorDescription(string.Format("Tank was placed at {0},{1} when it should have been placed at {0},{2}", x, placedY, lowestValid));
@@ -978,20 +978,20 @@ namespace TankBattleTestSuite
             }
             return true;
         }
-        private static bool TestTerrain0TerrainDestruction()
+        private static bool TestTerrain0DestroyGround()
         {
             Requires(TestTerrain0Terrain);
-            Requires(TestTerrain0TerrainAt);
+            Requires(TestTerrain0IsTileAt);
 
             Terrain battlefield = new Terrain();
             for (int y = 0; y < Terrain.HEIGHT; y++)
             {
                 for (int x = 0; x < Terrain.WIDTH; x++)
                 {
-                    if (battlefield.TerrainAt(x, y))
+                    if (battlefield.IsTileAt(x, y))
                     {
-                        battlefield.TerrainDestruction(x, y, 0.5f);
-                        if (battlefield.TerrainAt(x, y))
+                        battlefield.DestroyGround(x, y, 0.5f);
+                        if (battlefield.IsTileAt(x, y))
                         {
                             SetErrorDescription("Attempted to destroy terrain but it still exists");
                             return false;
@@ -1006,39 +1006,39 @@ namespace TankBattleTestSuite
             SetErrorDescription("Did not find any terrain to destroy");
             return false;
         }
-        private static bool TestTerrain0CalculateGravity()
+        private static bool TestTerrain0Gravity()
         {
             Requires(TestTerrain0Terrain);
-            Requires(TestTerrain0TerrainAt);
-            Requires(TestTerrain0TerrainDestruction);
+            Requires(TestTerrain0IsTileAt);
+            Requires(TestTerrain0DestroyGround);
 
             Terrain battlefield = new Terrain();
             for (int x = 0; x < Terrain.WIDTH; x++)
             {
-                if (battlefield.TerrainAt(x, Terrain.HEIGHT - 1))
+                if (battlefield.IsTileAt(x, Terrain.HEIGHT - 1))
                 {
-                    if (battlefield.TerrainAt(x, Terrain.HEIGHT - 2))
+                    if (battlefield.IsTileAt(x, Terrain.HEIGHT - 2))
                     {
                         // Seek up and find the first non-set tile
                         for (int y = Terrain.HEIGHT - 2; y >= 0; y--)
                         {
-                            if (!battlefield.TerrainAt(x, y))
+                            if (!battlefield.IsTileAt(x, y))
                             {
                                 // Do a gravity step and make sure it doesn't slip down
-                                battlefield.CalculateGravity();
-                                if (!battlefield.TerrainAt(x, y + 1))
+                                battlefield.Gravity();
+                                if (!battlefield.IsTileAt(x, y + 1))
                                 {
                                     SetErrorDescription("Moved down terrain even though there was no room");
                                     return false;
                                 }
 
                                 // Destroy the bottom-most tile
-                                battlefield.TerrainDestruction(x, Terrain.HEIGHT - 1, 0.5f);
+                                battlefield.DestroyGround(x, Terrain.HEIGHT - 1, 0.5f);
 
                                 // Do a gravity step and make sure it does slip down
-                                battlefield.CalculateGravity();
+                                battlefield.Gravity();
 
-                                if (battlefield.TerrainAt(x, y + 1))
+                                if (battlefield.IsTileAt(x, y + 1))
                                 {
                                     SetErrorDescription("Terrain didn't fall");
                                     return false;
@@ -1056,65 +1056,65 @@ namespace TankBattleTestSuite
             SetErrorDescription("Did not find any appropriate terrain to test");
             return false;
         }
-        private static bool TestAttack0RecordCurrentGame()
+        private static bool TestWeaponEffect0RecordCurrentGame()
         {
             Requires(TestBlast0Blast);
             Requires(TestGameplay0Gameplay);
 
-            Attack weaponEffect = new Blast(1, 1, 1);
+            WeaponEffect weaponEffect = new Blast(1, 1, 1);
             Gameplay game = new Gameplay(2, 1);
             weaponEffect.RecordCurrentGame(game);
             return true;
         }
-        private static bool TestProjectile0Projectile()
+        private static bool TestShell0Shell()
         {
             Requires(TestBlast0Blast);
-            Player player = CreateTestingPlayer();
+            Opponent player = CreateTestingPlayer();
             Blast explosion = new Blast(1, 1, 1);
-            Projectile projectile = new Projectile(25, 25, 45, 30, 0.02f, explosion, player);
+            Shell projectile = new Shell(25, 25, 45, 30, 0.02f, explosion, player);
             return true;
         }
-        private static bool TestProjectile0ProcessTimeEvent()
+        private static bool TestShell0Process()
         {
             Requires(TestGameplay0NewGame);
             Requires(TestBlast0Blast);
-            Requires(TestProjectile0Projectile);
-            Requires(TestAttack0RecordCurrentGame);
+            Requires(TestShell0Shell);
+            Requires(TestWeaponEffect0RecordCurrentGame);
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Player player = game.GetPlayer(1);
+            Opponent player = game.GetPlayerNumber(1);
             Blast explosion = new Blast(1, 1, 1);
 
-            Projectile projectile = new Projectile(25, 25, 45, 100, 0.01f, explosion, player);
+            Shell projectile = new Shell(25, 25, 45, 100, 0.01f, explosion, player);
             projectile.RecordCurrentGame(game);
-            projectile.ProcessTimeEvent();
+            projectile.Process();
 
             // We can't really test this one without a substantial framework,
             // so we just call it and hope that everything works out
 
             return true;
         }
-        private static bool TestProjectile0Paint()
+        private static bool TestShell0Draw()
         {
             Requires(TestGameplay0NewGame);
-            Requires(TestGameplay0GetPlayer);
+            Requires(TestGameplay0GetPlayerNumber);
             Requires(TestBlast0Blast);
-            Requires(TestProjectile0Projectile);
-            Requires(TestAttack0RecordCurrentGame);
+            Requires(TestShell0Shell);
+            Requires(TestWeaponEffect0RecordCurrentGame);
 
             Size bitmapSize = new Size(640, 480);
             Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             Graphics graphics = Graphics.FromImage(image);
             graphics.Clear(Color.Black); // Blacken out the image so we can see the projectile
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Player player = game.GetPlayer(1);
+            Opponent player = game.GetPlayerNumber(1);
             Blast explosion = new Blast(1, 1, 1);
 
-            Projectile projectile = new Projectile(25, 25, 45, 100, 0.01f, explosion, player);
+            Shell projectile = new Shell(25, 25, 45, 100, 0.01f, explosion, player);
             projectile.RecordCurrentGame(game);
-            projectile.Paint(graphics, bitmapSize);
+            projectile.Draw(graphics, bitmapSize);
             graphics.Dispose();
 
             for (int y = 0; y < bitmapSize.Height; y++)
@@ -1133,73 +1133,73 @@ namespace TankBattleTestSuite
         }
         private static bool TestBlast0Blast()
         {
-            Player player = CreateTestingPlayer();
+            Opponent player = CreateTestingPlayer();
             Blast explosion = new Blast(1, 1, 1);
 
             return true;
         }
-        private static bool TestBlast0Ignite()
+        private static bool TestBlast0Explode()
         {
             Requires(TestBlast0Blast);
-            Requires(TestAttack0RecordCurrentGame);
-            Requires(TestGameplay0GetPlayer);
+            Requires(TestWeaponEffect0RecordCurrentGame);
+            Requires(TestGameplay0GetPlayerNumber);
             Requires(TestGameplay0NewGame);
 
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Player player = game.GetPlayer(1);
+            Opponent player = game.GetPlayerNumber(1);
             Blast explosion = new Blast(1, 1, 1);
             explosion.RecordCurrentGame(game);
-            explosion.Ignite(25, 25);
+            explosion.Explode(25, 25);
 
             return true;
         }
-        private static bool TestBlast0ProcessTimeEvent()
+        private static bool TestBlast0Process()
         {
             Requires(TestBlast0Blast);
-            Requires(TestAttack0RecordCurrentGame);
-            Requires(TestGameplay0GetPlayer);
+            Requires(TestWeaponEffect0RecordCurrentGame);
+            Requires(TestGameplay0GetPlayerNumber);
             Requires(TestGameplay0NewGame);
-            Requires(TestBlast0Ignite);
+            Requires(TestBlast0Explode);
 
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Player player = game.GetPlayer(1);
+            Opponent player = game.GetPlayerNumber(1);
             Blast explosion = new Blast(1, 1, 1);
             explosion.RecordCurrentGame(game);
-            explosion.Ignite(25, 25);
-            explosion.ProcessTimeEvent();
+            explosion.Explode(25, 25);
+            explosion.Process();
 
             // Again, we can't really test this one without a full framework
 
             return true;
         }
-        private static bool TestBlast0Paint()
+        private static bool TestBlast0Draw()
         {
             Requires(TestBlast0Blast);
-            Requires(TestAttack0RecordCurrentGame);
-            Requires(TestGameplay0GetPlayer);
+            Requires(TestWeaponEffect0RecordCurrentGame);
+            Requires(TestGameplay0GetPlayerNumber);
             Requires(TestGameplay0NewGame);
-            Requires(TestBlast0Ignite);
-            Requires(TestBlast0ProcessTimeEvent);
+            Requires(TestBlast0Explode);
+            Requires(TestBlast0Process);
 
             Size bitmapSize = new Size(640, 480);
             Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
             Graphics graphics = Graphics.FromImage(image);
             graphics.Clear(Color.Black); // Blacken out the image so we can see the explosion
-            Player p = CreateTestingPlayer();
+            Opponent p = CreateTestingPlayer();
             Gameplay game = InitialiseGame();
             game.NewGame();
-            Player player = game.GetPlayer(1);
+            Opponent player = game.GetPlayerNumber(1);
             Blast explosion = new Blast(10, 10, 10);
             explosion.RecordCurrentGame(game);
-            explosion.Ignite(25, 25);
+            explosion.Explode(25, 25);
             // Step it for a bit so we can be sure the explosion is visible
             for (int i = 0; i < 10; i++)
             {
-                explosion.ProcessTimeEvent();
+                explosion.Process();
             }
-            explosion.Paint(graphics, bitmapSize);
+            explosion.Draw(graphics, bitmapSize);
 
             for (int y = 0; y < bitmapSize.Height; y++)
             {
@@ -1216,7 +1216,7 @@ namespace TankBattleTestSuite
             return false;
         }
 
-        private static SkirmishForm InitialiseSkirmishForm(out NumericUpDown angleCtrl, out TrackBar powerCtrl, out Button fireCtrl, out Panel controlPanel, out ListBox weaponSelect)
+        private static GameplayForm InitialiseGameplayForm(out NumericUpDown angleCtrl, out TrackBar powerCtrl, out Button fireCtrl, out Panel controlPanel, out ListBox weaponSelect)
         {
             Requires(TestGameplay0NewGame);
 
@@ -1229,17 +1229,17 @@ namespace TankBattleTestSuite
             weaponSelect = null;
 
             game.NewGame();
-            SkirmishForm gameplayForm = null;
+            GameplayForm gameplayForm = null;
             foreach (Form f in Application.OpenForms)
             {
-                if (f is SkirmishForm)
+                if (f is GameplayForm)
                 {
-                    gameplayForm = f as SkirmishForm;
+                    gameplayForm = f as GameplayForm;
                 }
             }
             if (gameplayForm == null)
             {
-                SetErrorDescription("Gameplay.NewGame() did not create a SkirmishForm and that is the only way SkirmishForm can be tested");
+                SetErrorDescription("Gameplay.NewGame() did not create a GameplayForm and that is the only way GameplayForm can be tested");
                 return null;
             }
 
@@ -1359,7 +1359,7 @@ namespace TankBattleTestSuite
                 }
                 else
                 {
-                    SetErrorDescription(string.Format("Unexpected control ({0}) named \"{1}\" found in SkirmishForm", c.GetType().FullName, c.Name));
+                    SetErrorDescription(string.Format("Unexpected control ({0}) named \"{1}\" found in GameplayForm", c.GetType().FullName, c.Name));
                     return null;
                 }
             }
@@ -1377,32 +1377,32 @@ namespace TankBattleTestSuite
             return gameplayForm;
         }
 
-        private static bool TestSkirmishForm0SkirmishForm()
+        private static bool TestGameplayForm0GameplayForm()
         {
             NumericUpDown angle;
             TrackBar power;
             Button fire;
             Panel controlPanel;
             ListBox weaponSelect;
-            SkirmishForm gameplayForm = InitialiseSkirmishForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
+            GameplayForm gameplayForm = InitialiseGameplayForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
 
             if (gameplayForm == null) return false;
 
             return true;
         }
-        private static bool TestSkirmishForm0EnableHumanControl()
+        private static bool TestGameplayForm0EnableTankButtons()
         {
-            Requires(TestSkirmishForm0SkirmishForm);
+            Requires(TestGameplayForm0GameplayForm);
             Gameplay game = InitialiseGame();
             game.NewGame();
 
             // Find the gameplay form
-            SkirmishForm gameplayForm = null;
+            GameplayForm gameplayForm = null;
             foreach (Form f in Application.OpenForms)
             {
-                if (f is SkirmishForm)
+                if (f is GameplayForm)
                 {
-                    gameplayForm = f as SkirmishForm;
+                    gameplayForm = f as GameplayForm;
                 }
             }
             if (gameplayForm == null)
@@ -1429,38 +1429,38 @@ namespace TankBattleTestSuite
 
             if (controlPanel == null)
             {
-                SetErrorDescription("Control panel was not found in SkirmishForm");
+                SetErrorDescription("Control panel was not found in GameplayForm");
                 return false;
             }
 
             // Disable the control panel to check that EnableControlPanel enables it
             controlPanel.Enabled = false;
 
-            gameplayForm.EnableHumanControl();
+            gameplayForm.EnableTankButtons();
 
             if (!controlPanel.Enabled)
             {
-                SetErrorDescription("Control panel is still disabled after SkirmishForm.EnableHumanControl()");
+                SetErrorDescription("Control panel is still disabled after GameplayForm.EnableTankButtons()");
                 return false;
             }
             return true;
 
         }
-        private static bool TestSkirmishForm0Aim()
+        private static bool TestGameplayForm0SetAimingAngle()
         {
-            Requires(TestSkirmishForm0SkirmishForm);
+            Requires(TestGameplayForm0GameplayForm);
             NumericUpDown angle;
             TrackBar power;
             Button fire;
             Panel controlPanel;
             ListBox weaponSelect;
-            SkirmishForm gameplayForm = InitialiseSkirmishForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
+            GameplayForm gameplayForm = InitialiseGameplayForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
 
             if (gameplayForm == null) return false;
 
             float testAngle = 27;
 
-            gameplayForm.Aim(testAngle);
+            gameplayForm.SetAimingAngle(testAngle);
             if (FloatEquals((float)angle.Value, testAngle)) return true;
 
             else
@@ -1469,21 +1469,21 @@ namespace TankBattleTestSuite
                 return false;
             }
         }
-        private static bool TestSkirmishForm0SetTurretPower()
+        private static bool TestGameplayForm0SetPower()
         {
-            Requires(TestSkirmishForm0SkirmishForm);
+            Requires(TestGameplayForm0GameplayForm);
             NumericUpDown angle;
             TrackBar power;
             Button fire;
             Panel controlPanel;
             ListBox weaponSelect;
-            SkirmishForm gameplayForm = InitialiseSkirmishForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
+            GameplayForm gameplayForm = InitialiseGameplayForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
 
             if (gameplayForm == null) return false;
 
             int testPower = 71;
 
-            gameplayForm.SetTurretPower(testPower);
+            gameplayForm.SetPower(testPower);
             if (power.Value == testPower) return true;
 
             else
@@ -1492,26 +1492,26 @@ namespace TankBattleTestSuite
                 return false;
             }
         }
-        private static bool TestSkirmishForm0SelectWeapon()
+        private static bool TestGameplayForm0SetWeaponIndex()
         {
-            Requires(TestSkirmishForm0SkirmishForm);
+            Requires(TestGameplayForm0GameplayForm);
             NumericUpDown angle;
             TrackBar power;
             Button fire;
             Panel controlPanel;
             ListBox weaponSelect;
-            SkirmishForm gameplayForm = InitialiseSkirmishForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
+            GameplayForm gameplayForm = InitialiseGameplayForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
 
             if (gameplayForm == null) return false;
 
-            gameplayForm.SelectWeapon(0);
+            gameplayForm.SetWeaponIndex(0);
 
             // WeaponSelect is optional behaviour, so it's okay if it's not implemented here, as long as the method works.
             return true;
         }
-        private static bool TestSkirmishForm0Attack()
+        private static bool TestGameplayForm0Attack()
         {
-            Requires(TestSkirmishForm0SkirmishForm);
+            Requires(TestGameplayForm0GameplayForm);
             // This is something we can't really test properly without a proper framework, so for now we'll just click
             // the button and make sure it disables the control panel
             NumericUpDown angle;
@@ -1519,7 +1519,7 @@ namespace TankBattleTestSuite
             Button fire;
             Panel controlPanel;
             ListBox weaponSelect;
-            SkirmishForm gameplayForm = InitialiseSkirmishForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
+            GameplayForm gameplayForm = InitialiseGameplayForm(out angle, out power, out fire, out controlPanel, out weaponSelect);
 
             controlPanel.Enabled = true;
             fire.PerformClick();
@@ -1534,66 +1534,66 @@ namespace TankBattleTestSuite
         private static void UnitTests()
         {
             DoTest(TestGameplay0Gameplay);
-            DoTest(TestGameplay0GetNumPlayers);
+            DoTest(TestGameplay0PlayerCount);
             DoTest(TestGameplay0GetTotalRounds);
             DoTest(TestGameplay0SetPlayer);
-            DoTest(TestGameplay0GetPlayer);
-            DoTest(TestGameplay0PlayerColour);
-            DoTest(TestGameplay0GetPlayerLocations);
+            DoTest(TestGameplay0GetPlayerNumber);
+            DoTest(TestGameplay0GetTankColour);
+            DoTest(TestGameplay0CalculatePlayerPositions);
             DoTest(TestGameplay0Shuffle);
             DoTest(TestGameplay0NewGame);
-            DoTest(TestGameplay0GetMap);
-            DoTest(TestGameplay0GetPlayerTank);
-            DoTest(TestTankType0CreateTank);
-            DoTest(TestTankType0DisplayTank);
-            DoTest(TestTankType0LineDraw);
-            DoTest(TestTankType0GetTankHealth);
-            DoTest(TestTankType0Weapons);
-            DoTest(TestPlayer0Human);
-            DoTest(TestPlayer0CreateTank);
-            DoTest(TestPlayer0PlayerName);
-            DoTest(TestPlayer0PlayerColour);
-            DoTest(TestPlayer0Winner);
-            DoTest(TestPlayer0GetScore);
-            DoTest(TestHuman0StartRound);
-            DoTest(TestHuman0CommenceTurn);
-            DoTest(TestHuman0ReportHit);
-            DoTest(TestBattleTank0BattleTank);
-            DoTest(TestBattleTank0GetPlayer);
-            DoTest(TestBattleTank0CreateTank);
-            DoTest(TestBattleTank0GetAngle);
-            DoTest(TestBattleTank0Aim);
-            DoTest(TestBattleTank0GetTankPower);
-            DoTest(TestBattleTank0SetTurretPower);
-            DoTest(TestBattleTank0GetWeapon);
-            DoTest(TestBattleTank0SelectWeapon);
-            DoTest(TestBattleTank0Paint);
-            DoTest(TestBattleTank0XPos);
-            DoTest(TestBattleTank0GetY);
-            DoTest(TestBattleTank0Attack);
-            DoTest(TestBattleTank0DamageArmour);
-            DoTest(TestBattleTank0Alive);
-            DoTest(TestBattleTank0CalculateGravity);
+            DoTest(TestGameplay0GetLevel);
+            DoTest(TestGameplay0GetCurrentGameplayTank);
+            DoTest(TestTankModel0GetTank);
+            DoTest(TestTankModel0DisplayTank);
+            DoTest(TestTankModel0DrawLine);
+            DoTest(TestTankModel0GetArmour);
+            DoTest(TestTankModel0WeaponList);
+            DoTest(TestOpponent0HumanOpponent);
+            DoTest(TestOpponent0GetTank);
+            DoTest(TestOpponent0Name);
+            DoTest(TestOpponent0GetColour);
+            DoTest(TestOpponent0AddScore);
+            DoTest(TestOpponent0GetScore);
+            DoTest(TestHumanOpponent0StartRound);
+            DoTest(TestHumanOpponent0BeginTurn);
+            DoTest(TestHumanOpponent0ProjectileHitPos);
+            DoTest(TestControlledTank0ControlledTank);
+            DoTest(TestControlledTank0GetPlayerNumber);
+            DoTest(TestControlledTank0GetTank);
+            DoTest(TestControlledTank0GetAim);
+            DoTest(TestControlledTank0SetAimingAngle);
+            DoTest(TestControlledTank0GetCurrentPower);
+            DoTest(TestControlledTank0SetPower);
+            DoTest(TestControlledTank0GetWeaponIndex);
+            DoTest(TestControlledTank0SetWeaponIndex);
+            DoTest(TestControlledTank0Draw);
+            DoTest(TestControlledTank0GetX);
+            DoTest(TestControlledTank0GetYPos);
+            DoTest(TestControlledTank0Attack);
+            DoTest(TestControlledTank0InflictDamage);
+            DoTest(TestControlledTank0Exists);
+            DoTest(TestControlledTank0Gravity);
             DoTest(TestTerrain0Terrain);
-            DoTest(TestTerrain0TerrainAt);
-            DoTest(TestTerrain0TankCollisionAt);
-            DoTest(TestTerrain0TankVerticalPosition);
-            DoTest(TestTerrain0TerrainDestruction);
-            DoTest(TestTerrain0CalculateGravity);
-            DoTest(TestAttack0RecordCurrentGame);
-            DoTest(TestProjectile0Projectile);
-            DoTest(TestProjectile0ProcessTimeEvent);
-            DoTest(TestProjectile0Paint);
+            DoTest(TestTerrain0IsTileAt);
+            DoTest(TestTerrain0CheckTankCollision);
+            DoTest(TestTerrain0TankYPosition);
+            DoTest(TestTerrain0DestroyGround);
+            DoTest(TestTerrain0Gravity);
+            DoTest(TestWeaponEffect0RecordCurrentGame);
+            DoTest(TestShell0Shell);
+            DoTest(TestShell0Process);
+            DoTest(TestShell0Draw);
             DoTest(TestBlast0Blast);
-            DoTest(TestBlast0Ignite);
-            DoTest(TestBlast0ProcessTimeEvent);
-            DoTest(TestBlast0Paint);
-            DoTest(TestSkirmishForm0SkirmishForm);
-            DoTest(TestSkirmishForm0EnableHumanControl);
-            DoTest(TestSkirmishForm0Aim);
-            DoTest(TestSkirmishForm0SetTurretPower);
-            DoTest(TestSkirmishForm0SelectWeapon);
-            DoTest(TestSkirmishForm0Attack);
+            DoTest(TestBlast0Explode);
+            DoTest(TestBlast0Process);
+            DoTest(TestBlast0Draw);
+            DoTest(TestGameplayForm0GameplayForm);
+            DoTest(TestGameplayForm0EnableTankButtons);
+            DoTest(TestGameplayForm0SetAimingAngle);
+            DoTest(TestGameplayForm0SetPower);
+            DoTest(TestGameplayForm0SetWeaponIndex);
+            DoTest(TestGameplayForm0Attack);
         }
         
         #endregion
@@ -1602,20 +1602,20 @@ namespace TankBattleTestSuite
 
         private static bool CheckClasses()
         {
-            string[] classNames = new string[] { "Program", "ComputerOpponent", "Terrain", "Blast", "SkirmishForm", "Gameplay", "Human", "Projectile", "Player", "BattleTank", "TankType", "Attack" };
+            string[] classNames = new string[] { "Program", "AIOpponent", "Terrain", "Blast", "GameplayForm", "Gameplay", "HumanOpponent", "Shell", "Opponent", "ControlledTank", "TankModel", "WeaponEffect" };
             string[][] classFields = new string[][] {
                 new string[] { "Main" }, // Program
-                new string[] { }, // ComputerOpponent
-                new string[] { "TerrainAt","TankCollisionAt","TankVerticalPosition","TerrainDestruction","CalculateGravity","WIDTH","HEIGHT"}, // Terrain
-                new string[] { "Ignite" }, // Blast
-                new string[] { "EnableHumanControl","Aim","SetTurretPower","SelectWeapon","Attack","InitRenderBuffer"}, // SkirmishForm
-                new string[] { "GetNumPlayers","GetCurrentRound","GetTotalRounds","SetPlayer","GetPlayer","GetBattleTank","PlayerColour","GetPlayerLocations","Shuffle","NewGame","BeginRound","GetMap","DisplayTanks","GetPlayerTank","AddAttackEffect","ProcessEffects","RenderEffects","RemoveWeaponEffect","CheckCollidedTank","DamageArmour","CalculateGravity","FinishTurn","FindWinner","NextRound","Wind"}, // Gameplay
-                new string[] { }, // Human
-                new string[] { }, // Projectile
-                new string[] { "CreateTank","PlayerName","PlayerColour","Winner","GetScore","StartRound","CommenceTurn","ReportHit"}, // Player
-                new string[] { "GetPlayer","CreateTank","GetAngle","Aim","GetTankPower","SetTurretPower","GetWeapon","SelectWeapon","Paint","XPos","GetY","Attack","DamageArmour","Alive","CalculateGravity"}, // BattleTank
-                new string[] { "DisplayTank","LineDraw","CreateBitmap","GetTankHealth","Weapons","WeaponLaunch","CreateTank","WIDTH","HEIGHT","NUM_TANKS"}, // TankType
-                new string[] { "RecordCurrentGame","ProcessTimeEvent","Paint"} // Attack
+                new string[] { }, // AIOpponent
+                new string[] { "IsTileAt","CheckTankCollision","TankYPosition","DestroyGround","Gravity","WIDTH","HEIGHT"}, // Terrain
+                new string[] { "Explode" }, // Blast
+                new string[] { "EnableTankButtons","SetAimingAngle","SetPower","SetWeaponIndex","Attack","InitRenderBuffer"}, // GameplayForm
+                new string[] { "PlayerCount","GetRound","GetTotalRounds","SetPlayer","GetPlayerNumber","PlayerTank","GetTankColour","CalculatePlayerPositions","Shuffle","NewGame","BeginRound","GetLevel","DrawPlayers","GetCurrentGameplayTank","AddWeaponEffect","ProcessEffects","RenderEffects","EndEffect","CheckHitTank","InflictDamage","Gravity","TurnOver","RewardWinner","NextRound","GetWindSpeed"}, // Gameplay
+                new string[] { }, // HumanOpponent
+                new string[] { }, // Shell
+                new string[] { "GetTank","Name","GetColour","AddScore","GetScore","StartRound","BeginTurn","ProjectileHitPos"}, // Opponent
+                new string[] { "GetPlayerNumber","GetTank","GetAim","SetAimingAngle","GetCurrentPower","SetPower","GetWeaponIndex","SetWeaponIndex","Draw","GetX","GetYPos","Attack","InflictDamage","Exists","Gravity"}, // ControlledTank
+                new string[] { "DisplayTank","DrawLine","CreateBitmap","GetArmour","WeaponList","FireWeapon","GetTank","WIDTH","HEIGHT","NUM_TANKS"}, // TankModel
+                new string[] { "RecordCurrentGame","Process","Draw"} // WeaponEffect
             };
 
             Assembly assembly = Assembly.GetExecutingAssembly();

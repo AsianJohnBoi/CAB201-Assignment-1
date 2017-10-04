@@ -1,44 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TankBattle
 {
-    public class Terrain
+    abstract public class Opponent
     {
-        public const int WIDTH = 160;
-        public const int HEIGHT = 120;
-
-        public Terrain()
+        public Opponent(string name, TankModel tank, Color colour)
+        {
+            throw new NotImplementedException();
+        }
+        public TankModel GetTank()
+        {
+            throw new NotImplementedException();
+        }
+        public string Name()
+        {
+            throw new NotImplementedException();
+        }
+        public Color GetColour()
+        {
+            throw new NotImplementedException();
+        }
+        public void AddScore()
+        {
+            throw new NotImplementedException();
+        }
+        public int GetScore()
         {
             throw new NotImplementedException();
         }
 
-        public bool IsTileAt(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void StartRound();
 
-        public bool CheckTankCollision(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame);
 
-        public int TankYPosition(int x)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DestroyGround(float destroyX, float destroyY, float radius)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Gravity()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void ProjectileHitPos(float x, float y);
     }
 }

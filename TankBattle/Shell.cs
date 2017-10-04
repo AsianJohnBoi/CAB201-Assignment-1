@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace TankBattle
 {
-    public class Blast : WeaponEffect
+    public class Shell : WeaponEffect
     {
-        public Blast(int explosionDamage, int explosionRadius, int earthDestructionRadius)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Explode(float x, float y)
+        public Shell(float x, float y, float angle, float power, float gravity, Blast explosion, Opponent player)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +19,7 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public override void Draw(Graphics graphics, Size displaySize)
+        public override void Draw(Graphics graphics, Size size)
         {
             throw new NotImplementedException();
         }
