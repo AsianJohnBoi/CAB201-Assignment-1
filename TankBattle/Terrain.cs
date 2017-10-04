@@ -16,27 +16,27 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public bool IsTileAt(int x, int y)
+        public bool TerrainAt(int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public bool CheckTankCollision(int x, int y)
+        public bool TankCollisionAt(int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public int TankYPosition(int x)
+        public int TankVerticalPosition(int x)
         {
             throw new NotImplementedException();
         }
 
-        public void DestroyGround(float destroyX, float destroyY, float radius)
+        public void TerrainDestruction(float destroyX, float destroyY, float radius)
         {
             throw new NotImplementedException();
         }
 
-        public bool Gravity()
+        public bool CalculateGravity()
         {
             throw new NotImplementedException();
         }

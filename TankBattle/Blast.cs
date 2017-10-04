@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace TankBattle
 {
-    public class Blast : WeaponEffect
+    public class Blast : Attack
     {
         public Blast(int explosionDamage, int explosionRadius, int earthDestructionRadius)
         {
             throw new NotImplementedException();
         }
 
-        public void Explode(float x, float y)
+        public void Ignite(float x, float y)
         {
             throw new NotImplementedException();
         }
 
-        public override void Process()
+        public override void ProcessTimeEvent()
         {
             throw new NotImplementedException();
         }
 
-        public override void Draw(Graphics graphics, Size displaySize)
+        public override void Paint(Graphics graphics, Size displaySize)
         {
             throw new NotImplementedException();
         }

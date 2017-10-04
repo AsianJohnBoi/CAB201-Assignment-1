@@ -15,12 +15,12 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public int PlayerCount()
+        public int GetNumPlayers()
         {
             throw new NotImplementedException();
         }
 
-        public int GetRound()
+        public int GetCurrentRound()
         {
             throw new NotImplementedException();
         }
@@ -30,27 +30,27 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public void SetPlayer(int playerNum, Opponent player)
+        public void SetPlayer(int playerNum, Player player)
         {
             throw new NotImplementedException();
         }
 
-        public Opponent GetPlayerNumber(int playerNum)
+        public Player GetPlayer(int playerNum)
         {
             throw new NotImplementedException();
         }
 
-        public ControlledTank PlayerTank(int playerNum)
+        public BattleTank GetBattleTank(int playerNum)
         {
             throw new NotImplementedException();
         }
 
-        public static Color GetTankColour(int playerNum)
+        public static Color PlayerColour(int playerNum)
         {
             throw new NotImplementedException();
         }
 
-        public static int[] CalculatePlayerPositions(int numPlayers)
+        public static int[] GetPlayerLocations(int numPlayers)
         {
             throw new NotImplementedException();
         }
@@ -70,22 +70,22 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public Terrain GetLevel()
+        public Terrain GetMap()
         {
             throw new NotImplementedException();
         }
 
-        public void DrawPlayers(Graphics graphics, Size displaySize)
+        public void DisplayTanks(Graphics graphics, Size displaySize)
         {
             throw new NotImplementedException();
         }
 
-        public ControlledTank GetCurrentGameplayTank()
+        public BattleTank GetPlayerTank()
         {
             throw new NotImplementedException();
         }
 
-        public void AddWeaponEffect(WeaponEffect weaponEffect)
+        public void AddAttackEffect(Attack weaponEffect)
         {
             throw new NotImplementedException();
         }
@@ -100,32 +100,32 @@ namespace TankBattle
             throw new NotImplementedException();
         }
 
-        public void EndEffect(WeaponEffect weaponEffect)
+        public void RemoveWeaponEffect(Attack weaponEffect)
         {
             throw new NotImplementedException();
         }
 
-        public bool CheckHitTank(float projectileX, float projectileY)
+        public bool CheckCollidedTank(float projectileX, float projectileY)
         {
             throw new NotImplementedException();
         }
 
-        public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
+        public void DamageArmour(float damageX, float damageY, float explosionDamage, float radius)
         {
             throw new NotImplementedException();
         }
 
-        public bool Gravity()
+        public bool CalculateGravity()
         {
             throw new NotImplementedException();
         }
 
-        public bool TurnOver()
+        public bool FinishTurn()
         {
             throw new NotImplementedException();
         }
 
-        public void RewardWinner()
+        public void FindWinner()
         {
             throw new NotImplementedException();
         }
@@ -135,7 +135,7 @@ namespace TankBattle
             throw new NotImplementedException();
         }
         
-        public int GetWindSpeed()
+        public int Wind()
         {
             throw new NotImplementedException();
         }
