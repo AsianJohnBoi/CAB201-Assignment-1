@@ -23,17 +23,19 @@ namespace TankBattle
 
         public override void StartRound()
         {
-            throw new NotImplementedException();
-        }
+			
+		}
 
         public override void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame)
         {
-            throw new NotImplementedException();
-        }
+			throw new NotImplementedException();
+			//finish GameplayForm
+		}
 
         public override void ProjectileHitPos(float x, float y)
         {
             throw new NotImplementedException();
+			//finish GameplayForm
         }
     }
 }

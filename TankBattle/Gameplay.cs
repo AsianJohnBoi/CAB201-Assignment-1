@@ -10,19 +10,24 @@ namespace TankBattle
 {
     public class Gameplay
     {
-        private int numPlayers;
-        private int numRounds;
+        private int[] numPlayers;
+        private int[] numRounds;
+		private int playerNum;
+		private List<string> WeaponsEffect;
+		private int currentRound;
+		private int opponent;
 
-        public Gameplay(int numPlayers, int numRounds)
+
+		public Gameplay(int numPlayers, int numRounds)
         {
-            this.numPlayers = numPlayers;
-            this.numRounds = numRounds;
-            List<string> WeaponsEffect = new List<string>();
+            this.numPlayers = new int[numPlayers];
+            this.numRounds = new int[numRounds];
+            WeaponsEffect = new List<string>();
         }
 
         public int PlayerCount()
         {
-            return numPlayers;
+            return numPlayers.Length;
         }
 
         public int GetRound()
@@ -32,18 +37,22 @@ namespace TankBattle
 
         public int GetTotalRounds()
         {
-            return numRounds;
+            return numRounds.Length;
         }
 
         public void SetPlayer(int playerNum, Opponent player)
         {
-            throw new NotImplementedException();
+			playerNum = numPlayers.Length - 1;
         }
 
         public Opponent GetPlayerNumber(int playerNum)
         {
-            throw new NotImplementedException();
-        }
+			TankModel tank = TankModel.GetTank(1);
+			Opponent[] TheOppo = new Opponent[]
+			{
+			};
+			return TheOppo[playerNum];
+		}
 
         public ControlledTank PlayerTank(int playerNum)
         {
@@ -74,9 +83,6 @@ namespace TankBattle
             }
             array = shuffledArray;
         }
-        private int currentRound;
-        private int opponent;
-
         public void NewGame()
         {
             this.currentRound = 1;
@@ -86,12 +92,13 @@ namespace TankBattle
 
         public void BeginRound()
         {
-            
-        }
+
+		}
 
         public Terrain GetLevel()
         {
-            throw new NotImplementedException();
+			Terrain newRound = new Terrain();
+			return newRound;
         }
 
         public void DrawPlayers(Graphics graphics, Size displaySize)
