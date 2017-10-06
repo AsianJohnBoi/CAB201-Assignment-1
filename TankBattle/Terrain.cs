@@ -11,14 +11,15 @@ namespace TankBattle
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
 
+        private bool gravityState;
+
+        private int terrainAmount = (WIDTH * HEIGHT / 2); //Amount of terrain, area of terrain fills half the map
+
         bool[,] map = new bool[HEIGHT, WIDTH];
 
         public Terrain()
         {
             Random rnd = new Random();
-
-            //Amount of terrain, area of terrain fills half the map
-            int terrainAmount = (WIDTH * HEIGHT / 2);
 
             //Create empty map
             for (int y = 0; y <= HEIGHT - 1; y++) {
@@ -94,14 +95,13 @@ namespace TankBattle
             }
 
 
-            //Display map - POST GRAVITY
+            //Display map -POST GRAVITY
             //Console.WriteLine("POST GRAVITY:");
-            //for (int row = 0; row <= HEIGHT - 1; row++) {
-            //    for (int column = 0; column <= WIDTH - 1; column++) {
-            //        if (map[row, column] == false) {
+            //for (int y = 0; y <= HEIGHT - 1; y++) {
+            //    for (int x = 0; x <= WIDTH - 1; x++) {
+            //        if (map[y, x] == false) {
             //            Console.Write('.');
-            //        }
-            //        else if (map[row, column] == true) {
+            //        } else if (map[y, x] == true) {
             //            Console.Write('#');
             //        }
             //    }
@@ -113,7 +113,11 @@ namespace TankBattle
 
         public bool IsTileAt(int x, int y)
         {
-            throw new NotImplementedException();
+            if (map[y - 1, x - 1] == true) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public bool CheckTankCollision(int x, int y)
