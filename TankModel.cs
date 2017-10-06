@@ -15,9 +15,17 @@ namespace TankBattle
 
         public abstract int[,] DisplayTank(float angle);
 
+        //private int X1, X2, Y1, Y2;
         public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
-            throw new NotImplementedException();
+            graphic[X1, Y1] = 1;
+            graphic[X2, Y2] = 1;
+            int dx = X2 - X1;
+            int dy = Y2 - Y1;
+            for (int x = X1; x != X2; x++ ){
+                int y = Y1 + dy * (x - X1) / dx;
+                graphic[x, y] = 1;
+            }
         }
 
         public Bitmap CreateBitmap(Color tankColour, float angle)
@@ -83,6 +91,7 @@ namespace TankBattle
     {
         private int X1, Y1, X2, Y2;
         private int currentDur;
+        public String[] Weapons;
 
         public override int[,] DisplayTank(float angle)
         {
@@ -120,9 +129,9 @@ namespace TankBattle
 
         public override string[] WeaponList()
         {
-            String[] Weapons = new string[] 
+            Weapons = new string[] 
             {
-                "Standard shell", "Medium Shell", "Large Shell",
+                "Standard shell", "Medium Shell", "Large Shell", "Armour Piercing Shell",
             };
             return Weapons;
         }
