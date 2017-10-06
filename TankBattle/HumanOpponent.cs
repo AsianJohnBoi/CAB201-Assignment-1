@@ -9,9 +9,16 @@ namespace TankBattle
 {
     public class HumanOpponent : Opponent
     {
+		private string name;
+		private TankModel tank;
+		private Color colour;
+
+
         public HumanOpponent(string name, TankModel tank, Color colour) : base(name, tank, colour)
         {
-            throw new NotImplementedException();
+			this.name = name;
+			this.tank = tank;
+			this.colour = colour;
         }
 
         public override void StartRound()

@@ -18,7 +18,7 @@ namespace TankBattle
         private int angle;
         private int Tankweapon;
 
-        public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
+		public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
             this.player = player;
             this.tankX = tankX;
@@ -65,12 +65,26 @@ namespace TankBattle
             this.Tankweapon = newWeapon;
         }
 
-        public void Draw(Graphics graphics, Size displaySize)
+		public void Draw(Graphics graphics, Size displaySize)
         {
-            throw new NotImplementedException();
-        }
+			//int drawX1 = displaySize.Width * x / Terrain.WIDTH;
+			//int drawY1 = displaySize.Height * y / Terrain.HEIGHT;
+			//int drawX2 = displaySize.Width * (x + TankModel.WIDTH) / Terrain.WIDTH;
+			//int drawY2 = displaySize.Height * (y + TankModel.HEIGHT) / Terrain.HEIGHT;
+			//graphics.DrawImage(TankModel.CreateBitmap(), new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
 
-        public int GetX()
+			//int drawY3 = displaySize.Height * (y - TankModel.HEIGHT) / Terrain.HEIGHT;
+			//Font font = new Font("Arial", 8);
+			//Brush brush = new SolidBrush(Color.White);
+
+			//int pct = armour * 100 / TheTank.GetArmour();
+			//if (pct < 100)
+			//{
+			//	graphics.DrawString(pct + "%", font, brush, new Point(drawX1, drawY3));
+			//}
+		}
+
+		public int GetX()
         {
             throw new NotImplementedException();
         }
