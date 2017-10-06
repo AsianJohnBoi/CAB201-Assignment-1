@@ -15,9 +15,17 @@ namespace TankBattle
 
         public abstract int[,] DisplayTank(float angle);
 
+        //private int X1, X2, Y1, Y2;
         public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
-            throw new NotImplementedException();
+            graphic[X1, Y1] = 1;
+            graphic[X2, Y2] = 1;
+            int dx = X2 - X1;
+            int dy = Y2 - Y1;
+            for (int x = X1; x != X2; x++ ){
+                int y = Y1 + dy * (x - X1) / dx;
+                graphic[x, y] = 1;
+            }
         }
 
         public Bitmap CreateBitmap(Color tankColour, float angle)
@@ -75,7 +83,57 @@ namespace TankBattle
 
         public static TankModel GetTank(int tankNumber)
         {
+            return new TheTank();
+        }
+    }
+    //create 4 
+    public class TheTank : TankModel
+    {
+        private int X1, Y1, X2, Y2;
+        private int currentDur;
+        public String[] Weapons;
+
+        public override int[,] DisplayTank(float angle)
+        {
+            int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
+                   { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+                   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+            X1 = 7;
+            Y1 = 6;
+            X2 = (int)Math.Sin(angle);
+            Y2 = (int)Math.Cos(angle);
+            DrawLine(graphic, X1, Y1, X2, Y2);
+            return graphic;
+        }
+
+        public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame)
+        {
             throw new NotImplementedException();
+        }
+
+        public override int GetArmour()
+        {
+            currentDur = 100;
+            return currentDur;
+        }
+
+        public override string[] WeaponList()
+        {
+            Weapons = new string[] 
+            {
+                "Standard shell", "Medium Shell", "Large Shell", "Armour Piercing Shell",
+            };
+            return Weapons;
         }
     }
 }

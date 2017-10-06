@@ -14,6 +14,9 @@ namespace TankBattle
         private int tankY;
         private TankModel tankModel;
         private int currentDur;
+        private int power;
+        private int angle;
+        private int Tankweapon;
 
         public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
@@ -35,31 +38,31 @@ namespace TankBattle
 
         public float GetAim()
         {
-            throw new NotImplementedException();
+            return angle; 
         }
 
         public void SetAimingAngle(float angle)
         {
-            throw new NotImplementedException();
+            if (angle >= -90 && angle <= 180){ this.angle = (int)angle; }
         }
 
         public int GetCurrentPower()
         {
-            throw new NotImplementedException();
+            return power;
         }
 
         public void SetPower(int power)
         {
-            throw new NotImplementedException();
+            this.power = power;
         }
 
         public int GetWeaponIndex()
         {
-            throw new NotImplementedException();
+            return Tankweapon;
         }
         public void SetWeaponIndex(int newWeapon)
         {
-            throw new NotImplementedException();
+            this.Tankweapon = newWeapon;
         }
 
         public void Draw(Graphics graphics, Size displaySize)
