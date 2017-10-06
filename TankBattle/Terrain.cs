@@ -109,7 +109,6 @@ namespace TankBattle
             //    Console.WriteLine();
             //}
 
-
         }
 
         public bool IsTileAt(int x, int y)

@@ -10,24 +10,19 @@ namespace TankBattle
 {
     public class Gameplay
     {
-        private int[] numPlayers;
-        private int[] numRounds;
-		private int playerNum;
-		private List<string> WeaponsEffect;
-		private int currentRound;
-		private int opponent;
+        private int numPlayers;
+        private int numRounds;
 
-
-		public Gameplay(int numPlayers, int numRounds)
+        public Gameplay(int numPlayers, int numRounds)
         {
-            this.numPlayers = new int[numPlayers];
-            this.numRounds = new int[numRounds];
-            WeaponsEffect = new List<string>();
+            this.numPlayers = numPlayers;
+            this.numRounds = numRounds;
+            List<string> WeaponsEffect = new List<string>();
         }
 
         public int PlayerCount()
         {
-            return numPlayers.Length;
+            return numPlayers;
         }
 
         public int GetRound()
@@ -37,22 +32,18 @@ namespace TankBattle
 
         public int GetTotalRounds()
         {
-            return numRounds.Length;
+            return numRounds;
         }
 
         public void SetPlayer(int playerNum, Opponent player)
         {
-			playerNum = numPlayers.Length - 1;
+            throw new NotImplementedException();
         }
 
         public Opponent GetPlayerNumber(int playerNum)
         {
-			TankModel tank = TankModel.GetTank(1);
-			Opponent[] TheOppo = new Opponent[]
-			{
-			};
-			return TheOppo[playerNum];
-		}
+            throw new NotImplementedException();
+        }
 
         public ControlledTank PlayerTank(int playerNum)
         {
@@ -83,6 +74,9 @@ namespace TankBattle
             }
             array = shuffledArray;
         }
+        private int currentRound;
+        private int opponent;
+
         public void NewGame()
         {
             this.currentRound = 1;
@@ -92,13 +86,12 @@ namespace TankBattle
 
         public void BeginRound()
         {
-
-		}
+            
+        }
 
         public Terrain GetLevel()
         {
-			Terrain newRound = new Terrain();
-			return newRound;
+            throw new NotImplementedException();
         }
 
         public void DrawPlayers(Graphics graphics, Size displaySize)
