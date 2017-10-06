@@ -10,14 +10,19 @@ namespace TankBattle
 {
     public class Gameplay
     {
+        private int numPlayers;
+        private int numRounds;
+
         public Gameplay(int numPlayers, int numRounds)
         {
-            throw new NotImplementedException();
+            this.numPlayers = numPlayers;
+            this.numRounds = numRounds;
+            List<string> WeaponsEffect = new List<string>();
         }
 
         public int PlayerCount()
         {
-            throw new NotImplementedException();
+            return numPlayers;
         }
 
         public int GetRound()
@@ -27,7 +32,7 @@ namespace TankBattle
 
         public int GetTotalRounds()
         {
-            throw new NotImplementedException();
+            return numRounds;
         }
 
         public void SetPlayer(int playerNum, Opponent player)
@@ -47,7 +52,8 @@ namespace TankBattle
 
         public static Color GetTankColour(int playerNum)
         {
-            throw new NotImplementedException();
+            Color[] TheColor = new Color[] { Color.AliceBlue, Color.Beige, Color.Chocolate, Color.Gold, Color.Orange, Color.Violet, Color.Yellow, Color.Green };
+            return TheColor[playerNum - 1];
         }
 
         public static int[] CalculatePlayerPositions(int numPlayers)
@@ -57,17 +63,30 @@ namespace TankBattle
 
         public static void Shuffle(int[] array)
         {
-            throw new NotImplementedException();
+            int[] shuffledArray = new int[array.Length];
+            int rndNo;
+            Random rnd = new Random();
+            for (int i = array.Length; i >= 1; i--)
+            {
+                rndNo = rnd.Next(1, i + 1) - 1;
+                shuffledArray[i - 1] = array[rndNo];
+                array[rndNo] = array[i - 1];
+            }
+            array = shuffledArray;
         }
+        private int currentRound;
+        private int opponent;
 
         public void NewGame()
         {
-            throw new NotImplementedException();
+            this.currentRound = 1;
+            this.opponent = 0;
+            BeginRound();
         }
 
         public void BeginRound()
         {
-            throw new NotImplementedException();
+            
         }
 
         public Terrain GetLevel()

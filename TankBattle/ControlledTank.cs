@@ -9,18 +9,28 @@ namespace TankBattle
 {
     public class ControlledTank
     {
+        private Opponent player;
+        private int tankX;
+        private int tankY;
+        private TankModel tankModel;
+        private int currentDur;
+
         public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
-            throw new NotImplementedException();
+            this.player = player;
+            this.tankX = tankX;
+            this.tankY = tankY;
+            tankModel = player.GetTank();
+            currentDur = tankModel.GetArmour();
         }
 
         public Opponent GetPlayerNumber()
         {
-            throw new NotImplementedException();
+            return player;
         }
         public TankModel GetTank()
         {
-            throw new NotImplementedException();
+            return tankModel;
         }
 
         public float GetAim()
@@ -78,7 +88,8 @@ namespace TankBattle
 
         public bool Exists()
         {
-            throw new NotImplementedException();
+            if (currentDur > 0) { return true; }
+            else { return false; }
         }
 
         public bool Gravity()
