@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,7 +31,45 @@ namespace TankBattle
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
 
+            string[] imageFilenames = { "Images\\background1.jpg",
+                                        "Images\\background2.jpg",
+                                        "Images\\background3.jpg",
+                                        "Images\\background4.jpg"};
+
+            Color[] landscapeColours = { Color.FromArgb(255, 0, 0, 0),
+                                        Color.FromArgb(255, 73, 58, 47),
+                                        Color.FromArgb(255, 148, 116, 93),
+                                        Color.FromArgb(255, 133, 119, 109) };
+
+            currentGame = game;
+
+            int randNumber = rng.Next(4);
+
+            //Set random background image and colour 
+            backgroundImage = Image.FromFile(imageFilenames[randNumber]);
+            landscapeColour = Color.FromName(landscapeColours[randNumber].ToString());
+
             InitializeComponent();
+
+            //Initialise graphic buffers
+            backgroundGraphics = InitRenderBuffer();
+            gameplayGraphics = InitRenderBuffer();
+
+            DrawBackground();
+
+            DrawGameplay();
+
+            NewTurn();
+        }
+
+        private void DrawGameplay() {
+            backgroundGraphics.Render(gameplayGraphics.Graphics);
+            currentGame.DrawPlayers(gameplayGraphics.Graphics, displayPanel.Size);
+            currentGame.RenderEffects(gameplayGraphics.Graphics, displayPanel.Size);
+        }
+
+        private void NewTurn() {
+            throw new NotImplementedException();
         }
 
         // From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
@@ -47,26 +85,31 @@ namespace TankBattle
 
         public void EnableTankButtons()
         {
-            throw new NotImplementedException();
+            controlPanel.Enabled = true;
         }
 
         public void SetAimingAngle(float angle)
         {
-            throw new NotImplementedException();
+            angleSetter.Value = (int)angle; //not sure if change angle to int
         }
 
         public void SetPower(int power)
         {
-            throw new NotImplementedException();
+            powerTrackBar.Value = power;
         }
         public void SetWeaponIndex(int weapon)
         {
-            throw new NotImplementedException();
+            weaponComboBox.SelectedItem = weapon;
         }
 
         public void Attack()
         {
-            throw new NotImplementedException();
+            currentGame.GetCurrentGameplayTank();
+            Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
+                      //ControlledTank, then calls its Attack() method.
+
+            controlPanel.Enabled = false;
+            formTimer.Enabled = true;
         }
 
         private void DrawBackground()
@@ -107,6 +150,10 @@ namespace TankBattle
         {
             Graphics graphics = displayPanel.CreateGraphics();
             gameplayGraphics.Render(graphics);
+        }
+
+        private void GameplayForm_Load(object sender, EventArgs e) {
+
         }
     }
 }
