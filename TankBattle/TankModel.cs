@@ -30,9 +30,18 @@ namespace TankBattle
             int dx = X2 - X1;
             int dy = Y2 - Y1;
 
-            for (int x = X1; x != X2 - 1; x--) {
-                int y = Y1 + dy * (x - X1) / dx;
-                graphic[x, y] = 1;
+            if (X1 > X2) {
+                for (int x = X1; x != X2 - 1; x--) {
+                    int y = Y1 + dy * (x - X1) / dx;
+                    graphic[x, y] = 1;
+                }
+            }
+
+            else if (X2 > X1) {
+                for (int x = X1; x != X2 - 1; x++) {
+                    int y = Y1 + dy * (x - X1) / dx;
+                    graphic[x, y] = 1;
+                }
             }
         }
         public Bitmap CreateBitmap(Color tankColour, float angle)
