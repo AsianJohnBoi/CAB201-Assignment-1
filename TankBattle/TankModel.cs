@@ -36,7 +36,8 @@ namespace TankBattle
                     graphic[x, y] = 1;
                 }
             }
-
+		
+	    //probs don't need since line is never on an angle of depression
             else if (X2 > X1) {
                 for (int x = X1; x != X2 - 1; x++) {
                     int y = Y1 + dy * (x - X1) / dx;
