@@ -29,7 +29,8 @@ namespace TankBattle
 
             int dx = X2 - X1;
             int dy = Y2 - Y1;
-
+		
+            //If X1 starts on very right of line
             if (X1 > X2) {
                 for (int x = X1; x != X2 - 1; x--) {
                     int y = Y1 + dy * (x - X1) / dx;
@@ -37,7 +38,7 @@ namespace TankBattle
                 }
             }
 		
-	    //probs don't need since line is never on an angle of depression
+	    //If X1 starts on very left of line
             else if (X2 > X1) {
                 for (int x = X1; x != X2 - 1; x++) {
                     int y = Y1 + dy * (x - X1) / dx;
