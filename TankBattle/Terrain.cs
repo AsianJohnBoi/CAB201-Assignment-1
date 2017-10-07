@@ -57,7 +57,7 @@ namespace TankBattle
             //x = x, y = y + 1
             //if x = x && current y == true && next y == false (next y = y + 1) 
             //current y = false, next y = true, KEEP X coord the same
-            for (int i = 0; i < terrainAmount; i++) {
+            for (int i = 0; i < terrainAmount; i++) { //need to double check loop amount, doesn't need to loop that many times
                 for (int y = 0; y <= HEIGHT - 2; y++) {
                     for (int x = 0; x <= WIDTH - 1; x++) {
                         if (map[y, x] == true && map[y + 1, x] == false) {
