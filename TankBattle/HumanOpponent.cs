@@ -12,7 +12,7 @@ namespace TankBattle
 		private string name;
 		private TankModel tank;
 		private Color colour;
-
+		private GameplayForm i;
 
 		public HumanOpponent(string name, TankModel tank, Color colour) : base(name, tank, colour)
 		{
@@ -28,14 +28,12 @@ namespace TankBattle
 
 		public override void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame)
 		{
-			throw new NotImplementedException();
-			//finish GameplayForm
-		}
+			i.EnableTankButtons();
+	}
 
 		public override void ProjectileHitPos(float x, float y)
 		{
-			throw new NotImplementedException();
-			//finish GameplayForm
+			
 		}
 	}
 }

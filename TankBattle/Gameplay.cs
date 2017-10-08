@@ -16,6 +16,10 @@ namespace TankBattle
 		private List<string> WeaponsEffect;
 		private int currentRound;
 		private int opponent;
+		private int x;
+		private Terrain newTerrain;
+		int[,] coords;
+		private Opponent[] TheOppo;
 
 
 		public Gameplay(int numPlayers, int numRounds)
@@ -48,15 +52,24 @@ namespace TankBattle
 		public Opponent GetPlayerNumber(int playerNum)
 		{
 			TankModel tank = TankModel.GetTank(1);
-			Opponent[] TheOppo = new Opponent[]
+			x = playerNum;
+			TheOppo = new Opponent[x];
 			{
+				//not implemented, not sure
 			};
 			return TheOppo[playerNum];
 		}
 
 		public ControlledTank PlayerTank(int playerNum)
 		{
-			throw new NotImplementedException();
+			TankModel tank = TankModel.GetTank(1);
+			x = playerNum;
+
+			ControlledTank[] TheTank = new ControlledTank[x];
+			{
+				//not implemented, not sure
+			};
+			return TheTank[playerNum];
 		}
 
 		public static Color GetTankColour(int playerNum)
@@ -66,8 +79,19 @@ namespace TankBattle
 		}
 
 		public static int[] CalculatePlayerPositions(int numPlayers)
-		{
-			throw new NotImplementedException();
+		{	
+			int TerrainW = (Terrain.WIDTH / numPlayers);
+			int x = 0;
+			int y = 40;
+			int[] coords = new int[numPlayers * 2];
+
+			for (int i = 0; i >= numPlayers; i++)
+			{
+				x = x + TerrainW;
+				coords[i] = x; //add x position to list, loops to replace the previous int
+			}
+
+			return coords;
 		}
 
 		public static void Shuffle(int[] array)
@@ -85,20 +109,30 @@ namespace TankBattle
 		}
 		public void NewGame()
 		{
-			this.currentRound = 1;
-			this.opponent = 0;
+			currentRound = 1;
+			opponent = 0;
 			BeginRound();
 		}
 
 		public void BeginRound()
 		{
+			newTerrain = new Terrain();
 
+			//CalculatePlayerPositions(TheOppo.Length);
+
+			//for (int i = 0; i <= TheOppo.Length; i++)
+			//{
+			//	TheOppo[i].StartRound();
+			//	if (i >= TheOppo.Length)
+			//	{
+			//		i = 0;
+			//	}
+			//}
 		}
 
 		public Terrain GetLevel()
 		{
-			Terrain newRound = new Terrain();
-			return newRound;
+			return newTerrain;
 		}
 
 		public void DrawPlayers(Graphics graphics, Size displaySize)

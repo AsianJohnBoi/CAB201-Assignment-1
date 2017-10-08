@@ -20,10 +20,15 @@ namespace TankBattle
         private int levelHeight = 120;
         private Gameplay currentGame;
 
-        private BufferedGraphics backgroundGraphics;
+		private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
 
-        public GameplayForm(Gameplay game)
+		internal object GetComponent<T>()
+		{
+			throw new NotImplementedException();
+		}
+
+		public GameplayForm(Gameplay game)
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
