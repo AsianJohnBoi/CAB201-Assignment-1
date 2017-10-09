@@ -10,14 +10,14 @@ namespace TankBattle
     {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
+        public bool[,] map; 
 
         private int terrainAmount = (WIDTH * HEIGHT / 2); //Amount of terrain, area of terrain fills half the map
-
-        bool[,] map = new bool[HEIGHT, WIDTH];
 
         public Terrain()
         {
             Random rnd = new Random();
+            map = new bool[HEIGHT, WIDTH];
 
             //Create empty map
             for (int y = 0; y <= HEIGHT - 1; y++) {
@@ -38,20 +38,6 @@ namespace TankBattle
             for (int i = 0; i < WIDTH; i++) {
                 map[HEIGHT - 1, i] = true;
             }
-
-            //Display map - PRE GRAVITY
-            //Console.WriteLine("PRE GRAVITY:");
-            //for (int y = 0; y <= HEIGHT - 1; y++) {
-            //    for (int x = 0; x <= WIDTH - 1; x++) {
-            //        if (map[y, x] == false) {
-            //            Console.Write('.');
-            //        } else if (map[y, x] == true) {
-            //            Console.Write('#');
-            //        }
-            //    }
-            //    //seperate lines
-            //    Console.WriteLine();
-            //}
 
             //Move floating terrain down
             //x = x, y = y + 1
@@ -91,22 +77,6 @@ namespace TankBattle
                     }
                 }
             }
-
-
-            //Display map -POST GRAVITY
-            //Console.WriteLine("POST GRAVITY:");
-            //for (int y = 0; y <= HEIGHT - 1; y++) {
-            //    for (int x = 0; x <= WIDTH - 1; x++) {
-            //        if (map[y, x] == false) {
-            //            Console.Write('.');
-            //        } else if (map[y, x] == true) {
-            //            Console.Write('#');
-            //        }
-            //    }
-            //    //seperate lines
-            //    Console.WriteLine();
-            //}
-
         }
 
         public bool IsTileAt(int x, int y)

@@ -20,7 +20,9 @@ namespace TankBattle
 		private Terrain newTerrain;
 		int[,] coords;
 		private Opponent[] TheOppo;
-
+        private int Wind;
+        private ControlledTank[] TheTank;
+        int[] thepos;
 
 		public Gameplay(int numPlayers, int numRounds)
 		{
@@ -36,7 +38,7 @@ namespace TankBattle
 
 		public int GetRound()
 		{
-			throw new NotImplementedException();
+			return currentRound;
 		}
 
 		public int GetTotalRounds()
@@ -51,13 +53,7 @@ namespace TankBattle
 
 		public Opponent GetPlayerNumber(int playerNum)
 		{
-			TankModel tank = TankModel.GetTank(1);
-			x = playerNum;
-			TheOppo = new Opponent[x];
-			{
-				//not implemented, not sure
-			};
-			return TheOppo[playerNum];
+			return TheOppo[playerNum - 1];
 		}
 
 		public ControlledTank PlayerTank(int playerNum)
@@ -65,7 +61,7 @@ namespace TankBattle
 			TankModel tank = TankModel.GetTank(1);
 			x = playerNum;
 
-			ControlledTank[] TheTank = new ControlledTank[x];
+			TheTank = new ControlledTank[x];
 			{
 				//not implemented, not sure
 			};
@@ -90,13 +86,12 @@ namespace TankBattle
 				x = x + TerrainW;
 				coords[i] = x; //add x position to list, loops to replace the previous int
 			}
-
 			return coords;
 		}
 
 		public static void Shuffle(int[] array)
 		{
-			int[] shuffledArray = new int[array.Length];
+			int[] shuffledArray = array;
 			int rndNo;
 			Random rnd = new Random();
 			for (int i = array.Length; i >= 1; i--)
@@ -116,18 +111,22 @@ namespace TankBattle
 
 		public void BeginRound()
 		{
-			newTerrain = new Terrain();
+            playerNum = opponent;
 
-			//CalculatePlayerPositions(TheOppo.Length);
+			newTerrain = new Terrain(); 
+            //Console.WriteLine(newTerrain); //'TankBattle.terrain' message returns instead of the map.
 
-			//for (int i = 0; i <= TheOppo.Length; i++)
-			//{
-			//	TheOppo[i].StartRound();
-			//	if (i >= TheOppo.Length)
-			//	{
-			//		i = 0;
-			//	}
-			//}
+			thepos = CalculatePlayerPositions(TheOppo.Length); 
+            Console.WriteLine(thepos); //nothing showing up
+
+			for (int i = 0; i < TheOppo.Length - 1; i++)
+			{
+				TheOppo[i].StartRound();
+			}
+
+            Shuffle(thepos);
+
+            GetWindSpeed();
 		}
 
 		public Terrain GetLevel()
@@ -197,7 +196,9 @@ namespace TankBattle
 
 		public int GetWindSpeed()
 		{
-			throw new NotImplementedException();
+            Random rnd = new Random();
+			Wind = rnd.Next(-100, 101);
+            return Wind;
 		}
 	}
 }
