@@ -19,16 +19,15 @@ namespace TankBattle
         private int levelWidth = 160;
         private int levelHeight = 120;
         private Gameplay currentGame;
+        //added
+        private ControlledTank currentOpponent;
+        private TankModel y;
+        private Opponent x; 
 
-		private BufferedGraphics backgroundGraphics;
+        private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
 
-		internal object GetComponent<T>()
-		{
-			throw new NotImplementedException();
-		}
-
-		public GameplayForm(Gameplay game)
+        public GameplayForm(Gameplay game)
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
@@ -74,8 +73,54 @@ namespace TankBattle
         }
 
         private void NewTurn() {
-            throw new NotImplementedException();
+            //First, get a reference to the current ControlledTank with currentGame.GetCurrentGameplayTank()
+            currentGame.GetCurrentGameplayTank();
+
+            //Likewise, get a reference to the current Opponent by calling the ControlledTank's GetPlayerNumber()
+            currentOpponent.GetPlayerNumber();
+
+            //Set the form caption to "Tank Battle - Round ? of ?", using methods in currentGame to get the current and
+            //total rounds.
+            //GameplayForm.Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
+
+            //Set the BackColor property of controlPanel to the current Opponent's colour.
+            controlPanel.BackColor = x.GetColour();
+
+            //Set the player name label to the current Opponent's name.
+            playerLabel.Text = x.Name();
+
+            //Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
+            SetAimingAngle(currentOpponent.GetAim());
+
+            //Call SetPower() to set the current turret power to the current ControlledTank's power.
+            SetPower(currentOpponent.GetCurrentPower());
+
+            //Update the wind speed label to show the current wind speed, retrieved from currentGame.Positive values
+            //should be shown as E winds, negative values as W winds.For example, 50 would be displayed as "50 E"
+            //while -38 would be displayed as "38 W".
+            windStatusLabel.Text = "temp"; //RECHECK, retrive wind value then if statement 
+
+            //Clear the current weapon names from the ComboBox.
+            weaponComboBox.Items.Clear();
+
+            //Get a reference to the current TankModel with ControlledTank's GetTank() method, then get a list of
+            //weapons available to that TankModel.
+            currentOpponent.GetTank();
+            string[] weapons = y.WeaponList();
+
+            //Add each weapon name in the list to the ComboBox.
+            for (int i = 0; i < weapons.Length; i++) {
+                weaponComboBox.Items.Add(weapons[i]);
+            }
+
+            //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
+            int currentWeapon = 0;
+            currentOpponent.SetWeaponIndex(currentWeapon); //RECHECK
+
+            //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
+            x.BeginTurn(this, currentGame);
         }
+        
 
         // From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
         protected override CreateParams CreateParams
