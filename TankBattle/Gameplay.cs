@@ -13,16 +13,15 @@ namespace TankBattle
 		private int[] numPlayers;
 		private int[] numRounds;
 		private int playerNum;
+        private int currentPlayer;
 		private List<string> WeaponsEffect;
 		private int currentRound;
 		private int opponent;
 		private int x;
 		private Terrain newTerrain;
-		int[,] coords;
 		private Opponent[] TheOppo;
         private int Wind;
         private ControlledTank[] TheTank;
-        int[] thepos;
 
 		public Gameplay(int numPlayers, int numRounds)
 		{
@@ -111,22 +110,25 @@ namespace TankBattle
 
 		public void BeginRound()
 		{
-            playerNum = opponent;
-
+            currentPlayer = opponent; 
 			newTerrain = new Terrain(); 
-            //Console.WriteLine(newTerrain); //'TankBattle.terrain' message returns instead of the map.
-
-			thepos = CalculatePlayerPositions(TheOppo.Length); 
-            Console.WriteLine(thepos); //nothing showing up
-
+			int[] thepos = CalculatePlayerPositions(TheOppo.Length);                                  
+            
 			for (int i = 0; i < TheOppo.Length - 1; i++)
 			{
 				TheOppo[i].StartRound();
 			}
 
             Shuffle(thepos);
-
+            TheTank = new int[TheOppo.Length];
+            for (int i = 0; i < TheTank.Length; i++){
+                TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
+            }
+            
             GetWindSpeed();
+
+            GameplayForm newForm = new GameplayForm();
+            newForm.Show();
 		}
 
 		public Terrain GetLevel()

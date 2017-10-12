@@ -10,7 +10,7 @@ namespace TankBattle
     {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
-        public bool[,] map; 
+        private bool[,] map; 
 
         private int terrainAmount = (WIDTH * HEIGHT / 2); //Amount of terrain, area of terrain fills half the map
 
