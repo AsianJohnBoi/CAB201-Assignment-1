@@ -12,19 +12,26 @@ namespace TankBattle
         private Opponent player;
         private int tankX;
         private int tankY;
+        private Gameplay game;
         private TankModel tankModel;
         private int currentDur;
         private int power;
         private int angle;
-        private int Tankweapon;
+        private int tankWeapon;
+        private Bitmap colour;
 
 		public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
             this.player = player;
             this.tankX = tankX;
             this.tankY = tankY;
+            this.game = game;
             tankModel = player.GetTank();
             currentDur = tankModel.GetArmour();
+            angle = 0;
+            power = 25;
+            tankWeapon = 0;
+            colour = tankModel.CreateBitmap(player.GetColour(), angle);
         }
 
         public Opponent GetPlayerNumber()
@@ -53,34 +60,33 @@ namespace TankBattle
 
         public void SetPower(int power)
         {
-            this.power = power;
+            this.power = (power < 5) ? 5 : (power > 100) ? 100 : power;
         }
 
         public int GetWeaponIndex()
         {
-            return Tankweapon;
+            return tankWeapon;
         }
         public void SetWeaponIndex(int newWeapon)
         {
-            this.Tankweapon = newWeapon;
+            this.tankWeapon = newWeapon;
         }
 
 		public void Draw(Graphics graphics, Size displaySize)
         {
             int x = tankX;
             int y = tankY;
-            int armour = 100;
 			int drawX1 = displaySize.Width * x / Terrain.WIDTH;
             int drawY1 = displaySize.Height * y / Terrain.HEIGHT;
             int drawX2 = displaySize.Width * (x + TankModel.WIDTH) / Terrain.WIDTH;
             int drawY2 = displaySize.Height * (y + TankModel.HEIGHT) / Terrain.HEIGHT;
-            //graphics.DrawImage(graphics, new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
+            graphics.DrawImage(colour, new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
             
             int drawY3 = displaySize.Height * (y - TankModel.HEIGHT) / Terrain.HEIGHT;
             Font font = new Font("Arial", 8);
             Brush brush = new SolidBrush(Color.White);
 
-            int pct = armour * 100 / tankModel.GetArmour();
+            int pct = currentDur * 100 / tankModel.GetArmour();
             if (pct < 100)
             {
                 graphics.DrawString(pct + "%", font, brush, new Point(drawX1, drawY3));
@@ -98,9 +104,7 @@ namespace TankBattle
 
         public void Attack()
         {
-            GetTank();
-            //incomplete
-
+            GetTank().FireWeapon(tankWeapon, this, game);
         }
 
         public void InflictDamage(int damageAmount)
@@ -116,7 +120,29 @@ namespace TankBattle
 
         public bool Gravity()
         {
-            throw new NotImplementedException();
+            if (!Exists())
+            {
+                return false;
+            }
+
+            Terrain t = game.GetLevel();
+
+            if (t.CheckTankCollision(tankX, tankY + 1))
+            {
+                return false;
+            }
+            else
+            {
+                tankY += 1;
+                currentDur -= 1;
+                if (tankY >= Terrain.HEIGHT)
+                {
+                    currentDur = 0;
+                }
+            }
+            return true;
+            
+           
         }
     }
 }

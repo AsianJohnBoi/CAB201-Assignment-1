@@ -101,7 +101,7 @@ namespace TankBattle
 
         public static TankModel GetTank(int tankNumber)
         {
-            return new TheTank();
+            return new TheTank(100);
         }
     }
     //create 4 
@@ -110,6 +110,11 @@ namespace TankBattle
         private int X1, Y1, X2, Y2;
         private int currentDur;
         public String[] Weapons;
+
+        public TheTank(int dur)
+        {
+            this.currentDur = dur;
+        }
 
 		public override int[,] DisplayTank(float angle)
 		{
@@ -146,12 +151,15 @@ namespace TankBattle
 
         public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame)
         {
-            throw new NotImplementedException();
+            float centerPosX = (float)playerTank.GetX() + (TankModel.WIDTH / 2), centerPosY = (float)playerTank.GetYPos() + (TankModel.HEIGHT / 2);
+            Opponent op = playerTank.GetPlayerNumber();
+            Blast blast = new Blast(100, 4, 4);
+            Shell shell = new Shell(centerPosX, centerPosY, playerTank.GetAim(), playerTank.GetCurrentPower(), 0.01f, blast, op);
+            currentGame.AddWeaponEffect(shell);
         }
 
         public override int GetArmour()
         {
-            currentDur = 100;
             return currentDur;
         }
 

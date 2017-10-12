@@ -11,12 +11,12 @@ namespace TankBattle
     {
         public AIOpponent(string name, TankModel tank, Color colour) : base(name, tank, colour)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void StartRound()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame)

@@ -28,7 +28,7 @@ namespace TankBattle
 
 		public override void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame)
 		{
-			i.EnableTankButtons();
+            gameplayForm.EnableTankButtons();
 	    }
 
 		public override void ProjectileHitPos(float x, float y)

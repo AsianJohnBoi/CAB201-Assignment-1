@@ -10,8 +10,9 @@ namespace TankBattle
 {
 	public class Gameplay
 	{
+        //check if array / int
 		private int[] numPlayers;
-		private int[] numRounds;
+		private int numRounds;
 		private int playerNum;
         private int currentPlayer;
 		private List<string> WeaponsEffect;
@@ -26,7 +27,8 @@ namespace TankBattle
 		public Gameplay(int numPlayers, int numRounds)
 		{
 			this.numPlayers = new int[numPlayers];
-			this.numRounds = new int[numRounds];
+			this.numRounds = numRounds;
+            TheOppo = new Opponent[numPlayers];
 			WeaponsEffect = new List<string>();
 		}
 
@@ -42,12 +44,12 @@ namespace TankBattle
 
 		public int GetTotalRounds()
 		{
-			return numRounds.Length;
+			return numRounds;
 		}
 
 		public void SetPlayer(int playerNum, Opponent player)
 		{
-			playerNum = numPlayers.Length - 1;
+            TheOppo[playerNum - 1] = player;
 		}
 
 		public Opponent GetPlayerNumber(int playerNum)
@@ -57,14 +59,7 @@ namespace TankBattle
 
 		public ControlledTank PlayerTank(int playerNum)
 		{
-			TankModel tank = TankModel.GetTank(1);
-			x = playerNum;
-
-			TheTank = new ControlledTank[x];
-			{
-				//not implemented, not sure
-			};
-			return TheTank[playerNum];
+			return TheTank[playerNum - 1];
 		}
 
 		public static Color GetTankColour(int playerNum)
@@ -77,7 +72,6 @@ namespace TankBattle
 		{	
 			int TerrainW = (Terrain.WIDTH / numPlayers);
 			int x = 0;
-			int y = 40;
 			int[] coords = new int[numPlayers * 2];
 
 			for (int i = 0; i >= numPlayers; i++)
@@ -90,16 +84,29 @@ namespace TankBattle
 
 		public static void Shuffle(int[] array)
 		{
-			int[] shuffledArray = array;
-			int rndNo;
-			Random rnd = new Random();
+			//int[] shuffledArray = array;
+			//int rndNo;
+			Random rndA = new Random();
+            Random rndB = new Random();
 			for (int i = array.Length; i >= 1; i--)
 			{
+                /*
 				rndNo = rnd.Next(1, i + 1) - 1;
 				shuffledArray[i - 1] = array[rndNo];
-				array[rndNo] = array[i - 1];
+				array[rndNo] = array[i - 1];*/
+
+                int idxA = rndA.Next(0,array.Length), idxB = rndB.Next(0,array.Length);
+
+                while (idxA==idxB)
+                {
+                    idxB = rndB.Next(0, array.Length);
+                }
+
+                int tmp = array[idxA];
+                array[idxA] = array[idxB];
+                array[idxB] = tmp;
 			}
-			array = shuffledArray;
+			//array = shuffledArray;
 		}
 		public void NewGame()
 		{
@@ -120,14 +127,14 @@ namespace TankBattle
 			}
 
             Shuffle(thepos);
-            TheTank = new int[TheOppo.Length];
+            TheTank = new ControlledTank[TheOppo.Length];
             for (int i = 0; i < TheTank.Length; i++){
                 TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
             }
             
             GetWindSpeed();
 
-            GameplayForm newForm = new GameplayForm();
+            GameplayForm newForm = new GameplayForm(this);
             newForm.Show();
 		}
 
