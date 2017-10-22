@@ -81,21 +81,36 @@ namespace TankBattle
 
         public bool IsTileAt(int x, int y)
         {
-            if (map[y - 1, x - 1] == true) {
-                return true;
-            } else {
-                return false;
+            if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT) { return false; }
+            else
+            {
+                if (map[x, y] == true) { return true; }
+                else { return false; }
             }
         }
 
         public bool CheckTankCollision(int x, int y)
         {
-            throw new NotImplementedException();
+            if (map[x + WIDTH, y+ HEIGHT] || map[x, y + 3] == true){ return true; }
+            else { return false; }
         }
 
         public int TankYPosition(int x)
         {
-            throw new NotImplementedException();
+            int y = 0;
+            if (x > WIDTH - TankModel.WIDTH) { return 0; }
+            else
+            {
+                for (int i = 0; i < HEIGHT;)
+                {
+                    if (map[x, i] != true){ i++; }
+                    else {
+                        y = i;
+                        break;
+                    }
+                }
+            }
+            return y;
         }
 
         public void DestroyGround(float destroyX, float destroyY, float radius)

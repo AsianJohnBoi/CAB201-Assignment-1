@@ -15,7 +15,7 @@ namespace TankBattle
 		private int numRounds;
 		private int playerNum;
         private int currentPlayer;
-		private List<string> WeaponsEffect;
+		private List<WeaponEffect> WeaponsEffect;
 		private int currentRound;
 		private int opponent;
 		private int x;
@@ -29,7 +29,7 @@ namespace TankBattle
 			this.numPlayers = new int[numPlayers];
 			this.numRounds = numRounds;
             TheOppo = new Opponent[numPlayers];
-			WeaponsEffect = new List<string>();
+			WeaponsEffect = new List<WeaponEffect>();
 		}
 
 		public int PlayerCount()
@@ -145,17 +145,29 @@ namespace TankBattle
 
 		public void DrawPlayers(Graphics graphics, Size displaySize)
 		{
-			throw new NotImplementedException();
+			for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (TheTank[i].Exists())
+                {
+                    TheTank[i].Draw(graphics, displaySize);
+                }
+            }
 		}
 
 		public ControlledTank GetCurrentGameplayTank()
 		{
-			throw new NotImplementedException();
+            return TheTank[playerNum];
 		}
 
 		public void AddWeaponEffect(WeaponEffect weaponEffect)
 		{
-			throw new NotImplementedException();
+			for (int i = 0; i < WeaponsEffect.Count; i++)
+            {
+                if (WeaponsEffect[i] == null)
+                {
+                    WeaponsEffect[i] = weaponEffect;
+                }
+            }
 		}
 
 		public bool ProcessEffects()
