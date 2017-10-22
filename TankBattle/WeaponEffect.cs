@@ -9,9 +9,11 @@ namespace TankBattle
 {
     public abstract class WeaponEffect
     {
+        protected Gameplay i;
+
         public void RecordCurrentGame(Gameplay game)
         {
-            throw new NotImplementedException();
+            i = game;
         }
 
         public abstract void Process();
