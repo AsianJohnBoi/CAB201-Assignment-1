@@ -9,9 +9,16 @@ namespace TankBattle
 {
     public class AIOpponent : Opponent
     {
+        private string name;
+        private TankModel tank;
+        private Color color;
+        private GameplayForm gameplayform;
+
         public AIOpponent(string name, TankModel tank, Color colour) : base(name, tank, colour)
         {
-            
+            this.name = name;
+            this.tank = tank;
+            color = color;
         }
 
         public override void StartRound()
@@ -21,7 +28,11 @@ namespace TankBattle
 
         public override void BeginTurn(GameplayForm gameplayForm, Gameplay currentGame)
         {
-            throw new NotImplementedException();
+            gameplayform = gameplayForm;
+            //gameplayform.SetWeaponIndex();
+            //gameplayform.SetAimingAngle();
+            //gameplayForm.SetPower();
+            gameplayForm.Attack();
         }
 
         public override void ProjectileHitPos(float x, float y)
