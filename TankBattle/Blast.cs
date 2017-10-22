@@ -36,8 +36,9 @@ namespace TankBattle
             if (lifespan == 0)
             {
                 i.InflictDamage(x, y, explosionDamage, earthDestructionRadius);
-                i.GetLevel();
-                //newTerrain.DestroyGround(x, y, earthDestructionRadius); //what is the object, replace newterrain
+                Terrain theterrain = i.GetLevel();
+                theterrain.DestroyGround(x, y, earthDestructionRadius);
+                i.EndEffect(this);
             }
         }
 

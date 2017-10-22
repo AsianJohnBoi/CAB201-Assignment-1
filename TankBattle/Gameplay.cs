@@ -84,16 +84,10 @@ namespace TankBattle
 
 		public static void Shuffle(int[] array)
 		{
-			//int[] shuffledArray = array;
-			//int rndNo;
 			Random rndA = new Random();
             Random rndB = new Random();
 			for (int i = array.Length; i >= 1; i--)
 			{
-                /*
-				rndNo = rnd.Next(1, i + 1) - 1;
-				shuffledArray[i - 1] = array[rndNo];
-				array[rndNo] = array[i - 1];*/
 
                 int idxA = rndA.Next(0,array.Length), idxB = rndB.Next(0,array.Length);
 
@@ -106,7 +100,6 @@ namespace TankBattle
                 array[idxA] = array[idxB];
                 array[idxB] = tmp;
 			}
-			//array = shuffledArray;
 		}
 		public void NewGame()
 		{
@@ -172,22 +165,58 @@ namespace TankBattle
 
 		public bool ProcessEffects()
 		{
-			throw new NotImplementedException();
+            bool weaponExist = false;
+			for (int i = 0; i < WeaponsEffect.Count; i++)
+            {
+                if (WeaponsEffect[i] != null) { weaponExist = true;}
+                else { weaponExist = false; }
+            }
+            return weaponExist;
 		}
 
 		public void RenderEffects(Graphics graphics, Size displaySize)
 		{
-			throw new NotImplementedException();
+            if (ProcessEffects())
+            {
+                for (int i = 0; i < WeaponsEffect.Count; i++)
+                {
+                    WeaponsEffect[i].Draw(graphics, displaySize);
+                }
+            }
 		}
 
 		public void EndEffect(WeaponEffect weaponEffect)
 		{
-			throw new NotImplementedException();
+            if (WeaponsEffect.Contains(weaponEffect))
+            {
+                WeaponsEffect.Remove(weaponEffect);
+            }
 		}
 
-		public bool CheckHitTank(float projectileX, float projectileY)
+		public bool CheckHitTank(float projectileX, float projectileY) //double check
 		{
-			throw new NotImplementedException();
+            bool hit = false;
+			if (projectileX < 0 | projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) { hit = false; }
+            else if (newTerrain.IsTileAt((int)projectileX, (int)projectileY))
+            {
+                hit = true;
+            }
+            for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (i == playerNum)   //prevent current tank hitting itself
+                {
+                    i++;
+                }
+                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
+                {
+                    hit = true;
+                }
+                else if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH &&   projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
+                {
+                    hit = true;
+                }
+            }
+            return hit;
 		}
 
 		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
