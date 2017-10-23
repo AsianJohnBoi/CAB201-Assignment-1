@@ -19,10 +19,13 @@ namespace TankBattle
         private int levelWidth = 160;
         private int levelHeight = 120;
         private Gameplay currentGame;
+
         //added
-        private ControlledTank currentOpponent;
-        private TankModel y;
-        private Opponent x; 
+        private ControlledTank currentControlledTank;
+        private TankModel currentTankModel;
+        private Opponent currentOpponent;
+
+        private int windSpeed;
 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
@@ -77,36 +80,42 @@ namespace TankBattle
             currentGame.GetCurrentGameplayTank();
 
             //Likewise, get a reference to the current Opponent by calling the ControlledTank's GetPlayerNumber()
-            currentOpponent.GetPlayerNumber();
+            currentControlledTank.GetPlayerNumber();
 
             //Set the form caption to "Tank Battle - Round ? of ?", using methods in currentGame to get the current and
             //total rounds.
-            //GameplayForm.Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
+            this.Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
 
             //Set the BackColor property of controlPanel to the current Opponent's colour.
-            controlPanel.BackColor = x.GetColour();
+            controlPanel.BackColor = currentOpponent.GetColour();
 
             //Set the player name label to the current Opponent's name.
-            playerLabel.Text = x.Name();
+            playerLabel.Text = currentOpponent.Name();
 
             //Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
-            SetAimingAngle(currentOpponent.GetAim());
+            SetAimingAngle(currentControlledTank.GetAim());
 
             //Call SetPower() to set the current turret power to the current ControlledTank's power.
-            SetPower(currentOpponent.GetCurrentPower());
+            SetPower(currentControlledTank.GetCurrentPower());
 
-            //Update the wind speed label to show the current wind speed, retrieved from currentGame.Positive values
-            //should be shown as E winds, negative values as W winds.For example, 50 would be displayed as "50 E"
-            //while -38 would be displayed as "38 W".
-            windStatusLabel.Text = "temp"; //RECHECK, retrive wind value then if statement 
+            //Update the wind speed label to show the current wind speed, retrieved from currentGame.
+            //Positive values should be shown as E winds, negative values as W winds.
+            //For example, 50 would be displayed as "50 E" while -38 would be displayed as "38 W".
+            windSpeed = currentGame.GetWindSpeed(); 
+
+            if (windSpeed > 0) {
+                windStatusLabel.Text = windSpeed + " E";
+            } else if (windSpeed < 0) {
+                windStatusLabel.Text = windSpeed + " W";
+            }
 
             //Clear the current weapon names from the ComboBox.
             weaponComboBox.Items.Clear();
 
             //Get a reference to the current TankModel with ControlledTank's GetTank() method, then get a list of
             //weapons available to that TankModel.
-            currentOpponent.GetTank();
-            string[] weapons = y.WeaponList();
+            currentControlledTank.GetTank();
+            string[] weapons = currentTankModel.WeaponList();
 
             //Add each weapon name in the list to the ComboBox.
             for (int i = 0; i < weapons.Length; i++) {
@@ -114,11 +123,10 @@ namespace TankBattle
             }
 
             //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
-            int currentWeapon = 0;
-            currentOpponent.SetWeaponIndex(currentWeapon); //RECHECK
+            //SetWeaponIndex(currentControlledTank.tankWeapon));
 
             //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
-            x.BeginTurn(this, currentGame);
+            currentOpponent.BeginTurn(this, currentGame);
         }
         
 
@@ -140,7 +148,7 @@ namespace TankBattle
 
         public void SetAimingAngle(float angle)
         {
-            angleSetter.Value = (int)angle; //not sure if change angle to int
+            angleSetter.Value = (int)angle; 
         }
 
         public void SetPower(int power)
