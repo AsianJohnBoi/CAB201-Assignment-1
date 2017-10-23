@@ -92,7 +92,25 @@ namespace TankBattle {
         }
 
         public bool CheckTankCollision(int x, int y) {
-            if (map[x + WIDTH, y + HEIGHT] || map[x, y + 3] == true) { return true; } else { return false; }
+            bool collision = false;
+			if (x < 0 || x - TankModel.WIDTH > WIDTH || y < 0 || y - TankModel.HEIGHT > HEIGHT){
+				return true; 
+			} 
+			else{
+				for (int i = x; i <= WIDTH; i++){
+					if (map[x + 1, y] == true){
+						collision = true;
+					}
+					for (int b = 0; b <= HEIGHT; b++){
+						//if (map[, y])
+						//if (map[x + i, y + b] == true){
+						//	collision = true;
+						//}
+					}
+				}
+			}		
+			return collision;
+			//if (map[x + WIDTH, y + HEIGHT] || map[x, y + 3] == true) { return true; } else { return false; }
         }
 
         public int TankYPosition(int x) {
@@ -129,29 +147,36 @@ namespace TankBattle {
 
         public bool Gravity() {
 
-
             bool moved = false;
-			int xrow = 0;
 
-			for (int y = 0; y < HEIGHT - 1; y++){
-				if (map[xrow, y] == false){
-					y++;
-					moved = false;
-				}
-				else if (map[xrow, y] == true){
-					map[xrow, y] = false;
-					map[xrow, y + 1] = true;
-					moved = true;
-				}
-				else if (y >= HEIGHT){
-					y = 0;
-					xrow++;
-				}
-				else if (xrow >= WIDTH){
-					moved = false;
-					break;
+			for (int y = HEIGHT - 2; y > 0; y--){
+				for (int x = 0; x < WIDTH; x++){
+					if (IsTileAt(x, y + 1) == false && IsTileAt(x, y) == true ){
+						map[x, y] = false;
+						map[x, y + 1] = true;
+						moved = true;
+					}
 				}
 			}
+				//if (map[xrow, y] == false){
+				//	y++;
+				//	moved = false;
+				//}
+				// if (IsTileAt(xrow, y) == true && IsTileAt(xrow, y + 1) == false){
+
+				//else if (map[xrow, y] == true){
+					
+				 //}
+				//}
+				//else if (y >= HEIGHT){
+				//	y = 0;
+				//	xrow++;
+				//}
+				//else if (xrow >= WIDTH){
+				//	moved = false;
+				//	break;
+				//}
+
 			return moved;
 
         }
