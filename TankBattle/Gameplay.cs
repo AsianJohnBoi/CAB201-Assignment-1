@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -224,21 +224,50 @@ namespace TankBattle
 		{
             float distanceBetweenX;
             float distanceBetweenY;
+            float tankPositionX;
+            float tankPositionY;
+
+            int damageDone = 0;
+            float tempDamage = 0;
 
             for (int i = 0; i < TheTank.Length; i++)
             {
                 if (TheTank[i].Exists())
                 {
-                    if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
-                    {
-                        distanceBetweenX = TheTank[i].GetX() - damageX;
-                        distanceBetweenY = TheTank[i].GetYPos() - damageY;
+                    //if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
+                    //{
+                    //    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
+                    //    tankPositionX = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
+
+                    //    distanceBetweenX = TheTank[i].GetX() - damageX;
+                    //    distanceBetweenY = TheTank[i].GetYPos() - damageY;
+                    //}
+                    //else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
+                    //{
+                    //    distanceBetweenX = TheTank[i].GetX() + damageX;
+                    //    distanceBetweenY = TheTank[i].GetYPos() + damageY;
+                    //}
+
+                    float dist;
+                    double tempDist;
+
+                    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
+                    tankPositionY = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
+
+                    tempDist = Math.Sqrt(Math.Pow(damageX - tankPositionX, 2) + Math.Pow(damageY - tankPositionY, 2));
+                    dist = (float)tempDist;
+                       
+                    if (dist > radius) {
+                        tempDamage = 0;
+                    } else if (dist > radius && dist < radius / 2) {
+                        tempDamage = (explosionDamage * (radius - dist) / radius);
+                    } else if (dist < radius / 2) {
+                        tempDamage = explosionDamage;
                     }
-                    else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
-                    {
-                        distanceBetweenX = TheTank[i].GetX() + damageX;
-                        distanceBetweenY = TheTank[i].GetYPos() + damageY;
-                    }
+
+                    damageDone = (int)tempDamage;
+                    TheTank[i].InflictDamage(damageDone);
+
                 }
             }
 		}
