@@ -16,5 +16,15 @@ namespace TankBattle
         {
             InitializeComponent();
         }
+
+        private void NewGameButton_Click(object sender, EventArgs e)
+        {
+            Gameplay game = new Gameplay(2, 1);
+            Opponent player1 = new HumanOpponent("Player 1", TankModel.GetTank(1), Gameplay.GetTankColour(1));
+            Opponent player2 = new HumanOpponent("Player 2", TankModel.GetTank(1), Gameplay.GetTankColour(2));
+            game.SetPlayer(1, player1);
+            game.SetPlayer(2, player2);
+            game.NewGame();
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace TankBattle
 		private Opponent[] TheOppo;
         private int Wind;
         private ControlledTank[] TheTank;
+        private Random rnd = new Random();
 
 		public Gameplay(int numPlayers, int numRounds)
 		{
@@ -72,9 +73,9 @@ namespace TankBattle
 		{	
 			int TerrainW = (Terrain.WIDTH / numPlayers);
 			int x = 0;
-			int[] coords = new int[numPlayers * 2];
+			int[] coords = new int[numPlayers];
 
-			for (int i = 0; i >= numPlayers; i++)
+            for (int i = 0; i > numPlayers; i++)
 			{
 				x = x + TerrainW;
 				coords[i] = x; //add x position to list, loops to replace the previous int
@@ -149,7 +150,7 @@ namespace TankBattle
 
 		public ControlledTank GetCurrentGameplayTank()
 		{
-            return TheTank[playerNum];
+            return TheTank[currentPlayer];
 		}
 
 		public void AddWeaponEffect(WeaponEffect weaponEffect)
@@ -207,7 +208,7 @@ namespace TankBattle
                 {
                     i++;
                 }
-                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
+                else if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
                 {
                     hit = true;
                 }
@@ -219,29 +220,116 @@ namespace TankBattle
             return hit;
 		}
 
-		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
+		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
 		{
-			throw new NotImplementedException();
+            float distanceBetweenX;
+            float distanceBetweenY;
+
+            for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (TheTank[i].Exists())
+                {
+                    if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
+                    {
+                        distanceBetweenX = TheTank[i].GetX() - damageX;
+                        distanceBetweenY = TheTank[i].GetYPos() - damageY;
+                    }
+                    else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
+                    {
+                        distanceBetweenX = TheTank[i].GetX() + damageX;
+                        distanceBetweenY = TheTank[i].GetYPos() + damageY;
+                    }
+                }
+            }
 		}
 
-		public bool Gravity()
+		public bool Gravity() //double check
 		{
-			throw new NotImplementedException();
+            bool anyMovement = false;
+            for (int i = 0; i < WeaponsEffect.Count; i++)
+            {
+                if (WeaponsEffect[i] != null) //checks if there are any weaponeffects
+                {
+                    anyMovement = true;
+                }
+            }
+            if (newTerrain.Gravity() == true) //if gravity applied to terrain, set bool to true
+            {
+                anyMovement = true;
+            }
+            for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (TheTank[i].Gravity() == true)
+                {
+                    anyMovement = true;
+                }
+            }
+
+            return anyMovement;
+		}
+        
+		public bool TurnOver() //double check
+		{
+            bool tanksExists = true;
+            int howManyExists = 0;
+
+            for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (TheTank[i].Exists()) //checks to see how many tanks there are
+                {
+                    tanksExists = true;
+                    howManyExists++;
+                }
+            }
+            if (howManyExists > 2) //if there is two or more tanks, continue the round
+            {
+                currentPlayer++;
+                if (currentPlayer > numPlayers.Length - 1) { currentPlayer = 0; }
+                if (!TheTank[currentPlayer].Exists()) { currentPlayer++; }
+            }
+            else if (howManyExists < 2) //if there is one tank left
+            {
+                RewardWinner();
+                tanksExists = false;
+            }
+
+            Wind += rnd.Next(-10, 10);
+            if (Wind <= -100) { Wind = -100; }
+            else if (Wind >= 100) { Wind = 100; }
+
+            return tanksExists; // return true is round is still going
 		}
 
-		public bool TurnOver()
+		public void RewardWinner() //double check
 		{
-			throw new NotImplementedException();
+			for (int i = 0; i < TheTank.Length; i++)
+            {
+                if (TheTank[i].Exists())
+                {
+                    TheOppo[currentPlayer].AddScore(); //correct tank? //option 1
+                    // GetPlayerNumber(TheTank[i]).AddScore(); //option 2
+                }
+            }
 		}
 
-		public void RewardWinner()
+		public void NextRound() //double check
 		{
-			throw new NotImplementedException();
-		}
-
-		public void NextRound()
-		{
-			throw new NotImplementedException();
+			if (!TurnOver()){
+                if (currentRound <= numRounds) { 
+                    currentRound++;
+                }
+                currentPlayer++;
+                if (currentPlayer > numPlayers.Length - 1)
+                {
+                    currentPlayer = 0;
+                    BeginRound();
+                }
+                else if (currentRound > numRounds)
+                {
+                    IntroForm introform = new IntroForm();
+                    introform.Show();
+                }
+            }
 		}
 
 		public int GetWindSpeed()
