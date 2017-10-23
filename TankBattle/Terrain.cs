@@ -92,14 +92,32 @@ namespace TankBattle {
         }
 
         public bool CheckTankCollision(int x, int y) {
-            if (map[x + WIDTH, y + HEIGHT] || map[x, y + 3] == true) { return true; } else { return false; }
-        }
+			bool collision = false;
+			if (x < 0 || x - TankModel.WIDTH > WIDTH || y < 0 || y - TankModel.HEIGHT > HEIGHT){
+				return false; 
+			} 
+			else{
+				for (int i = x; i <= WIDTH; i++){
+					if (map[x + 1, y] == true){
+						collision = true;
+					}
+					for (int b = 0; b <= HEIGHT; b++){
+						if (map[, y])
+						//if (map[x + i, y + b] == true){
+						//	collision = true;
+						//}
+					}
+				}
+			}		
+			return collision;
+				//if (map[x + WIDTH, y + HEIGHT] || map[x, y + 3] == true) { return true; } else { return false; }
+		}
 
         public int TankYPosition(int x) {
             int y = 0;
             if (x > WIDTH - TankModel.WIDTH) { return 0; } else {
                 for (int i = 0; i < HEIGHT;) {
-                    if (map[x, i] != true) { i++; } else {
+                    if (map[x, i] == false) { i++; } else {
                         y = i;
                         break;
                     }
@@ -130,29 +148,47 @@ namespace TankBattle {
         public bool Gravity() {
 
 
-            return false;
+            public bool Gravity() {
 
-            //for (int i = 0; i < HEIGHT; i++) { //double check value looped through, should be the same as constructor but need to double check that too
-            //    //loop through every coord of the map
-            //    for (int y = 0; y < HEIGHT; y++) {
-            //        for (int x = 0; x < WIDTH; x++) {
-            //            if (map[x, y] == true && map[x, y + 1] == false) {
 
-            //                map[x, y] = false;
-            //                map[x, y + 1] = true;
 
-            //                temp = true;
-            //                return temp;
+            bool moved = false;
 
-            //            } else {
 
-            //                temp = false;
-            //                return temp;
 
-            //            }
-            //        }
-            //    }
-            //}
+            for (int y = 0; y < HEIGHT - 1; y++) {
+
+                for (int x = 0; x < WIDTH - 1; x++) {
+
+                    if (map[x, y] == true && map[x, y + 1] == false) {
+
+                        map[x, y] = false;
+
+                        map[x, y + 1] = true;
+
+
+
+                        moved = true;
+
+                    }
+
+                }
+
+            }
+
+
+
+            if (moved == true) {
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+
 
         }
     }
