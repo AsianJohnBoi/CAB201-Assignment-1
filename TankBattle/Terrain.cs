@@ -129,30 +129,24 @@ namespace TankBattle {
 
         public bool Gravity() {
 
+            bool moved = false;
 
-            return false;
+            for (int y = 0; y < HEIGHT - 1; y++) {
+                for (int x = 0; x < WIDTH - 1; x++) {
+                    if (map[x, y] == true && map[x, y + 1] == false) {
+                        map[x, y] = false;
+                        map[x, y + 1] = true;
 
-            //for (int i = 0; i < HEIGHT; i++) { //double check value looped through, should be the same as constructor but need to double check that too
-            //    //loop through every coord of the map
-            //    for (int y = 0; y < HEIGHT; y++) {
-            //        for (int x = 0; x < WIDTH; x++) {
-            //            if (map[x, y] == true && map[x, y + 1] == false) {
+                        moved = true;
+                    }
+                }
+            }
 
-            //                map[x, y] = false;
-            //                map[x, y + 1] = true;
-
-            //                temp = true;
-            //                return temp;
-
-            //            } else {
-
-            //                temp = false;
-            //                return temp;
-
-            //            }
-            //        }
-            //    }
-            //}
+            if (moved == true) {
+                return true;
+            } else {
+                return false;
+            }
 
         }
     }
