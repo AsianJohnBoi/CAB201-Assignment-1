@@ -106,14 +106,15 @@ namespace TankBattle {
                 }
             }
             return collision;
-
         }
 
         public int TankYPosition(int x) {
             int y = HEIGHT - 2;
-            for (int yp = y; yp > 0; yp--){
-                if (CheckTankCollision(x, yp) == true){
-                    y--;
+            if (x < 0 && x > WIDTH - TankModel.WIDTH){ //checks if x position is within range
+                for (int yp = HEIGHT - 2; yp > 0; yp--){
+                    if (CheckTankCollision(x, yp) == true){
+                        y--;
+                    }
                 }
             }
             return y;
