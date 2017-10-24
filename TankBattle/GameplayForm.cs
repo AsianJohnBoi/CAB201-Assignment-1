@@ -9,10 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TankBattle
-{
-    public partial class GameplayForm : Form
-    {
+namespace TankBattle {
+    public partial class GameplayForm : Form {
         private Color landscapeColour;
         private Random rng = new Random();
         private Image backgroundImage = null;
@@ -26,12 +24,14 @@ namespace TankBattle
         private Opponent currentOpponent;
 
         private int windSpeed;
-
+        private int angleSet;
+        private int powerSet;
+        private int weaponSet;
+ 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
 
-        public GameplayForm(Gameplay game)
-        {
+        public GameplayForm(Gameplay game) {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -101,7 +101,7 @@ namespace TankBattle
             //Update the wind speed label to show the current wind speed, retrieved from currentGame.
             //Positive values should be shown as E winds, negative values as W winds.
             //For example, 50 would be displayed as "50 E" while -38 would be displayed as "38 W".
-            windSpeed = currentGame.GetWindSpeed(); 
+            windSpeed = currentGame.GetWindSpeed();
 
             if (windSpeed > 0) {
                 windStatusLabel.Text = windSpeed + " E";
@@ -123,45 +123,38 @@ namespace TankBattle
             }
 
             //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
-            //SetWeaponIndex(currentControlledTank.tankWeapon));
+            SetWeaponIndex(currentControlledTank.GetWeaponIndex());
 
             //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
             currentOpponent.BeginTurn(this, currentGame);
         }
-        
+
 
         // From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
-        protected override CreateParams CreateParams
-        {
-            get
-            {
+        protected override CreateParams CreateParams {
+            get {
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
                 return cp;
             }
         }
 
-        public void EnableTankButtons()
-        {
+        public void EnableTankButtons() {
             controlPanel.Enabled = true;
         }
 
-        public void SetAimingAngle(float angle)
-        {
-            angleSetter.Value = (int)angle; 
+        public void SetAimingAngle(float angle) {
+            angleSetter.Value = (int)angleSet;
         }
 
-        public void SetPower(int power)
-        {
-            powerTrackBar.Value = power;
+        public void SetPower(int power) {
+            powerTrackBar.Value = powerSet;
         }
-        public void SetWeaponIndex(int weapon)
-        {
-            weaponComboBox.SelectedItem = weapon;
+        public void SetWeaponIndex(int weapon) {
+            weaponComboBox.SelectedItem = weaponSet;
         }
 
-        public void Attack()
-        {
+        public void Attack() {
             currentGame.GetCurrentGameplayTank();
             Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
                       //ControlledTank, then calls its Attack() method.
@@ -170,8 +163,7 @@ namespace TankBattle
             formTimer.Enabled = true;
         }
 
-        private void DrawBackground()
-        {
+        private void DrawBackground() {
             Graphics graphics = backgroundGraphics.Graphics;
             Image background = backgroundImage;
             graphics.DrawImage(backgroundImage, new Rectangle(0, 0, displayPanel.Width, displayPanel.Height));
@@ -179,12 +171,9 @@ namespace TankBattle
             Terrain battlefield = currentGame.GetLevel();
             Brush brush = new SolidBrush(landscapeColour);
 
-            for (int y = 0; y < Terrain.HEIGHT; y++)
-            {
-                for (int x = 0; x < Terrain.WIDTH; x++)
-                {
-                    if (battlefield.IsTileAt(x, y))
-                    {
+            for (int y = 0; y < Terrain.HEIGHT; y++) {
+                for (int x = 0; x < Terrain.WIDTH; x++) {
+                    if (battlefield.IsTileAt(x, y)) {
                         int drawX1 = displayPanel.Width * x / levelWidth;
                         int drawY1 = displayPanel.Height * y / levelHeight;
                         int drawX2 = displayPanel.Width * (x + 1) / levelWidth;
@@ -195,8 +184,7 @@ namespace TankBattle
             }
         }
 
-        public BufferedGraphics InitRenderBuffer()
-        {
+        public BufferedGraphics InitRenderBuffer() {
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;
             Graphics graphics = displayPanel.CreateGraphics();
             Rectangle dimensions = new Rectangle(0, 0, displayPanel.Width, displayPanel.Height);
@@ -204,14 +192,50 @@ namespace TankBattle
             return bufferedGraphics;
         }
 
-        private void displayPanel_Paint(object sender, PaintEventArgs e)
-        {
+        private void displayPanel_Paint(object sender, PaintEventArgs e) {
             Graphics graphics = displayPanel.CreateGraphics();
             gameplayGraphics.Render(graphics);
         }
 
         private void GameplayForm_Load(object sender, EventArgs e) {
 
+        }
+
+        private void angleSetter_ValueChanged(object sender, EventArgs e) {
+            currentControlledTank.SetAimingAngle(angleSet);
+            DrawGameplay();
+            displayPanel.Invalidate();
+        }
+
+        private void powerTrackBar_Scroll(object sender, EventArgs e) {
+            currentControlledTank.SetPower(powerSet);
+            DrawGameplay();
+            displayPanel.Invalidate();
+        }
+
+        private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            currentControlledTank.SetWeaponIndex(weaponSet);
+        }
+
+        private void formTimer_Tick(object sender, EventArgs e) {
+            currentGame.ProcessEffects();
+            DrawBackground();
+            DrawGameplay();
+            displayPanel.Invalidate();
+
+            if (currentGame.Gravity() == true) {
+                return;
+            } else {
+                formTimer.Enabled = false;
+
+                if (currentGame.TurnOver() == true) {
+                    NewTurn();
+                } else {
+                    Dispose();
+                    currentGame.NextRound();
+                    return;
+                }
+            }
         }
     }
 }
