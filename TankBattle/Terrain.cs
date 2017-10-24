@@ -93,34 +93,27 @@ namespace TankBattle {
 
         public bool CheckTankCollision(int x, int y) {
             bool collision = false;
-			if (x < 0 || x - TankModel.WIDTH > WIDTH || y < 0 || y - TankModel.HEIGHT > HEIGHT){
-				return true; 
-			} 
-			else{
-				for (int i = x; i <= WIDTH; i++){
-					if (map[x + 1, y] == true){
-						collision = true;
-					}
-					for (int b = 0; b <= HEIGHT; b++){
-						//if (map[, y])
-						//if (map[x + i, y + b] == true){
-						//	collision = true;
-						//}
-					}
-				}
-			}		
-			return collision;
-			//if (map[x + WIDTH, y + HEIGHT] || map[x, y + 3] == true) { return true; } else { return false; }
+            int width = x + TankModel.WIDTH; //4
+            int height = y + TankModel.HEIGHT; //3
+
+            for (int xp = x; xp < width; xp++){ 
+                for (int yp = y; yp < height; yp++){ 
+                    if (xp >= width){ xp = x; } //reset xp
+                    else if (yp >= height){ yp = y; } //reset yp
+                    else if (IsTileAt(xp, yp) == true){
+                        collision = true;
+                    }
+                }
+            }
+            return collision;
+
         }
 
         public int TankYPosition(int x) {
-            int y = 0;
-            if (x > WIDTH - TankModel.WIDTH) { return 0; } else {
-                for (int i = 0; i < HEIGHT;) {
-                    if (map[x, i] != true) { i++; } else {
-                        y = i;
-                        break;
-                    }
+            int y = HEIGHT - 2;
+            for (int yp = y; yp > 0; yp--){
+                if (CheckTankCollision(x, yp) == true){
+                    y--;
                 }
             }
             return y;
@@ -147,14 +140,14 @@ namespace TankBattle {
 
         public bool Gravity() {
 
-            bool moved = false;
+            bool moveDown = false;
 
 			for (int y = HEIGHT - 2; y > 0; y--){
 				for (int x = 0; x < WIDTH; x++){
 					if (IsTileAt(x, y + 1) == false && IsTileAt(x, y) == true ){
 						map[x, y] = false;
 						map[x, y + 1] = true;
-						moved = true;
+						moveDown = true;
 					}
 				}
 			}
@@ -177,7 +170,7 @@ namespace TankBattle {
 				//	break;
 				//}
 
-			return moved;
+			return moveDown;
 
         }
     }

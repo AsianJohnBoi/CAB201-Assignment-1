@@ -101,7 +101,7 @@ namespace TankBattle
 
         public static TankModel GetTank(int tankNumber)
         {
-            return new TheTank(100);
+            return new TheTank(tankNumber); //100
         }
     }
     //create 4 
