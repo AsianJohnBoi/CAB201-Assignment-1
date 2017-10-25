@@ -203,7 +203,6 @@ namespace TankBattle
             this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "GameplayForm";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.GameplayForm_Load);
             this.controlPanel.ResumeLayout(false);
             this.controlPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.angleSetter)).EndInit();
