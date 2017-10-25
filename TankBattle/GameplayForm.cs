@@ -69,6 +69,30 @@ namespace TankBattle {
             NewTurn();
         }
 
+		public void EnableTankButtons() {
+            controlPanel.Enabled = true;
+        }
+
+		public void SetAimingAngle(float angle) {
+            angleSetter.Value = angleSet;
+        }
+
+        public void SetPower(int power) {
+            powerTrackBar.Value = powerSet;
+        }
+        public void SetWeaponIndex(int weapon) {
+            weaponComboBox.SelectedItem = weaponSet;
+        }
+
+        public void Attack() {
+            currentControlledTank = currentGame.GetCurrentGameplayTank(); //value not stored
+            currentControlledTank.Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
+											//ControlledTank, then calls its Attack() method.
+
+            controlPanel.Enabled = false;
+            formTimer.Enabled = true;
+        }
+
         private void DrawGameplay() {
             backgroundGraphics.Render(gameplayGraphics.Graphics);
             currentGame.DrawPlayers(gameplayGraphics.Graphics, displayPanel.Size);
@@ -77,10 +101,10 @@ namespace TankBattle {
 
         private void NewTurn() {
             //First, get a reference to the current ControlledTank with currentGame.GetCurrentGameplayTank()
-            currentGame.GetCurrentGameplayTank(); //store
+            currentControlledTank = currentGame.GetCurrentGameplayTank();
 
             //Likewise, get a reference to the current Opponent by calling the ControlledTank's GetPlayerNumber()
-            currentControlledTank.GetPlayerNumber();
+            currentOpponent = currentControlledTank.GetPlayerNumber();
 
             //Set the form caption to "Tank Battle - Round ? of ?", using methods in currentGame to get the current and
             //total rounds.
@@ -93,10 +117,12 @@ namespace TankBattle {
             playerLabel.Text = currentOpponent.Name();
 
             //Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
-            SetAimingAngle(currentControlledTank.GetAim());
+			currentControlledTank.SetAimingAngle(angleSet);
+            //SetAimingAngle(currentControlledTank.GetAim());
 
             //Call SetPower() to set the current turret power to the current ControlledTank's power.
-            SetPower(currentControlledTank.GetCurrentPower());
+			currentControlledTank.SetPower(powerSet);
+            //SetPower(currentControlledTank.GetCurrentPower());
 
             //Update the wind speed label to show the current wind speed, retrieved from currentGame.
             //Positive values should be shown as E winds, negative values as W winds.
@@ -114,7 +140,7 @@ namespace TankBattle {
 
             //Get a reference to the current TankModel with ControlledTank's GetTank() method, then get a list of
             //weapons available to that TankModel.
-            currentControlledTank.GetTank(); //not stored anywhere
+            currentTankModel = currentControlledTank.GetTank(); //not stored anywhere
             string[] weapons = currentTankModel.WeaponList();
 
             //Add each weapon name in the list to the ComboBox.
@@ -123,10 +149,11 @@ namespace TankBattle {
             }
 
             //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
-            SetWeaponIndex(currentControlledTank.GetWeaponIndex()); //fix
+			weaponSet = currentControlledTank.GetWeaponIndex();
+            SetWeaponIndex(weaponSet);
 
             //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
-            currentOpponent.BeginTurn(this, currentGame); //fix
+            currentOpponent.BeginTurn(this, currentGame);
         }
 
 
@@ -137,30 +164,6 @@ namespace TankBattle {
                 cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
                 return cp;
             }
-        }
-
-        public void EnableTankButtons() {
-            controlPanel.Enabled = true;
-        }
-
-        public void SetAimingAngle(float angle) {
-            angleSetter.Value = (int)angleSet;
-        }
-
-        public void SetPower(int power) {
-            powerTrackBar.Value = powerSet;
-        }
-        public void SetWeaponIndex(int weapon) {
-            weaponComboBox.SelectedItem = weaponSet;
-        }
-
-        public void Attack() {
-            currentGame.GetCurrentGameplayTank(); //value not stored
-            Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
-                      //ControlledTank, then calls its Attack() method.
-
-            controlPanel.Enabled = false;
-            formTimer.Enabled = true;
         }
 
         private void DrawBackground() {
@@ -219,23 +222,32 @@ namespace TankBattle {
 
         private void formTimer_Tick(object sender, EventArgs e) {
             currentGame.ProcessEffects();
-            DrawBackground();
-            DrawGameplay();
-            displayPanel.Invalidate();
+			if (currentGame.ProcessEffects() == false){
+				currentGame.Gravity();
+				DrawBackground();
+				DrawGameplay();
+				displayPanel.Invalidate();
+				if (currentGame.Gravity() == true) {
+					return;
+				} else {
+					formTimer.Enabled = false;
+					currentGame.TurnOver();
+					NewTurn();
+					Dispose();
+					currentGame.NextRound();
+					return;
+			}
 
-            if (currentGame.Gravity() == true) {
-                return;
-            } else {
-                formTimer.Enabled = false;
+        
 
-                if (currentGame.TurnOver() == true) {
-                    NewTurn();
-                } else {
-                    Dispose();
-                    currentGame.NextRound();
-                    return;
-                }
-            }
+             //   if (currentGame.TurnOver() == true) {
+             //       NewTurn();
+            //    } else {
+            //        Dispose();
+             //       currentGame.NextRound();
+            //        return;
+             //   }
+           // }
         }
     }
 }
