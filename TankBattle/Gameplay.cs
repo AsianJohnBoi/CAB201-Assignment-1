@@ -75,7 +75,7 @@ namespace TankBattle
 			int x = 0;
 			int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < numPlayers; i++)
+            for (int i = 0; i < numPlayers - 1; i++)
 			{
 				x = x + TerrainW;
 				coords[i] = x; //add x position to list, loops to replace the previous int
