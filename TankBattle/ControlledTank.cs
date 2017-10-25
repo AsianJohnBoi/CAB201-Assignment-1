@@ -40,7 +40,7 @@ namespace TankBattle
         }
         public TankModel GetTank()
         {
-            return tankModel;
+            return player.GetTank();
         }
 
         public float GetAim()
@@ -51,6 +51,7 @@ namespace TankBattle
         public void SetAimingAngle(float angle)
         {
             if (angle >= -90 && angle <= 180){ this.angle = (int)angle; }
+			colour = tankModel.CreateBitmap(player.GetColour(), angle);
         }
 
         public int GetCurrentPower()
@@ -67,6 +68,7 @@ namespace TankBattle
         {
             return tankWeapon;
         }
+
         public void SetWeaponIndex(int newWeapon)
         {
             this.tankWeapon = newWeapon;
@@ -120,27 +122,28 @@ namespace TankBattle
 
         public bool Gravity()
         {
-            if (!Exists())
+			bool moved = false;
+            if (!Exists()) 
             {
-                return false;
-            }
+                moved = false;
+				Terrain t = game.GetLevel();
 
-            Terrain t = game.GetLevel();
-
-            if (t.CheckTankCollision(tankX, tankY + 1))
-            {
-                return false;
-            }
-            else
-            {
-                tankY += 1;
-                currentDur -= 1;
-                if (tankY >= Terrain.HEIGHT)
-                {
-                    currentDur = 0;
-                }
-            }
-            return true;
+				if (t.CheckTankCollision(tankX, tankY + 1) == true)
+				{
+					moved = false;
+				}
+				else
+				{
+					tankY += 1; //doesn't increment the tank's position by 1.
+					currentDur -= 1;
+					if (tankY == Terrain.HEIGHT - TankModel.HEIGHT)
+					{
+						currentDur = 0;
+					}
+					moved = true;
+				}
+			}
+			return moved;
             
            
         }

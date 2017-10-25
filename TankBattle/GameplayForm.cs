@@ -74,11 +74,11 @@ namespace TankBattle {
         }
 
         public void SetAimingAngle(float angle) {
-            angleSetter.Value = angleSet;
+            angleSetter.Value = (int)angle;
         }
 
         public void SetPower(int power) {
-            powerTrackBar.Value = powerSet;
+            powerTrackBar.Value = power;
         }
         public void SetWeaponIndex(int weapon) {
             weaponComboBox.SelectedItem = weaponSet;
@@ -90,7 +90,8 @@ namespace TankBattle {
                                             //ControlledTank, then calls its Attack() method.
 
             controlPanel.Enabled = false;
-            formTimer.Enabled = true;
+			fireButton.Enabled = false;
+			formTimer.Enabled = true;
         }
 
         private void DrawGameplay() {
@@ -233,17 +234,6 @@ namespace TankBattle {
                     currentGame.NextRound();
                     return;
                 }
-
-
-
-                //   if (currentGame.TurnOver() == true) {
-                //       NewTurn();
-                //    } else {
-                //        Dispose();
-                //       currentGame.NextRound();
-                //        return;
-                //   }
-                // }
             }
         }
     }

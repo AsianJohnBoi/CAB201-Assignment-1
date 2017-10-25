@@ -72,7 +72,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(275, 63);
             this.label1.TabIndex = 2;
-            this.label1.Text = "n9983244";
+            this.label1.Text = "n9983244 n9999183";
             // 
             // IntroForm
             // 

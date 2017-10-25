@@ -24,6 +24,8 @@ namespace TankBattle
         private int Wind;
         private ControlledTank[] TheTank;
         private Random rnd = new Random();
+		private float tankPositionX;
+		private float tankPositionY;
 
 		public Gameplay(int numPlayers, int numRounds)
 		{
@@ -75,12 +77,13 @@ namespace TankBattle
 			int x = 0;
 			int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < numPlayers; i++)
+            for (int i = 0; i < numPlayers - 1; i++)
 			{
 				x = x + TerrainW;
 				coords[i] = x; //add x position to list, loops to replace the previous int
-			}
-			return coords;
+            }
+
+            return coords;
 		}
 
 		public static void Shuffle(int[] array)
@@ -102,6 +105,7 @@ namespace TankBattle
                 array[idxB] = tmp;
 			}
 		}
+
 		public void NewGame()
 		{
 			currentRound = 1;
@@ -126,7 +130,7 @@ namespace TankBattle
                 TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
             }
             
-            Wind = GetWindSpeed(); 
+            GetWindSpeed();
 
             GameplayForm newForm = new GameplayForm(this);
             newForm.Show();
@@ -220,12 +224,8 @@ namespace TankBattle
             return hit;
 		}
 
-		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
+		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
 		{
-            float distanceBetweenX;
-            float distanceBetweenY;
-            float tankPositionX;
-            float tankPositionY;
 
             int damageDone = 0;
             float tempDamage = 0;
@@ -234,6 +234,19 @@ namespace TankBattle
             {
                 if (TheTank[i].Exists())
                 {
+                    //if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
+                    //{
+                    //    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
+                    //    tankPositionX = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
+
+                    //    distanceBetweenX = TheTank[i].GetX() - damageX;
+                    //    distanceBetweenY = TheTank[i].GetYPos() - damageY;
+                    //}
+                    //else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
+                    //{
+                    //    distanceBetweenX = TheTank[i].GetX() + damageX;
+                    //    distanceBetweenY = TheTank[i].GetYPos() + damageY;
+                    //}
 
                     float dist;
                     double tempDist;
@@ -276,6 +289,7 @@ namespace TankBattle
             }
             for (int i = 0; i < TheTank.Length; i++)
             {
+                newTerrain.Gravity();
                 if (TheTank[i].Gravity() == true)
                 {
                     anyMovement = true;
@@ -298,6 +312,7 @@ namespace TankBattle
                     howManyExists++;
                 }
             }
+
             if (howManyExists > 2) //if there is two or more tanks, continue the round
             {
                 currentPlayer++;
@@ -351,7 +366,9 @@ namespace TankBattle
 
 		public int GetWindSpeed()
 		{
-            return rnd.Next(-100, 101);
+            Random rnd = new Random();
+			Wind = rnd.Next(-100, 101);
+            return Wind;
 		}
 	}
 }

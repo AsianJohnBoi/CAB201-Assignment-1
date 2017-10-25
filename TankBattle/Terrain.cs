@@ -121,7 +121,7 @@ namespace TankBattle {
 
             int y = 0;
 
-            for (int i = 0; i < HEIGHT - 1; i++) {
+            for (int i = 0; i < HEIGHT; i++) {
                 if (CheckTankCollision(x, i) == true) {
                     y = i - 1;
                     break;
