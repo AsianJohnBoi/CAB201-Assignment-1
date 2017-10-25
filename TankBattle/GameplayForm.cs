@@ -77,7 +77,7 @@ namespace TankBattle {
 
         private void NewTurn() {
             //First, get a reference to the current ControlledTank with currentGame.GetCurrentGameplayTank()
-            currentGame.GetCurrentGameplayTank();
+            currentGame.GetCurrentGameplayTank(); //store
 
             //Likewise, get a reference to the current Opponent by calling the ControlledTank's GetPlayerNumber()
             currentControlledTank.GetPlayerNumber();
@@ -114,7 +114,7 @@ namespace TankBattle {
 
             //Get a reference to the current TankModel with ControlledTank's GetTank() method, then get a list of
             //weapons available to that TankModel.
-            currentControlledTank.GetTank();
+            currentControlledTank.GetTank(); //not stored anywhere
             string[] weapons = currentTankModel.WeaponList();
 
             //Add each weapon name in the list to the ComboBox.
@@ -123,10 +123,10 @@ namespace TankBattle {
             }
 
             //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
-            SetWeaponIndex(currentControlledTank.GetWeaponIndex());
+            SetWeaponIndex(currentControlledTank.GetWeaponIndex()); //fix
 
             //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
-            currentOpponent.BeginTurn(this, currentGame);
+            currentOpponent.BeginTurn(this, currentGame); //fix
         }
 
 
@@ -155,7 +155,7 @@ namespace TankBattle {
         }
 
         public void Attack() {
-            currentGame.GetCurrentGameplayTank();
+            currentGame.GetCurrentGameplayTank(); //value not stored
             Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
                       //ControlledTank, then calls its Attack() method.
 

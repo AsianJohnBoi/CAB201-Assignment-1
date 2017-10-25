@@ -75,7 +75,7 @@ namespace TankBattle
 			int x = 0;
 			int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < numPlayers - 1; i++)
+            for (int i = 0; i < numPlayers; i++)
 			{
 				x = x + TerrainW;
 				coords[i] = x; //add x position to list, loops to replace the previous int
@@ -126,7 +126,7 @@ namespace TankBattle
                 TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
             }
             
-            GetWindSpeed();
+            Wind = GetWindSpeed(); 
 
             GameplayForm newForm = new GameplayForm(this);
             newForm.Show();
@@ -220,7 +220,7 @@ namespace TankBattle
             return hit;
 		}
 
-		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
+		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
 		{
             float distanceBetweenX;
             float distanceBetweenY;
@@ -234,19 +234,6 @@ namespace TankBattle
             {
                 if (TheTank[i].Exists())
                 {
-                    //if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
-                    //{
-                    //    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
-                    //    tankPositionX = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
-
-                    //    distanceBetweenX = TheTank[i].GetX() - damageX;
-                    //    distanceBetweenY = TheTank[i].GetYPos() - damageY;
-                    //}
-                    //else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
-                    //{
-                    //    distanceBetweenX = TheTank[i].GetX() + damageX;
-                    //    distanceBetweenY = TheTank[i].GetYPos() + damageY;
-                    //}
 
                     float dist;
                     double tempDist;
@@ -282,6 +269,7 @@ namespace TankBattle
                     anyMovement = true;
                 }
             }
+            newTerrain.Gravity();
             if (newTerrain.Gravity() == true) //if gravity applied to terrain, set bool to true
             {
                 anyMovement = true;
@@ -363,9 +351,7 @@ namespace TankBattle
 
 		public int GetWindSpeed()
 		{
-            Random rnd = new Random();
-			Wind = rnd.Next(-100, 101);
-            return Wind;
+            return rnd.Next(-100, 101);
 		}
 	}
 }
