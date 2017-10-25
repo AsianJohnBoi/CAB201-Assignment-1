@@ -27,7 +27,7 @@ namespace TankBattle {
         private int angleSet;
         private int powerSet;
         private int weaponSet;
- 
+
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
 
@@ -69,11 +69,11 @@ namespace TankBattle {
             NewTurn();
         }
 
-		public void EnableTankButtons() {
+        public void EnableTankButtons() {
             controlPanel.Enabled = true;
         }
 
-		public void SetAimingAngle(float angle) {
+        public void SetAimingAngle(float angle) {
             angleSetter.Value = angleSet;
         }
 
@@ -87,7 +87,7 @@ namespace TankBattle {
         public void Attack() {
             currentControlledTank = currentGame.GetCurrentGameplayTank(); //value not stored
             currentControlledTank.Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
-											//ControlledTank, then calls its Attack() method.
+                                            //ControlledTank, then calls its Attack() method.
 
             controlPanel.Enabled = false;
             formTimer.Enabled = true;
@@ -117,11 +117,11 @@ namespace TankBattle {
             playerLabel.Text = currentOpponent.Name();
 
             //Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
-			currentControlledTank.SetAimingAngle(angleSet);
+            currentControlledTank.SetAimingAngle(angleSet);
             //SetAimingAngle(currentControlledTank.GetAim());
 
             //Call SetPower() to set the current turret power to the current ControlledTank's power.
-			currentControlledTank.SetPower(powerSet);
+            currentControlledTank.SetPower(powerSet);
             //SetPower(currentControlledTank.GetCurrentPower());
 
             //Update the wind speed label to show the current wind speed, retrieved from currentGame.
@@ -149,7 +149,7 @@ namespace TankBattle {
             }
 
             //Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
-			weaponSet = currentControlledTank.GetWeaponIndex();
+            weaponSet = currentControlledTank.GetWeaponIndex();
             SetWeaponIndex(weaponSet);
 
             //Call the current Opponent's BeginTurn() method, passing in this and currentGame.
@@ -200,10 +200,6 @@ namespace TankBattle {
             gameplayGraphics.Render(graphics);
         }
 
-        private void GameplayForm_Load(object sender, EventArgs e) {
-
-        }
-
         private void angleSetter_ValueChanged(object sender, EventArgs e) {
             currentControlledTank.SetAimingAngle(angleSet);
             DrawGameplay();
@@ -222,32 +218,33 @@ namespace TankBattle {
 
         private void formTimer_Tick(object sender, EventArgs e) {
             currentGame.ProcessEffects();
-			if (currentGame.ProcessEffects() == false){
-				currentGame.Gravity();
-				DrawBackground();
-				DrawGameplay();
-				displayPanel.Invalidate();
-				if (currentGame.Gravity() == true) {
-					return;
-				} else {
-					formTimer.Enabled = false;
-					currentGame.TurnOver();
-					NewTurn();
-					Dispose();
-					currentGame.NextRound();
-					return;
-			}
+            if (currentGame.ProcessEffects() == false) {
+                currentGame.Gravity();
+                DrawBackground();
+                DrawGameplay();
+                displayPanel.Invalidate();
+                if (currentGame.Gravity() == true) {
+                    return;
+                } else {
+                    formTimer.Enabled = false;
+                    currentGame.TurnOver();
+                    NewTurn();
+                    Dispose();
+                    currentGame.NextRound();
+                    return;
+                }
 
-        
 
-             //   if (currentGame.TurnOver() == true) {
-             //       NewTurn();
-            //    } else {
-            //        Dispose();
-             //       currentGame.NextRound();
-            //        return;
-             //   }
-           // }
+
+                //   if (currentGame.TurnOver() == true) {
+                //       NewTurn();
+                //    } else {
+                //        Dispose();
+                //       currentGame.NextRound();
+                //        return;
+                //   }
+                // }
+            }
         }
     }
 }
