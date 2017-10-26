@@ -9,12 +9,17 @@ namespace TankBattle
 {
     public class AIOpponent : Opponent
     {
+		private string name;
+		private TankModel tank;
+		private Color colour;
         private Random rnd = new Random();
         private GameplayForm gameplayform;
 
         public AIOpponent(string name, TankModel tank, Color colour) : base(name, tank, colour)
         {
-
+			this.name = name;
+			this.tank = tank;
+			this.colour = colour;
         }
 
         public override void StartRound()

@@ -85,14 +85,12 @@ namespace TankBattle {
         }
 
         public void Attack() {
-            currentControlledTank = currentGame.GetCurrentGameplayTank(); //value not stored
+            currentControlledTank = currentGame.GetCurrentGameplayTank();
             currentControlledTank.Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
                                             //ControlledTank, then calls its Attack() method.
-
-            controlPanel.Enabled = false;
-			fireButton.Enabled = false;
 			formTimer.Enabled = true;
-        }
+			controlPanel.Enabled = false;
+		}
 
         private void DrawGameplay() {
             backgroundGraphics.Render(gameplayGraphics.Graphics);
@@ -236,5 +234,10 @@ namespace TankBattle {
                 }
             }
         }
-    }
+
+		private void fireButton_Click(object sender, EventArgs e)
+		{
+			Attack();
+		}
+	}
 }

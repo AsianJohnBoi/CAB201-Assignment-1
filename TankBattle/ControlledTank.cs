@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -111,41 +112,48 @@ namespace TankBattle
 
         public void InflictDamage(int damageAmount)
         {
-            currentDur = currentDur - damageAmount;
+            currentDur -= damageAmount;
         }
 
         public bool Exists()
         {
-            if (currentDur > 0) { return true; }
-            else { return false; }
+            if (currentDur > 0)
+			{
+				return true;
+			}
+            else {
+				return false;
+			}
         }
 
         public bool Gravity()
         {
-			bool moved = false;
-            if (!Exists()) 
-            {
-                moved = false;
-				Terrain t = game.GetLevel();
-
-				if (t.CheckTankCollision(tankX, tankY + 1) == true)
-				{
-					moved = false;
-				}
-				else
-				{
-					tankY += 1; //doesn't increment the tank's position by 1.
-					currentDur -= 1;
-					if (tankY == Terrain.HEIGHT - TankModel.HEIGHT)
-					{
-						currentDur = 0;
-					}
-					moved = true;
-				}
+			if (!Exists())
+			{
+				return false;
+				//Terrain t = game.GetLevel();
 			}
-			return moved;
-            
-           
+			Terrain t = game.GetLevel();
+			int x = GetX();
+			int y = GetYPos();
+			if (t.CheckTankCollision(x, y + 1))
+			{
+				return false;
+			}
+			else
+			{
+				Debug.WriteLine(tankY);
+				tankY++; //doesn't increment the tank's position by 1.
+				Debug.WriteLine(tankY);
+				currentDur--;
+				if (tankY == Terrain.HEIGHT - TankModel.HEIGHT)
+				{
+					currentDur = 0;
+					return true;
+				}
+				
+			}
+			return false;
         }
     }
 }

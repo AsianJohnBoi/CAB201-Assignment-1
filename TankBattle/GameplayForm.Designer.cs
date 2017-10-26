@@ -73,6 +73,7 @@ namespace TankBattle
 			this.controlPanel.Controls.Add(this.weaponComboBox);
 			this.controlPanel.Controls.Add(this.weaponLabel);
 			this.controlPanel.Controls.Add(this.angleLabel);
+			this.controlPanel.Enabled = false;
 			this.controlPanel.Location = new System.Drawing.Point(0, 0);
 			this.controlPanel.Name = "controlPanel";
 			this.controlPanel.Size = new System.Drawing.Size(800, 32);
@@ -94,7 +95,7 @@ namespace TankBattle
 			// 
 			this.powerTrackBar.LargeChange = 10;
 			this.powerTrackBar.Location = new System.Drawing.Point(548, 6);
-			this.powerTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.powerTrackBar.Margin = new System.Windows.Forms.Padding(2);
 			this.powerTrackBar.Maximum = 100;
 			this.powerTrackBar.Minimum = 5;
 			this.powerTrackBar.Name = "powerTrackBar";
@@ -106,12 +107,13 @@ namespace TankBattle
 			// 
 			this.fireButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.fireButton.Location = new System.Drawing.Point(724, 3);
-			this.fireButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.fireButton.Margin = new System.Windows.Forms.Padding(2);
 			this.fireButton.Name = "fireButton";
 			this.fireButton.Size = new System.Drawing.Size(70, 26);
 			this.fireButton.TabIndex = 10;
 			this.fireButton.Text = "Fire!";
 			this.fireButton.UseVisualStyleBackColor = true;
+			this.fireButton.Click += new System.EventHandler(this.fireButton_Click);
 			// 
 			// playerLabel
 			// 
@@ -149,7 +151,7 @@ namespace TankBattle
 			// angleSetter
 			// 
 			this.angleSetter.Location = new System.Drawing.Point(449, 9);
-			this.angleSetter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.angleSetter.Margin = new System.Windows.Forms.Padding(2);
 			this.angleSetter.Name = "angleSetter";
 			this.angleSetter.Size = new System.Drawing.Size(35, 20);
 			this.angleSetter.TabIndex = 8;
@@ -168,7 +170,7 @@ namespace TankBattle
 			// 
 			this.weaponComboBox.FormattingEnabled = true;
 			this.weaponComboBox.Location = new System.Drawing.Point(288, 9);
-			this.weaponComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.weaponComboBox.Margin = new System.Windows.Forms.Padding(2);
 			this.weaponComboBox.Name = "weaponComboBox";
 			this.weaponComboBox.Size = new System.Drawing.Size(103, 21);
 			this.weaponComboBox.TabIndex = 7;

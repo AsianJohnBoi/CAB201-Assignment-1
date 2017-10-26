@@ -101,20 +101,14 @@ namespace TankBattle
 
         public static TankModel GetTank(int tankNumber)
         {
-            return new TheTank(tankNumber); //100
+            return new TheTank(); //100
         }
     }
     //create 4 
     public class TheTank : TankModel
     {
         private int X1, Y1, X2, Y2;
-        private int currentDur;
         public String[] Weapons;
-
-        public TheTank(int dur)
-        {
-            this.currentDur = dur;
-        }
 
 		public override int[,] DisplayTank(float angle)
 		{
@@ -160,7 +154,7 @@ namespace TankBattle
 
         public override int GetArmour()
         {
-            return currentDur;
+            return 100;
         }
 
         public override string[] WeaponList()
