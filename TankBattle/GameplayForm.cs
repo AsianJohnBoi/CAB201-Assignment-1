@@ -23,10 +23,10 @@ namespace TankBattle {
         private TankModel currentTankModel;
         private Opponent currentOpponent;
 
-        private int windSpeed;
-        private int angleSet;
-        private int powerSet;
-        private int weaponSet;
+        private int windSpeed = 0;
+        private int angleSet = 0;
+        private int powerSet = 0;
+        private int weaponSet = 0;
 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
@@ -207,6 +207,7 @@ namespace TankBattle {
 
         private void powerTrackBar_Scroll(object sender, EventArgs e) {
             currentControlledTank.SetPower(powerSet);
+            powerLabel.Text = powerSet.ToString();
             DrawGameplay();
             displayPanel.Invalidate();
         }
