@@ -54,7 +54,7 @@ namespace TankBattle {
 
             //Set random background image and colour 
             backgroundImage = Image.FromFile(imageFilenames[randNumber]);
-            landscapeColour = Color.FromName(landscapeColours[randNumber].ToString());
+            landscapeColour = landscapeColour = (landscapeColours[randNumber]);
 
             InitializeComponent();
 
