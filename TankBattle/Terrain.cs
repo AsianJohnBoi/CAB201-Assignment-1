@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
+namespace TankBattle {
     public class Terrain {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
