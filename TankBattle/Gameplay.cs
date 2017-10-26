@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -73,13 +74,16 @@ namespace TankBattle
 
 		public static int[] CalculatePlayerPositions(int numPlayers)
 		{	
-			int TerrainW = (Terrain.WIDTH / numPlayers);
+			int TerrainW = (Terrain.WIDTH / (numPlayers + 2));
 			int x = 0;
 			int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < numPlayers - 1; i++)
+            for (int i = 0; i < coords.Length; i++)
 			{
-				x = x + TerrainW;
+				x += TerrainW;
+				if (i == 1 && numPlayers == 2){
+					x += TerrainW;
+				}
 				coords[i] = x; //add x position to list, loops to replace the previous int
             }
 
