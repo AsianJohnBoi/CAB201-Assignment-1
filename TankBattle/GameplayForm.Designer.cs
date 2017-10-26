@@ -32,8 +32,6 @@ namespace TankBattle
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameplayForm));
 			this.displayPanel = new System.Windows.Forms.Panel();
 			this.controlPanel = new System.Windows.Forms.Panel();
-			this.powerLevelLabel = new System.Windows.Forms.Label();
-			this.powerTrackBar = new System.Windows.Forms.TrackBar();
 			this.fireButton = new System.Windows.Forms.Button();
 			this.playerLabel = new System.Windows.Forms.Label();
 			this.powerLabel = new System.Windows.Forms.Label();
@@ -44,9 +42,11 @@ namespace TankBattle
 			this.weaponLabel = new System.Windows.Forms.Label();
 			this.angleLabel = new System.Windows.Forms.Label();
 			this.formTimer = new System.Windows.Forms.Timer(this.components);
+			this.powerLevelLabel = new System.Windows.Forms.Label();
+			this.powerTrackBar = new System.Windows.Forms.TrackBar();
 			this.controlPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.powerTrackBar)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.angleSetter)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.powerTrackBar)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// displayPanel
@@ -62,7 +62,6 @@ namespace TankBattle
 			this.controlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.controlPanel.BackColor = System.Drawing.Color.OrangeRed;
-			this.controlPanel.Controls.Add(this.powerLevelLabel);
 			this.controlPanel.Controls.Add(this.powerTrackBar);
 			this.controlPanel.Controls.Add(this.fireButton);
 			this.controlPanel.Controls.Add(this.playerLabel);
@@ -73,35 +72,12 @@ namespace TankBattle
 			this.controlPanel.Controls.Add(this.weaponComboBox);
 			this.controlPanel.Controls.Add(this.weaponLabel);
 			this.controlPanel.Controls.Add(this.angleLabel);
+			this.controlPanel.Controls.Add(this.powerLevelLabel);
 			this.controlPanel.Enabled = false;
 			this.controlPanel.Location = new System.Drawing.Point(0, 0);
 			this.controlPanel.Name = "controlPanel";
 			this.controlPanel.Size = new System.Drawing.Size(800, 32);
 			this.controlPanel.TabIndex = 1;
-			// 
-			// powerLevelLabel
-			// 
-			this.powerLevelLabel.AutoSize = true;
-			this.powerLevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.powerLevelLabel.Location = new System.Drawing.Point(648, 7);
-			this.powerLevelLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.powerLevelLabel.Name = "powerLevelLabel";
-			this.powerLevelLabel.Size = new System.Drawing.Size(128, 20);
-			this.powerLevelLabel.TabIndex = 6;
-			this.powerLevelLabel.Text = "powerLevelLabel";
-			this.powerLevelLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// powerTrackBar
-			// 
-			this.powerTrackBar.LargeChange = 10;
-			this.powerTrackBar.Location = new System.Drawing.Point(548, 6);
-			this.powerTrackBar.Margin = new System.Windows.Forms.Padding(2);
-			this.powerTrackBar.Maximum = 100;
-			this.powerTrackBar.Minimum = 5;
-			this.powerTrackBar.Name = "powerTrackBar";
-			this.powerTrackBar.Size = new System.Drawing.Size(104, 45);
-			this.powerTrackBar.TabIndex = 9;
-			this.powerTrackBar.Value = 5;
 			// 
 			// fireButton
 			// 
@@ -141,7 +117,7 @@ namespace TankBattle
 			// 
 			this.windLabel.AutoSize = true;
 			this.windLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.windLabel.Location = new System.Drawing.Point(151, 3);
+			this.windLabel.Location = new System.Drawing.Point(151, 1);
 			this.windLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.windLabel.Name = "windLabel";
 			this.windLabel.Size = new System.Drawing.Size(36, 13);
@@ -150,8 +126,23 @@ namespace TankBattle
 			// 
 			// angleSetter
 			// 
+			this.angleSetter.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
 			this.angleSetter.Location = new System.Drawing.Point(449, 9);
 			this.angleSetter.Margin = new System.Windows.Forms.Padding(2);
+			this.angleSetter.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+			this.angleSetter.Minimum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            -2147483648});
 			this.angleSetter.Name = "angleSetter";
 			this.angleSetter.Size = new System.Drawing.Size(35, 20);
 			this.angleSetter.TabIndex = 8;
@@ -159,7 +150,7 @@ namespace TankBattle
 			// windStatusLabel
 			// 
 			this.windStatusLabel.AutoSize = true;
-			this.windStatusLabel.Location = new System.Drawing.Point(128, 16);
+			this.windStatusLabel.Location = new System.Drawing.Point(156, 16);
 			this.windStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.windStatusLabel.Name = "windStatusLabel";
 			this.windStatusLabel.Size = new System.Drawing.Size(85, 13);
@@ -201,6 +192,30 @@ namespace TankBattle
 			// 
 			this.formTimer.Interval = 20;
 			// 
+			// powerLevelLabel
+			// 
+			this.powerLevelLabel.AutoSize = true;
+			this.powerLevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.powerLevelLabel.Location = new System.Drawing.Point(665, 7);
+			this.powerLevelLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.powerLevelLabel.Name = "powerLevelLabel";
+			this.powerLevelLabel.Size = new System.Drawing.Size(18, 20);
+			this.powerLevelLabel.TabIndex = 6;
+			this.powerLevelLabel.Text = "5";
+			this.powerLevelLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// powerTrackBar
+			// 
+			this.powerTrackBar.LargeChange = 10;
+			this.powerTrackBar.Location = new System.Drawing.Point(556, 1);
+			this.powerTrackBar.Maximum = 100;
+			this.powerTrackBar.Minimum = 5;
+			this.powerTrackBar.Name = "powerTrackBar";
+			this.powerTrackBar.Size = new System.Drawing.Size(104, 45);
+			this.powerTrackBar.TabIndex = 11;
+			this.powerTrackBar.Value = 5;
+			this.powerTrackBar.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+			// 
 			// GameplayForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,8 +229,8 @@ namespace TankBattle
 			this.Text = "Form1";
 			this.controlPanel.ResumeLayout(false);
 			this.controlPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.powerTrackBar)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.angleSetter)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.powerTrackBar)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -224,8 +239,6 @@ namespace TankBattle
 
         private System.Windows.Forms.Panel displayPanel;
         private System.Windows.Forms.Panel controlPanel;
-        private System.Windows.Forms.Label powerLevelLabel;
-        private System.Windows.Forms.TrackBar powerTrackBar;
         private System.Windows.Forms.Button fireButton;
         private System.Windows.Forms.Label playerLabel;
         private System.Windows.Forms.Label powerLabel;
@@ -236,6 +249,8 @@ namespace TankBattle
         private System.Windows.Forms.Label weaponLabel;
         private System.Windows.Forms.Label angleLabel;
         private System.Windows.Forms.Timer formTimer;
-    }
+		private System.Windows.Forms.Label powerLevelLabel;
+		private System.Windows.Forms.TrackBar powerTrackBar;
+	}
 }
 

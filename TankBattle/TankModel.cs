@@ -19,15 +19,6 @@ namespace TankBattle
         //private int X1, X2, Y1, Y2;
         public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
-             //graphic[X1, Y1] = 1;
-            //graphic[X2, Y2] = 1;
-            //int dx = X2 - X1;
-            //int dy = Y2 - Y1;
-            //for (int x = X1; x != X2; x++ ){
-            //    int y = Y1 + dy * (x - X1) / dx;
-            //    graphic[x, y] = 1;
-            //}
-
             int dx = X2 - X1;
             int dy = Y2 - Y1;
 		

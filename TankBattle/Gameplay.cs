@@ -68,7 +68,7 @@ namespace TankBattle
 
 		public static Color GetTankColour(int playerNum)
 		{
-			Color[] TheColor = new Color[] { Color.AliceBlue, Color.Beige, Color.Chocolate, Color.Gold, Color.Orange, Color.Violet, Color.Yellow, Color.Green };
+			Color[] TheColor = new Color[] { Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Red, Color.Violet, Color.Indigo, Color.Turquoise };
 			return TheColor[playerNum - 1];
 		}
 

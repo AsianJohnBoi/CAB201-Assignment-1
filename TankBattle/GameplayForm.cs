@@ -79,10 +79,11 @@ namespace TankBattle {
         }
 
         public void SetPower(int power) {
-            powerTrackBar.Value = power;
+			//powerTrackBar.Value = power;
+			powerTrackBar.Value = power;
         }
         public void SetWeaponIndex(int weapon) {
-            weaponComboBox.SelectedItem = weaponSet;
+            weaponComboBox.SelectedItem = weapon;
         }
 
         public void Attack() {
@@ -206,12 +207,12 @@ namespace TankBattle {
             displayPanel.Invalidate();
         }
 
-        private void powerTrackBar_Scroll(object sender, EventArgs e) {
+        /*private void powerTrackBar_Scroll(object sender, EventArgs e) {
             currentControlledTank.SetPower(powerSet);
-            powerLabel.Text = powerSet.ToString();
+			powerLevelLabel.Text = powerTrackBar.Value.ToString();
             DrawGameplay();
             displayPanel.Invalidate();
-        }
+        }*/
 
         private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             currentControlledTank.SetWeaponIndex(weaponSet);
@@ -240,6 +241,14 @@ namespace TankBattle {
 		private void fireButton_Click(object sender, EventArgs e)
 		{
 			Attack();
+		}
+
+		private void trackBar1_Scroll(object sender, EventArgs e)
+		{
+			currentControlledTank.SetPower(powerSet);
+			DrawGameplay();
+			displayPanel.Invalidate();
+			powerLevelLabel.Text = powerTrackBar.Value.ToString();
 		}
 	}
 }
