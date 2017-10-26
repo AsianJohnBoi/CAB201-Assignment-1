@@ -5,17 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace TankBattle {
     public class Terrain {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
-        private bool[,] map;
 
-        private int terrainAmount = (WIDTH * HEIGHT / 2); //Amount of terrain, area of terrain fills half the map
+        private const double MULTIPLIER = 3.0;
+
+        private double randomTerrainAmount;
+        private double randomTerrainMultiplier;
+        private int roundedTerrainAmount;
+        private bool[,] map;
 
         public Terrain() {
             Random rnd = new Random();
             map = new bool[WIDTH, HEIGHT];
+
+            randomTerrainMultiplier = rnd.NextDouble() * MULTIPLIER;
+            randomTerrainAmount = (WIDTH * HEIGHT / randomTerrainMultiplier);
+
+            roundedTerrainAmount = Convert.ToInt32(randomTerrainAmount);
 
             //Create empty map
             for (int y = 0; y <= HEIGHT - 1; y++) {
@@ -25,7 +33,7 @@ namespace TankBattle {
             }
 
             //Random positions for terrain
-            for (int i = 0; i < terrainAmount; i++) {
+            for (int i = 0; i < roundedTerrainAmount; i++) {
                 int randyPos = rnd.Next(HEIGHT);
                 int randxPos = rnd.Next(WIDTH);
 
@@ -72,18 +80,6 @@ namespace TankBattle {
                     }
                 }
             }
-
-            //for (int y = 0; y <= HEIGHT - 1; y++) {
-            //    for (int x = 0; x <= WIDTH - 1; x++) {
-            //        if (map[x, y] == false) {
-            //            Console.Write('.');
-            //        } else if (map[x, y] == true) {
-            //            Console.Write('#');
-            //        }
-            //    }
-            //    //seperate lines
-            //    Console.WriteLine();
-            //}
         }
 
         public bool IsTileAt(int x, int y) {
