@@ -9,7 +9,7 @@ namespace TankBattle {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
 
-        private const double MULTIPLIER = 3.0;
+        private const double MULTIPLIER = 2.75;
 
         private double randomTerrainAmount;
         private double randomTerrainMultiplier;
