@@ -9,7 +9,8 @@ namespace TankBattle {
         public const int WIDTH = 160; //160
         public const int HEIGHT = 120; //120
 
-        private const double MULTIPLIER = 2.75;
+        private const double MULTIPLIER = 3.0;
+        private const double MULTIPLIER_MINIMUM = 0.5;
 
         private double randomTerrainAmount;
         private double randomTerrainMultiplier;
@@ -20,9 +21,14 @@ namespace TankBattle {
             Random rnd = new Random();
             map = new bool[WIDTH, HEIGHT];
 
-            randomTerrainMultiplier = rnd.NextDouble() * MULTIPLIER;
-            randomTerrainAmount = (WIDTH * HEIGHT / randomTerrainMultiplier);
+            randomTerrainMultiplier = (rnd.NextDouble() * MULTIPLIER);
 
+            while (randomTerrainMultiplier < MULTIPLIER_MINIMUM) {
+                randomTerrainMultiplier = (rnd.NextDouble() * MULTIPLIER);
+            }
+
+            randomTerrainAmount = (WIDTH * HEIGHT / randomTerrainMultiplier);
+      
             roundedTerrainAmount = Convert.ToInt32(randomTerrainAmount);
 
             //Create empty map
