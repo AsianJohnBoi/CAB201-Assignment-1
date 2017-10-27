@@ -14,7 +14,6 @@ namespace TankBattle
         Blast explosion;
         Opponent player;
 
-
         public Shell(float x, float y, float angle, float power, float gravity, Blast explosion, Opponent player)
         {
             this.x = x;
@@ -25,24 +24,29 @@ namespace TankBattle
             float angleRadians = (90 - angle) * (float)Math.PI / 180;
             float magnitude = power / 50;
             xVelocity = (float)Math.Cos(angleRadians) * magnitude;
-            yVelocity = (float)Math.Sin(angleRadians) * -magnitude;
+            yVelocity = (float)Math.Sin(angleRadians) * magnitude;
         }
 
         public override void Process()
         {
-            x += x;
-            y += y;
-            xVelocity += xVelocity;
-            yVelocity += yVelocity;
+            x += xVelocity;
+            y += yVelocity;
             x += x / i.GetWindSpeed() / 1000.0f;
-            if (x < 0 || x > Terrain.WIDTH) { i.EndEffect(this); }
-            else if (y < 0 || y > Terrain.HEIGHT) { i.EndEffect(this); }
+            if (x < 0 || x > Terrain.WIDTH) {
+                i.EndEffect(this);
+                return;
+            }
+            else if (y < 0 || y > Terrain.HEIGHT) {
+                i.EndEffect(this);
+                return;
+            }
             else if (i.CheckHitTank(x, y))
             {
                 player.ProjectileHitPos(x, y);
                 explosion.Explode(x, y);
                 i.AddWeaponEffect(explosion);
                 i.EndEffect(this);
+                return;
             }
             y += gravity;
         }
