@@ -16,28 +16,32 @@ namespace TankBattle
 
         public abstract int[,] DisplayTank(float angle);
 
-        //private int X1, X2, Y1, Y2;
-        public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
-        {
-            int dx = X2 - X1;
-            int dy = Y2 - Y1;
-		
-            //If X1 starts on very right of line
-            if (X1 > X2) {
-                for (int x = X1; x != X2 - 1; x--) {
-                    int y = Y1 + dy * (x - X1) / dx;
-                    graphic[x, y] = 1;
-                }
-            }
-		
-	    //If X1 starts on very left of line
-            else if (X2 > X1) {
-                for (int x = X1; x != X2 - 1; x++) {
-                    int y = Y1 + dy * (x - X1) / dx;
-                    graphic[x, y] = 1;
-                }
-            }
-        }
+		//private int X1, X2, Y1, Y2;
+		public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
+		{
+			int dx = X2 - X1;
+			int dy = Y2 - Y1;
+
+			//If X1 starts on very right of line
+			if (X1 > X2)
+			{
+				for (int x = X1; x != X2 - 1; x--)
+				{
+					int y = Y1 + dy * (x - X1) / dx;
+					graphic[x, y] = 1;
+				}
+			}
+
+			//If X1 starts on very left of line
+			else if (X2 > X1)
+			{
+				for (int x = X1; x != X2 - 1; x++)
+				{
+					int y = Y1 + dy * (x - X1) / dx;
+					graphic[x, y] = 1;
+				}
+			}
+		}
         public Bitmap CreateBitmap(Color tankColour, float angle)
         {
             int[,] tankGraphic = DisplayTank(angle);
@@ -122,8 +126,6 @@ namespace TankBattle
 
 			X1 = 7;
 			Y1 = 6;
-            double x_t = Math.Sin(Math.PI/180 * angle);
-            double y_t = Math.Cos(Math.PI /180 * angle);
 			X2 = X1 + (int)(Math.Sin(radians) * 5);
 			Y2 = Y1 - (int)(Math.Cos(radians) * 5);
 
