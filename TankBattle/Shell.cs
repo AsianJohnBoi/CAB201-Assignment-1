@@ -24,7 +24,7 @@ namespace TankBattle
             float angleRadians = (90 - angle) * (float)Math.PI / 180;
             float magnitude = power / 50;
             xVelocity = (float)Math.Cos(angleRadians) * magnitude;
-            yVelocity = (float)Math.Sin(angleRadians) * magnitude;
+            yVelocity = (float)Math.Sin(angleRadians) * -magnitude;
         }
 
         public override void Process()

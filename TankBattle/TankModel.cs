@@ -93,11 +93,11 @@ namespace TankBattle
 
         public static TankModel GetTank(int tankNumber)
         {
-            return new TheTank(); //100
+            return new TheTank();
         }
     }
-    //create 4 
-    public class TheTank : TankModel
+
+	public class TheTank : TankModel
     {
         private int X1, Y1, X2, Y2;
         public String[] Weapons;
@@ -117,28 +117,16 @@ namespace TankBattle
 				   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
 				   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-			if (angle >= 0)
-			{
-				X1 = 7;
-				Y1 = 6;
-                double x_t = Math.Sin(Math.PI/180 * angle);
-                double y_t = Math.Cos(Math.PI /180 * angle);
-                X2 = (int)Math.Sin(Math.PI / 180 * angle);
-                Y2 = (int)Math.Cos(Math.PI / 180 * angle);
-                //X2 = X1 + ((int)(Math.Sin(Math.PI / 180 * angle) * 10) / 2 + 1);
-                //Y2 = Y1 - ((int)(Math.Cos(Math.PI / 180 * angle) * 10) / 2 + 1);
-            }
-            else if ( angle < 0)
-            {
-                X2 = 7;
-                Y2 = 6;
-                X1 = (int)Math.Sin(Math.PI / 180 * angle);
-                Y1 = (int)Math.Cos(Math.PI / 180 * angle);
-                //            X1 = X2 + ((int)(Math.Sin(Math.PI / 180 * angle) * 10) / 2 + 1);
-                //Y1 = Y1 - ((int)(Math.Cos(Math.PI / 180 * angle) * 10) / 2 + 1);
-                double x_t = Math.Sin(Math.PI / 180 * angle);
-                double y_t = Math.Cos(Math.PI / 180 * angle);
-			}
+			double radians = (Math.PI / 180) * angle;
+			int r2 = (int)radians;
+
+			X1 = 7;
+			Y1 = 6;
+            double x_t = Math.Sin(Math.PI/180 * angle);
+            double y_t = Math.Cos(Math.PI /180 * angle);
+			X2 = X1 + (int)(Math.Sin(radians) * 5);
+			Y2 = Y1 - (int)(Math.Cos(radians) * 5);
+
 			DrawLine(graphic, X1, Y1, X2, Y2);
 			return graphic;
         }
