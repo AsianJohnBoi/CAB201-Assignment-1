@@ -163,22 +163,30 @@ namespace TankBattle
 
 		public void AddWeaponEffect(WeaponEffect weaponEffect)
 		{
-			for (int i = 0; i < WeaponsEffect.Count; i++)
-            {
-                if (WeaponsEffect[i] == null)
-                {
-                    WeaponsEffect[i] = weaponEffect;
-                }
-            }
-		}
+            //for (int i = 0; i < WeaponsEffect.Count; i++)
+            //         {
+            //             if (WeaponsEffect[i] == null)
+            //             {
+            //                 WeaponsEffect[i] = weaponEffect;
+            //             }
+            //         }
+            WeaponsEffect.Add(weaponEffect);
+            weaponEffect.RecordCurrentGame(this);
+
+        }
 
 		public bool ProcessEffects()
 		{
             bool weaponExist = false;
-			for (int i = 0; i < WeaponsEffect.Count; i++)
-            {
-                if (WeaponsEffect[i] != null) { weaponExist = true;}
-                else { weaponExist = false; }
+			//for (int i = 0; i < WeaponsEffect.Count; i++)
+   //         {
+   //             if (WeaponsEffect[i] != null) { weaponExist = true;}
+   //             else { weaponExist = false; }
+   //         }
+            for (int i =0; i < WeaponsEffect.Count; i ++)
+            { 
+                WeaponsEffect[i].Process();
+                weaponExist = true;
             }
             return weaponExist;
 		}
@@ -214,7 +222,7 @@ namespace TankBattle
             {
                 if (i == playerNum)   //prevent current tank hitting itself
                 {
-                    i++;
+                    continue;
                 }
                 else if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
                 {

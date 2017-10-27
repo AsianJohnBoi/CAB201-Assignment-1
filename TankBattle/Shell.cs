@@ -14,6 +14,7 @@ namespace TankBattle
         Blast explosion;
         Opponent player;
 
+
         public Shell(float x, float y, float angle, float power, float gravity, Blast explosion, Opponent player)
         {
             this.x = x;

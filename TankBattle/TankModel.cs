@@ -121,15 +121,23 @@ namespace TankBattle
 			{
 				X1 = 7;
 				Y1 = 6;
-				X2 = (int)Math.Sin(angle);
-				Y2 = (int)Math.Cos(angle);
-			}
-			else if ( angle < 0)
-			{
-				X1 = (int)Math.Sin(angle);
-				Y1 = (int)Math.Cos(angle);
-				X2 = 7;
-				Y2 = 6;
+                double x_t = Math.Sin(Math.PI/180 * angle);
+                double y_t = Math.Cos(Math.PI /180 * angle);
+                X2 = (int)Math.Sin(Math.PI / 180 * angle);
+                Y2 = (int)Math.Cos(Math.PI / 180 * angle);
+                //X2 = X1 + ((int)(Math.Sin(Math.PI / 180 * angle) * 10) / 2 + 1);
+                //Y2 = Y1 - ((int)(Math.Cos(Math.PI / 180 * angle) * 10) / 2 + 1);
+            }
+            else if ( angle < 0)
+            {
+                X2 = 7;
+                Y2 = 6;
+                X1 = (int)Math.Sin(Math.PI / 180 * angle);
+                Y1 = (int)Math.Cos(Math.PI / 180 * angle);
+                //            X1 = X2 + ((int)(Math.Sin(Math.PI / 180 * angle) * 10) / 2 + 1);
+                //Y1 = Y1 - ((int)(Math.Cos(Math.PI / 180 * angle) * 10) / 2 + 1);
+                double x_t = Math.Sin(Math.PI / 180 * angle);
+                double y_t = Math.Cos(Math.PI / 180 * angle);
 			}
 			DrawLine(graphic, X1, Y1, X2, Y2);
 			return graphic;

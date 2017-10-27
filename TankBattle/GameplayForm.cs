@@ -90,8 +90,8 @@ namespace TankBattle {
             currentControlledTank = currentGame.GetCurrentGameplayTank();
             currentControlledTank.Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
                                             //ControlledTank, then calls its Attack() method.
-			formTimer.Enabled = true;
-			controlPanel.Enabled = false;
+            controlPanel.Enabled = false;
+            formTimer.Enabled = true;
 		}
 
         private void DrawGameplay() {
@@ -202,6 +202,7 @@ namespace TankBattle {
         }
 
         private void angleSetter_ValueChanged(object sender, EventArgs e) {
+            angleSet = (int)angleSetter.Value;
             currentControlledTank.SetAimingAngle(angleSet);
             DrawGameplay();
             displayPanel.Invalidate();
@@ -215,26 +216,61 @@ namespace TankBattle {
         }*/
 
         private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            weaponSet = weaponComboBox.SelectedIndex;
             currentControlledTank.SetWeaponIndex(weaponSet);
         }
 
         private void formTimer_Tick(object sender, EventArgs e) {
-            currentGame.ProcessEffects();
-            if (currentGame.ProcessEffects() == false) {
-                currentGame.Gravity();
+            //currentGame.ProcessEffects();
+            //if (currentGame.ProcessEffects() == false) {
+            //    currentGame.Gravity();
+            //    DrawBackground();
+            //    DrawGameplay();
+            //    displayPanel.Invalidate();
+            //    if (currentGame.Gravity() == true) {
+            //        return;
+            //    } else {
+            //        formTimer.Enabled = false;
+            //        currentGame.TurnOver();
+            //        NewTurn();
+            //        Dispose();
+            //        currentGame.NextRound();
+            //        return;
+            //    }
+            //}
+            
+            if (currentGame.ProcessEffects() == false)
+            {
+                bool gravity = currentGame.Gravity();
                 DrawBackground();
                 DrawGameplay();
                 displayPanel.Invalidate();
-                if (currentGame.Gravity() == true) {
+                if (gravity == true)
+                {
                     return;
-                } else {
+                }
+                else
+                {
                     formTimer.Enabled = false;
-                    currentGame.TurnOver();
-                    NewTurn();
-                    Dispose();
+                    bool nextTurn = currentGame.TurnOver();
+                    if (nextTurn)
+                    {
+                        NewTurn();
+                    }
+                    else
+                    {
+                        Dispose();
+                    }
+                    //Dispose();
                     currentGame.NextRound();
                     return;
                 }
+            }
+            else
+            {
+                DrawGameplay();
+                displayPanel.Invalidate();
+                return;
             }
         }
 
@@ -245,6 +281,7 @@ namespace TankBattle {
 
 		private void trackBar1_Scroll(object sender, EventArgs e)
 		{
+            powerSet = powerTrackBar.Value;
 			currentControlledTank.SetPower(powerSet);
 			DrawGameplay();
 			displayPanel.Invalidate();
