@@ -269,7 +269,7 @@ namespace TankBattle
                        
                     if (dist > radius) {
                         tempDamage = 0;
-                    } else if (dist > radius && dist < radius / 2) {
+                    } else if (dist < radius && dist > radius / 2) {
                         tempDamage = (explosionDamage * (radius - dist) / radius);
                     } else if (dist < radius / 2) {
                         tempDamage = explosionDamage;
@@ -323,7 +323,7 @@ namespace TankBattle
                 }
             }
 
-            if (howManyExists > 2) //if there is two or more tanks, continue the round
+            if (howManyExists >= 2) //if there is two or more tanks, continue the round
             {
                 currentPlayer++;
                 if (currentPlayer > numPlayers.Length - 1) { currentPlayer = 0; }
