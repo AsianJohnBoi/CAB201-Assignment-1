@@ -1,6 +1,6 @@
 ﻿namespace TankBattle
 {
-	partial class setupPlayerForm
+	partial class setupGameForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,154 +28,120 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.nextPlayerButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tank1RadioButton = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.aiRadioButton = new System.Windows.Forms.RadioButton();
-            this.humanRadioButton = new System.Windows.Forms.RadioButton();
-            this.playerNameInput = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.label2 = new System.Windows.Forms.Label();
+            this.setupPlayersButton = new System.Windows.Forms.Button();
+            this.playerAmountInput = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.playerAmountInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Silver;
-            this.panel1.Controls.Add(this.nextPlayerButton);
-            this.panel1.Controls.Add(this.groupBox2);
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.playerNameInput);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(24, 23);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(830, 385);
-            this.panel1.TabIndex = 0;
-            // 
-            // nextPlayerButton
-            // 
-            this.nextPlayerButton.Location = new System.Drawing.Point(68, 304);
-            this.nextPlayerButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.nextPlayerButton.Name = "nextPlayerButton";
-            this.nextPlayerButton.Size = new System.Drawing.Size(694, 52);
-            this.nextPlayerButton.TabIndex = 4;
-            this.nextPlayerButton.Text = "Next Player";
-            this.nextPlayerButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tank1RadioButton);
-            this.groupBox2.Location = new System.Drawing.Point(320, 156);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox2.Size = new System.Drawing.Size(442, 129);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tank";
-            // 
-            // tank1RadioButton
-            // 
-            this.tank1RadioButton.AutoSize = true;
-            this.tank1RadioButton.Location = new System.Drawing.Point(24, 60);
-            this.tank1RadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tank1RadioButton.Name = "tank1RadioButton";
-            this.tank1RadioButton.Size = new System.Drawing.Size(27, 26);
-            this.tank1RadioButton.TabIndex = 0;
-            this.tank1RadioButton.TabStop = true;
-            this.tank1RadioButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.aiRadioButton);
-            this.groupBox1.Controls.Add(this.humanRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(66, 156);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox1.Size = new System.Drawing.Size(222, 129);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Controller";
-            // 
-            // aiRadioButton
-            // 
-            this.aiRadioButton.AutoSize = true;
-            this.aiRadioButton.Location = new System.Drawing.Point(142, 56);
-            this.aiRadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.aiRadioButton.Name = "aiRadioButton";
-            this.aiRadioButton.Size = new System.Drawing.Size(62, 29);
-            this.aiRadioButton.TabIndex = 1;
-            this.aiRadioButton.TabStop = true;
-            this.aiRadioButton.Text = "AI";
-            this.aiRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // humanRadioButton
-            // 
-            this.humanRadioButton.AutoSize = true;
-            this.humanRadioButton.Location = new System.Drawing.Point(12, 56);
-            this.humanRadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.humanRadioButton.Name = "humanRadioButton";
-            this.humanRadioButton.Size = new System.Drawing.Size(111, 29);
-            this.humanRadioButton.TabIndex = 0;
-            this.humanRadioButton.TabStop = true;
-            this.humanRadioButton.Text = "Human";
-            this.humanRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // playerNameInput
-            // 
-            this.playerNameInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.playerNameInput.Location = new System.Drawing.Point(386, 50);
-            this.playerNameInput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.playerNameInput.Name = "playerNameInput";
-            this.playerNameInput.Size = new System.Drawing.Size(372, 53);
-            this.playerNameInput.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.label1.Location = new System.Drawing.Point(56, 50);
+            this.label1.Location = new System.Drawing.Point(24, 40);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(331, 46);
+            this.label1.Size = new System.Drawing.Size(464, 46);
             this.label1.TabIndex = 0;
-            this.label1.Text = "playerNameLabel";
+            this.label1.Text = "How many players? (2-8)";
             // 
-            // setupPlayerForm
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.label2.Location = new System.Drawing.Point(24, 123);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(547, 46);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "How many gameplay rounds?";
+            // 
+            // setupPlayersButton
+            // 
+            this.setupPlayersButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.setupPlayersButton.Location = new System.Drawing.Point(34, 202);
+            this.setupPlayersButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.setupPlayersButton.Name = "setupPlayersButton";
+            this.setupPlayersButton.Size = new System.Drawing.Size(706, 67);
+            this.setupPlayersButton.TabIndex = 4;
+            this.setupPlayersButton.Text = "Setup Players";
+            this.setupPlayersButton.UseVisualStyleBackColor = true;
+            // 
+            // playerAmountInput
+            // 
+            this.playerAmountInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playerAmountInput.Location = new System.Drawing.Point(577, 40);
+            this.playerAmountInput.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.playerAmountInput.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.playerAmountInput.Name = "playerAmountInput";
+            this.playerAmountInput.Size = new System.Drawing.Size(120, 49);
+            this.playerAmountInput.TabIndex = 5;
+            this.playerAmountInput.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Location = new System.Drawing.Point(577, 123);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 49);
+            this.numericUpDown1.TabIndex = 6;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // setupGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Maroon;
-            this.ClientSize = new System.Drawing.Size(878, 431);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(766, 292);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.playerAmountInput);
+            this.Controls.Add(this.setupPlayersButton);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.Name = "setupPlayerForm";
-            this.Text = "Setup Player";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Name = "setupGameForm";
+            this.Text = "Setup Game";
+            ((System.ComponentModel.ISupportInitialize)(this.playerAmountInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button nextPlayerButton;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.RadioButton tank1RadioButton;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.RadioButton aiRadioButton;
-		private System.Windows.Forms.RadioButton humanRadioButton;
-		private System.Windows.Forms.TextBox playerNameInput;
 		private System.Windows.Forms.Label label1;
-	}
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Button setupPlayersButton;
+        private System.Windows.Forms.NumericUpDown playerAmountInput;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+    }
 }
