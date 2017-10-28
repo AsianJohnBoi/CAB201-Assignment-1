@@ -241,19 +241,19 @@ namespace TankBattle {
             
             if (currentGame.ProcessEffects() == false)
             {
-                bool gravity = currentGame.Gravity();
+                currentGame.Gravity();
                 DrawBackground();
                 DrawGameplay();
                 displayPanel.Invalidate();
-                if (gravity == true)
+                if (currentGame.Gravity())
                 {
                     return;
                 }
                 else
                 {
                     formTimer.Enabled = false;
-                    bool nextTurn = currentGame.TurnOver();
-                    if (nextTurn)
+                    currentGame.TurnOver();
+                    if (currentGame.TurnOver())
                     {
                         NewTurn();
                     }
