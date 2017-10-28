@@ -131,7 +131,6 @@ namespace TankBattle
 			if (!Exists())
 			{
 				return false;
-				//Terrain t = game.GetLevel();
 			}
 			Terrain t = game.GetLevel();
 			int x = GetX();
@@ -142,18 +141,15 @@ namespace TankBattle
 			}
 			else
 			{
-				Debug.WriteLine(tankY);
-				tankY++; //doesn't increment the tank's position by 1.
-				Debug.WriteLine(tankY);
+				tankY++;
 				currentDur--;
 				if (tankY == Terrain.HEIGHT - TankModel.HEIGHT)
 				{
 					currentDur = 0;
 					return true;
 				}
-				
 			}
-			return false;
+			return true;
         }
     }
 }

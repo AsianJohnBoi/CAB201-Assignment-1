@@ -244,20 +244,6 @@ namespace TankBattle
             {
                 if (TheTank[i].Exists())
                 {
-                    //if (TheTank[i].GetX() + (TankModel.WIDTH / 2) >= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is greater than the x,y position
-                    //{
-                    //    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
-                    //    tankPositionX = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
-
-                    //    distanceBetweenX = TheTank[i].GetX() - damageX;
-                    //    distanceBetweenY = TheTank[i].GetYPos() - damageY;
-                    //}
-                    //else if (TheTank[i].GetX() + (TankModel.WIDTH / 2) <= damageX || TheTank[i].GetYPos() + (TankModel.HEIGHT / 2) >= damageY) //if tank position is less than the x,y position
-                    //{
-                    //    distanceBetweenX = TheTank[i].GetX() + damageX;
-                    //    distanceBetweenY = TheTank[i].GetYPos() + damageY;
-                    //}
-
                     float dist;
                     double tempDist;
 
@@ -269,7 +255,7 @@ namespace TankBattle
                        
                     if (dist > radius) {
                         tempDamage = 0;
-                    } else if (dist < radius && dist > radius / 2) {
+                    } else if (dist > radius && dist < radius / 2) {
                         tempDamage = (explosionDamage * (radius - dist) / radius);
                     } else if (dist < radius / 2) {
                         tempDamage = explosionDamage;
@@ -285,13 +271,6 @@ namespace TankBattle
 		public bool Gravity() //double check
 		{
             bool anyMovement = false;
-            for (int i = 0; i < WeaponsEffect.Count; i++)
-            {
-                if (WeaponsEffect[i] != null) //checks if there are any weaponeffects
-                {
-                    anyMovement = true;
-                }
-            }
             newTerrain.Gravity();
             if (newTerrain.Gravity() == true) //if gravity applied to terrain, set bool to true
             {
@@ -302,10 +281,12 @@ namespace TankBattle
                 newTerrain.Gravity();
                 if (TheTank[i].Gravity() == true)
                 {
-                    anyMovement = true;
+                    return true;
                 }
+				else{
+					anyMovement = false;
+				}
             }
-
             return anyMovement;
 		}
         

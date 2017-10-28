@@ -79,7 +79,6 @@ namespace TankBattle {
         }
 
         public void SetPower(int power) {
-			//powerTrackBar.Value = power;
 			powerTrackBar.Value = power;
         }
         public void SetWeaponIndex(int weapon) {
@@ -119,11 +118,9 @@ namespace TankBattle {
 
             //Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
             currentControlledTank.SetAimingAngle(angleSet);
-            //SetAimingAngle(currentControlledTank.GetAim());
 
             //Call SetPower() to set the current turret power to the current ControlledTank's power.
             currentControlledTank.SetPower(powerSet);
-            //SetPower(currentControlledTank.GetCurrentPower());
 
             //Update the wind speed label to show the current wind speed, retrieved from currentGame.
             //Positive values should be shown as E winds, negative values as W winds.
@@ -133,7 +130,7 @@ namespace TankBattle {
             if (windSpeed > 0) {
                 windStatusLabel.Text = windSpeed + " E";
             } else if (windSpeed < 0) {
-                windStatusLabel.Text = windSpeed + " W";
+                windStatusLabel.Text = -windSpeed + " W";
             }
 
             //Clear the current weapon names from the ComboBox.
@@ -208,37 +205,12 @@ namespace TankBattle {
             displayPanel.Invalidate();
         }
 
-        /*private void powerTrackBar_Scroll(object sender, EventArgs e) {
-            currentControlledTank.SetPower(powerSet);
-			powerLevelLabel.Text = powerTrackBar.Value.ToString();
-            DrawGameplay();
-            displayPanel.Invalidate();
-        }*/
-
         private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             weaponSet = weaponComboBox.SelectedIndex;
             currentControlledTank.SetWeaponIndex(weaponSet);
         }
 
         private void formTimer_Tick(object sender, EventArgs e) {
-            //currentGame.ProcessEffects();
-            //if (currentGame.ProcessEffects() == false) {
-            //    currentGame.Gravity();
-            //    DrawBackground();
-            //    DrawGameplay();
-            //    displayPanel.Invalidate();
-            //    if (currentGame.Gravity() == true) {
-            //        return;
-            //    } else {
-            //        formTimer.Enabled = false;
-            //        currentGame.TurnOver();
-            //        NewTurn();
-            //        Dispose();
-            //        currentGame.NextRound();
-            //        return;
-            //    }
-            //}
-            
             if (currentGame.ProcessEffects() == false)
             {
                 currentGame.Gravity();
@@ -261,7 +233,6 @@ namespace TankBattle {
                     {
                         Dispose();
                     }
-                    //Dispose();
                     currentGame.NextRound();
                     return;
                 }
