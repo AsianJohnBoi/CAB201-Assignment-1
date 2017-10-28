@@ -22,6 +22,12 @@ namespace TankBattle
 			int dx = X2 - X1;
 			int dy = Y2 - Y1;
 
+			//for (int x = Math.Min(X1, X2); x <= Math.Max(X1,X2); x++)
+			//{
+			//	int y = Y1 + dy * (x - X1) / dx;
+			//	graphic[x, y] = 1;
+			//}
+
 			//If X1 starts on very right of line
 			if (X1 > X2)
 			{
@@ -103,7 +109,7 @@ namespace TankBattle
 
 	public class TheTank : TankModel
     {
-        private int X1, Y1, X2, Y2;
+        public double X1, Y1, X2, Y2;
         public String[] Weapons;
 
 		public override int[,] DisplayTank(float angle)
@@ -121,15 +127,14 @@ namespace TankBattle
 				   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
 				   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-			double radians = (Math.PI / 180) * angle;
-			int r2 = (int)radians;
+			float radians = (180 - angle) * (float)Math.PI / 180;
 
 			X1 = 7;
 			Y1 = 6;
-			X2 = X1 + (int)(Math.Sin(radians) * 5);
-			Y2 = Y1 - (int)(Math.Cos(radians) * 5);
+			X2 = Math.Round(X1 + (5 * Math.Cos(radians)));
+			Y2 = Math.Round(Y1 + (5 * Math.Sin(radians)));
 
-			DrawLine(graphic, X1, Y1, X2, Y2);
+			DrawLine(graphic, (int)X1, (int)Y1, (int)X2, (int)Y2);
 			return graphic;
         }
 

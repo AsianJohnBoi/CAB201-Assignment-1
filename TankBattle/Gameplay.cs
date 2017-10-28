@@ -212,28 +212,26 @@ namespace TankBattle
 
 		public bool CheckHitTank(float projectileX, float projectileY) //double check
 		{
-            bool hit = false;
-			if (projectileX < 0 | projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) { hit = false; }
-            else if (newTerrain.IsTileAt((int)projectileX, (int)projectileY))
+			if (projectileX < 0 | projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) { return false; }
+            if (newTerrain.IsTileAt((int)projectileX, (int)projectileY))
             {
-                hit = true;
+                return true;
             }
             for (int i = 0; i < TheTank.Length; i++)
             {
                 if (i == playerNum)   //prevent current tank hitting itself
                 {
-                    continue;
+                    return false;
                 }
-                else if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
+                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
                 {
-                    hit = true;
-                }
-                else if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH &&   projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
-                {
-                    hit = true;
-                }
+					if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
+					{
+						return true;
+					}
+				}
             }
-            return hit;
+			return false;
 		}
 
 		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete

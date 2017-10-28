@@ -29,26 +29,25 @@ namespace TankBattle
 
         public override void Process()
         {
-            x += xVelocity;
-            y += yVelocity;
-            x += x / i.GetWindSpeed() / 1000.0f;
-            if (x < 0 || x > Terrain.WIDTH) {
-                i.EndEffect(this);
-                return;
-            }
-            else if (y < 0 || y > Terrain.HEIGHT) {
-                i.EndEffect(this);
-                return;
-            }
-            else if (i.CheckHitTank(x, y))
-            {
-                player.ProjectileHitPos(x, y);
-                explosion.Explode(x, y);
-                i.AddWeaponEffect(explosion);
-                i.EndEffect(this);
-                return;
-            }
-            y += gravity;
+			for (int l = 0; l < 10; l++)
+			{
+				x += xVelocity;
+				y += yVelocity;
+				x += x / i.GetWindSpeed() / 1000.0f;
+				if (x < 0 || x > Terrain.WIDTH || y < 0 || y > Terrain.HEIGHT) {
+					i.EndEffect(this);
+					return;
+				}
+				else if (i.CheckHitTank(x, y))
+				{
+					player.ProjectileHitPos(x, y);
+					explosion.Explode(x, y);
+					i.AddWeaponEffect(explosion);
+					i.EndEffect(this);
+				}
+				yVelocity += gravity;
+			}
+            
         }
 
         public override void Draw(Graphics graphics, Size size) //double check this method

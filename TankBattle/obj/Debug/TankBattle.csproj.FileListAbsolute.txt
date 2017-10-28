@@ -46,3 +46,5 @@ C:\Users\JohnSantias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankB
 C:\Users\JohnSantias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.csproj.CoreCompileInputs.cache
 C:\Users\JohnSantias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.exe
 C:\Users\JohnSantias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.pdb
+C:\Users\John Santias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.SetupPlayer.resources
+C:\Users\John Santias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.SetupGame.resources

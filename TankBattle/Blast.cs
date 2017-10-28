@@ -33,9 +33,10 @@ namespace TankBattle
 
         public override void Process()
         {
-            lifespan = lifespan - 0.05f;
+            lifespan -= 0.02f;
             if (lifespan <= 0)
             {
+				lifespan = 0;
                 i.InflictDamage(x, y, explosionDamage, earthDestructionRadius);
                 Terrain theterrain = i.GetLevel();
                 theterrain.DestroyGround(x, y, earthDestructionRadius);
