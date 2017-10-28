@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TankBattle
 {
-	public partial class SetupGame : Form
+	public partial class setupPlayerForm : Form
 	{
-		public SetupGame()
+		public setupPlayerForm()
 		{
 			InitializeComponent();
 		}
