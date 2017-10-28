@@ -64,17 +64,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIOpponent.cs" />
-    <Compile Include="SetupPlayer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SetupPlayer.Designer.cs">
-      <DependentUpon>SetupPlayer.cs</DependentUpon>
-    </Compile>
     <Compile Include="SetupGame.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SetupGame.Designer.cs">
       <DependentUpon>SetupGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetupPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupPlayer.Designer.cs">
+      <DependentUpon>SetupPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Terrain.cs" />
     <Compile Include="Blast.cs" />
@@ -100,8 +100,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TankModel.cs" />
     <Compile Include="WeaponEffect.cs" />
-    <EmbeddedResource Include="SetupPlayer.resx">
-      <DependentUpon>SetupPlayer.cs</DependentUpon>
+    <EmbeddedResource Include="SetupGame.resx">
+      <DependentUpon>SetupGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameplayForm.resx">
       <DependentUpon>GameplayForm.cs</DependentUpon>
@@ -119,8 +119,8 @@
     <EmbeddedResource Include="IntroForm.resx">
       <DependentUpon>IntroForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetupGame.resx">
-      <DependentUpon>SetupGame.cs</DependentUpon>
+    <EmbeddedResource Include="SetupPlayer.resx">
+      <DependentUpon>SetupPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -32,9 +32,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.setupPlayersButton = new System.Windows.Forms.Button();
             this.playerAmountInput = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.roundAmountInput = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.playerAmountInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundAmountInput)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -63,12 +63,13 @@
             // 
             this.setupPlayersButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.setupPlayersButton.Location = new System.Drawing.Point(34, 202);
-            this.setupPlayersButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.setupPlayersButton.Margin = new System.Windows.Forms.Padding(6);
             this.setupPlayersButton.Name = "setupPlayersButton";
             this.setupPlayersButton.Size = new System.Drawing.Size(706, 67);
             this.setupPlayersButton.TabIndex = 4;
             this.setupPlayersButton.Text = "Setup Players";
             this.setupPlayersButton.UseVisualStyleBackColor = true;
+            this.setupPlayersButton.Click += new System.EventHandler(this.setupPlayersButton_Click);
             // 
             // playerAmountInput
             // 
@@ -93,24 +94,24 @@
             0,
             0});
             // 
-            // numericUpDown1
+            // roundAmountInput
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(577, 123);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.roundAmountInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roundAmountInput.Location = new System.Drawing.Point(577, 123);
+            this.roundAmountInput.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.roundAmountInput.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 49);
-            this.numericUpDown1.TabIndex = 6;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.roundAmountInput.Name = "roundAmountInput";
+            this.roundAmountInput.Size = new System.Drawing.Size(120, 49);
+            this.roundAmountInput.TabIndex = 6;
+            this.roundAmountInput.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -121,16 +122,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 292);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.roundAmountInput);
             this.Controls.Add(this.playerAmountInput);
             this.Controls.Add(this.setupPlayersButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "setupGameForm";
             this.Text = "Setup Game";
             ((System.ComponentModel.ISupportInitialize)(this.playerAmountInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundAmountInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +143,6 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button setupPlayersButton;
         private System.Windows.Forms.NumericUpDown playerAmountInput;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown roundAmountInput;
     }
 }
