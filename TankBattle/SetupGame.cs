@@ -25,12 +25,11 @@ namespace TankBattle
 
             Gameplay game = new Gameplay(playerAmount, roundAmount);
 
-            Opponent player1 = new HumanOpponent("Player 1", TankModel.GetTank(1), Gameplay.GetTankColour(1));
-            Opponent player2 = new HumanOpponent("Player 2", TankModel.GetTank(1), Gameplay.GetTankColour(2));
-
-            game.SetPlayer(1, player1);
-            game.SetPlayer(2, player2);
-
+			for (int i = 0; i < playerAmount; i++)
+			{
+				Opponent player = new HumanOpponent("Player" + (i + 1), TankModel.GetTank(i+1), Gameplay.GetTankColour(i+1));
+				game.SetPlayer(i+1, player);
+			}
             game.NewGame();
 
         }
