@@ -279,13 +279,13 @@ namespace TankBattle {
 
             if (e.KeyCode == Keys.Right) {
                 if (angleSetter.Value < 90) {
-                    angleSetter.Value = angleSetter.Value + 1;
+                    angleSetter.Value = angleSetter.Value + 5;
                 }
             }
 
             if (e.KeyCode == Keys.Left) {
                 if (angleSetter.Value > -90) {
-                    angleSetter.Value = angleSetter.Value - 1;
+                    angleSetter.Value = angleSetter.Value - 5;
                 }
             }
 
