@@ -65,6 +65,7 @@ namespace TankBattle
 					game.SetPlayer(i + 1, a);
 				}
 				game.NewGame();
+				
 				Close();
 			}
 			

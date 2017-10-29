@@ -44,6 +44,7 @@ namespace TankBattle
 					explosion.Explode(x, y);
 					i.AddWeaponEffect(explosion);
 					i.EndEffect(this);
+					return;
 				}
 				yVelocity += gravity;
 			}

@@ -23,8 +23,6 @@ namespace TankBattle {
         private int Wind;
         private ControlledTank[] TheTank;
         private Random rnd = new Random();
-        private float tankPositionX;
-        private float tankPositionY;
 
         public Gameplay(int numPlayers, int numRounds) {
             this.numPlayers = new int[numPlayers];
@@ -145,13 +143,7 @@ namespace TankBattle {
         }
 
         public void AddWeaponEffect(WeaponEffect weaponEffect) {
-            //for (int i = 0; i < WeaponsEffect.Count; i++)
-            //         {
-            //             if (WeaponsEffect[i] == null)
-            //             {
-            //                 WeaponsEffect[i] = weaponEffect;
-            //             }
-            //         }
+
             WeaponsEffect.Add(weaponEffect);
             weaponEffect.RecordCurrentGame(this);
 
@@ -159,11 +151,7 @@ namespace TankBattle {
 
         public bool ProcessEffects() {
             bool weaponExist = false;
-            //for (int i = 0; i < WeaponsEffect.Count; i++)
-            //         {
-            //             if (WeaponsEffect[i] != null) { weaponExist = true;}
-            //             else { weaponExist = false; }
-            //         }
+
             for (int i = 0; i < WeaponsEffect.Count; i++) {
                 WeaponsEffect[i].Process();
                 weaponExist = true;
@@ -191,32 +179,49 @@ namespace TankBattle {
             if (newTerrain.IsTileAt((int)projectileX, (int)projectileY)) {
                 return true;
             }
-            for (int i = 0; i < TheTank.Length; i++) {
-                if (i == playerNum)   //prevent current tank hitting itself
-                {
-                    return false;
-                }
-                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY)) {
-                    if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+
+			for (int i = 0; i < TheTank.Length; i++)
+			{
+				if (i == playerNum)   //prevent current tank hitting itself
+				{
+					return false;
+				}
+
+				if ((projectileX >= TheTank[i].GetX() && projectileX <= TheTank[i].GetX() + TankModel.WIDTH) && (projectileY >= TheTank[i].GetYPos() && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
+				{
+					//if (projectileY >= TheTank[i].GetYPos() && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT)
+					//{
+						return true;
+					//}
+				}
+
+
+				//if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
+				//{
+				//	if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
+				//	{
+				//		return true;
+				//	}
+				//}
+			}
+			return false;
         }
 
         public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
         {
-
-            int damageDone = 0;
-            float tempDamage = 0;
+            //int damageDone = 0;
+            //float tempDamage = 0;
 
             for (int i = 0; i < TheTank.Length; i++) {
                 if (TheTank[i].Exists()) {
                     float dist;
                     double tempDist;
+					int damageDone = 0;
+					float tempDamage = 0;
+					float tankPositionX;
+					float tankPositionY;
 
-                    tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
+					tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
                     tankPositionY = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
 
                     tempDist = Math.Sqrt(Math.Pow(damageX - tankPositionX, 2) + Math.Pow(damageY - tankPositionY, 2));
@@ -317,10 +322,12 @@ namespace TankBattle {
                 if (currentPlayer > numPlayers.Length - 1) {
                     currentPlayer = 0;
                     BeginRound();
-                } else if (currentRound > numRounds) {
-                    IntroForm introform = new IntroForm();
-                    introform.Show();
-                }
+				}
+				else if (currentRound > numRounds)
+				{
+					Rankings ranks = new Rankings(numPlayers.Length, TheOppo);
+					ranks.Show();
+				}
             }
         }
 
