@@ -266,5 +266,52 @@ namespace TankBattle {
 			displayPanel.Invalidate();
 			powerLevelLabel.Text = powerTrackBar.Value.ToString();
 		}
-	}
+
+        private bool spacePressed = false;
+
+        private void GameplayForm_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Space && !spacePressed) {
+                spacePressed = true;
+                controlPanel.Enabled = false;
+
+                Attack();
+            }
+
+            if (e.KeyCode == Keys.Right) {
+                if (angleSetter.Value < 90) {
+                    angleSetter.Value = angleSetter.Value + 1;
+                }
+            }
+
+            if (e.KeyCode == Keys.Left) {
+                if (angleSetter.Value > -90) {
+                    angleSetter.Value = angleSetter.Value - 1;
+                }
+            }
+
+            if (e.KeyCode == Keys.Up) {
+                if (powerTrackBar.Value < 100) {
+                    powerTrackBar.Value = powerTrackBar.Value + 1;
+                    powerSet = powerTrackBar.Value;
+                    currentControlledTank.SetPower(powerSet);
+                    powerLevelLabel.Text = powerTrackBar.Value.ToString();
+                }
+            }
+
+            if (e.KeyCode == Keys.Down) {
+                if (powerTrackBar.Value > 5) {
+                    powerTrackBar.Value = powerTrackBar.Value - 1;
+                    powerSet = powerTrackBar.Value;
+                    currentControlledTank.SetPower(powerSet);
+                    powerLevelLabel.Text = powerTrackBar.Value.ToString();
+                }
+            }
+        }
+
+        private void GameplayForm_KeyUp(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Space) {
+                spacePressed = false;
+            }
+        }
+    }
 }
