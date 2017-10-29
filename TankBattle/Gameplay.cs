@@ -7,162 +7,138 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace TankBattle
-{
-	public class Gameplay
-	{
+namespace TankBattle {
+    public class Gameplay {
         //check if array / int
-		private int[] numPlayers;
-		private int numRounds;
-		private int playerNum;
+        private int[] numPlayers;
+        private int numRounds;
+        private int playerNum;
         private int currentPlayer;
-		private List<WeaponEffect> WeaponsEffect;
-		private int currentRound;
-		private int opponent;
-		private int x;
-		private Terrain newTerrain;
-		private Opponent[] TheOppo;
+        private List<WeaponEffect> WeaponsEffect;
+        private int currentRound;
+        private int opponent;
+        private int x;
+        private Terrain newTerrain;
+        private Opponent[] TheOppo;
         private int Wind;
         private ControlledTank[] TheTank;
         private Random rnd = new Random();
-		private float tankPositionX;
-		private float tankPositionY;
+        private float tankPositionX;
+        private float tankPositionY;
 
-		public Gameplay(int numPlayers, int numRounds)
-		{
-			this.numPlayers = new int[numPlayers];
-			this.numRounds = numRounds;
+        public Gameplay(int numPlayers, int numRounds) {
+            this.numPlayers = new int[numPlayers];
+            this.numRounds = numRounds;
             TheOppo = new Opponent[numPlayers];
-			WeaponsEffect = new List<WeaponEffect>();
-		}
+            WeaponsEffect = new List<WeaponEffect>();
+        }
 
-		public int PlayerCount()
-		{
-			return numPlayers.Length;
-		}
+        public int PlayerCount() {
+            return numPlayers.Length;
+        }
 
-		public int GetRound()
-		{
-			return currentRound;
-		}
+        public int GetRound() {
+            return currentRound;
+        }
 
-		public int GetTotalRounds()
-		{
-			return numRounds;
-		}
+        public int GetTotalRounds() {
+            return numRounds;
+        }
 
-		public void SetPlayer(int playerNum, Opponent player)
-		{
+        public void SetPlayer(int playerNum, Opponent player) {
             TheOppo[playerNum - 1] = player;
-		}
+        }
 
-		public Opponent GetPlayerNumber(int playerNum)
-		{
-			return TheOppo[playerNum - 1];
-		}
+        public Opponent GetPlayerNumber(int playerNum) {
+            return TheOppo[playerNum - 1];
+        }
 
-		public ControlledTank PlayerTank(int playerNum)
-		{
-			return TheTank[playerNum - 1];
-		}
+        public ControlledTank PlayerTank(int playerNum) {
+            return TheTank[playerNum - 1];
+        }
 
-		public static Color GetTankColour(int playerNum)
-		{
-			Color[] TheColor = new Color[] { Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Red, Color.Violet, Color.Indigo, Color.Turquoise };
-			return TheColor[playerNum - 1];
-		}
+        public static Color GetTankColour(int playerNum) {
+            Color[] TheColor = new Color[] { Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Red, Color.Violet, Color.Indigo, Color.Turquoise };
+            return TheColor[playerNum - 1];
+        }
 
-		public static int[] CalculatePlayerPositions(int numPlayers)
-		{	
-			int TerrainW = (Terrain.WIDTH / (numPlayers + 2));
-			int x = 0;
-			int[] coords = new int[numPlayers];
+        public static int[] CalculatePlayerPositions(int numPlayers) {
+            int TerrainW = (Terrain.WIDTH / (numPlayers + 2));
+            int x = 0;
+            int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < coords.Length; i++)
-			{
-				x += TerrainW;
-				if (i == 1 && numPlayers == 2){
-					x += TerrainW;
-				}
-				coords[i] = x; //add x position to list, loops to replace the previous int
+            for (int i = 0; i < coords.Length; i++) {
+                x += TerrainW;
+                if (i == 1 && numPlayers == 2) {
+                    x += TerrainW;
+                }
+                coords[i] = x; //add x position to list, loops to replace the previous int
             }
 
             return coords;
-		}
+        }
 
-		public static void Shuffle(int[] array)
-		{
-			Random rndA = new Random();
+        public static void Shuffle(int[] array) {
+            Random rndA = new Random();
             Random rndB = new Random();
-			for (int i = array.Length; i >= 1; i--)
-			{
+            for (int i = array.Length; i >= 1; i--) {
 
-                int idxA = rndA.Next(0,array.Length), idxB = rndB.Next(0,array.Length);
+                int idxA = rndA.Next(0, array.Length), idxB = rndB.Next(0, array.Length);
 
-                while (idxA==idxB)
-                {
+                while (idxA == idxB) {
                     idxB = rndB.Next(0, array.Length);
                 }
 
                 int tmp = array[idxA];
                 array[idxA] = array[idxB];
                 array[idxB] = tmp;
-			}
-		}
+            }
+        }
 
-		public void NewGame()
-		{
-			currentRound = 1;
-			opponent = 0;
-			BeginRound();
-		}
+        public void NewGame() {
+            currentRound = 1;
+            opponent = 0;
+            BeginRound();
+        }
 
-		public void BeginRound()
-		{
-            currentPlayer = opponent; 
-			newTerrain = new Terrain(); 
-			int[] thepos = CalculatePlayerPositions(TheOppo.Length);                                  
-            
-			for (int i = 0; i < TheOppo.Length - 1; i++)
-			{
-				TheOppo[i].StartRound();
-			}
+        public void BeginRound() {
+            currentPlayer = opponent;
+            newTerrain = new Terrain();
+            int[] thepos = CalculatePlayerPositions(TheOppo.Length);
+
+            for (int i = 0; i < TheOppo.Length - 1; i++) {
+                TheOppo[i].StartRound();
+            }
 
             Shuffle(thepos);
             TheTank = new ControlledTank[TheOppo.Length];
-            for (int i = 0; i < TheTank.Length; i++){
+            for (int i = 0; i < TheTank.Length; i++) {
                 TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
             }
-            
+
             GetWindSpeed();
 
             GameplayForm newForm = new GameplayForm(this);
             newForm.Show();
-		}
+        }
 
-		public Terrain GetLevel()
-		{
-			return newTerrain;
-		}
+        public Terrain GetLevel() {
+            return newTerrain;
+        }
 
-		public void DrawPlayers(Graphics graphics, Size displaySize)
-		{
-			for (int i = 0; i < TheTank.Length; i++)
-            {
-                if (TheTank[i].Exists())
-                {
+        public void DrawPlayers(Graphics graphics, Size displaySize) {
+            for (int i = 0; i < TheTank.Length; i++) {
+                if (TheTank[i].Exists()) {
                     TheTank[i].Draw(graphics, displaySize);
                 }
             }
-		}
+        }
 
-		public ControlledTank GetCurrentGameplayTank()
-		{
+        public ControlledTank GetCurrentGameplayTank() {
             return TheTank[currentPlayer];
-		}
+        }
 
-		public void AddWeaponEffect(WeaponEffect weaponEffect)
-		{
+        public void AddWeaponEffect(WeaponEffect weaponEffect) {
             //for (int i = 0; i < WeaponsEffect.Count; i++)
             //         {
             //             if (WeaponsEffect[i] == null)
@@ -175,75 +151,62 @@ namespace TankBattle
 
         }
 
-		public bool ProcessEffects()
-		{
+        public bool ProcessEffects() {
             bool weaponExist = false;
-			//for (int i = 0; i < WeaponsEffect.Count; i++)
-   //         {
-   //             if (WeaponsEffect[i] != null) { weaponExist = true;}
-   //             else { weaponExist = false; }
-   //         }
-            for (int i =0; i < WeaponsEffect.Count; i ++)
-            { 
+            //for (int i = 0; i < WeaponsEffect.Count; i++)
+            //         {
+            //             if (WeaponsEffect[i] != null) { weaponExist = true;}
+            //             else { weaponExist = false; }
+            //         }
+            for (int i = 0; i < WeaponsEffect.Count; i++) {
                 WeaponsEffect[i].Process();
                 weaponExist = true;
             }
             return weaponExist;
-		}
+        }
 
-		public void RenderEffects(Graphics graphics, Size displaySize)
-		{
-            if (ProcessEffects())
-            {
-                for (int i = 0; i < WeaponsEffect.Count; i++)
-                {
+        public void RenderEffects(Graphics graphics, Size displaySize) {
+            if (ProcessEffects()) {
+                for (int i = 0; i < WeaponsEffect.Count; i++) {
                     WeaponsEffect[i].Draw(graphics, displaySize);
                 }
             }
-		}
+        }
 
-		public void EndEffect(WeaponEffect weaponEffect)
-		{
-            if (WeaponsEffect.Contains(weaponEffect))
-            {
+        public void EndEffect(WeaponEffect weaponEffect) {
+            if (WeaponsEffect.Contains(weaponEffect)) {
                 WeaponsEffect.Remove(weaponEffect);
             }
-		}
+        }
 
-		public bool CheckHitTank(float projectileX, float projectileY) //double check
-		{
-			if (projectileX < 0 | projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) { return false; }
-            if (newTerrain.IsTileAt((int)projectileX, (int)projectileY))
-            {
+        public bool CheckHitTank(float projectileX, float projectileY) //double check
+        {
+            if (projectileX < 0 | projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) { return false; }
+            if (newTerrain.IsTileAt((int)projectileX, (int)projectileY)) {
                 return true;
             }
-            for (int i = 0; i < TheTank.Length; i++)
-            {
+            for (int i = 0; i < TheTank.Length; i++) {
                 if (i == playerNum)   //prevent current tank hitting itself
                 {
                     return false;
                 }
-                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY))
-                {
-					if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT))
-					{
-						return true;
-					}
-				}
+                if (TheTank[i].Exists() && (TheTank[i].GetX() == projectileX && TheTank[i].GetYPos() == projectileY)) {
+                    if (TheTank[i].Exists() && (projectileX <= TheTank[i].GetX() + TankModel.WIDTH && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT)) {
+                        return true;
+                    }
+                }
             }
-			return false;
-		}
+            return false;
+        }
 
-		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
-		{
+        public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius) //double check, incomplete
+        {
 
             int damageDone = 0;
             float tempDamage = 0;
 
-            for (int i = 0; i < TheTank.Length; i++)
-            {
-                if (TheTank[i].Exists())
-                {
+            for (int i = 0; i < TheTank.Length; i++) {
+                if (TheTank[i].Exists()) {
                     float dist;
                     double tempDist;
 
@@ -252,7 +215,7 @@ namespace TankBattle
 
                     tempDist = Math.Sqrt(Math.Pow(damageX - tankPositionX, 2) + Math.Pow(damageY - tankPositionY, 2));
                     dist = (float)tempDist;
-                       
+
                     if (dist > radius) {
                         tempDamage = 0;
                     } else if (dist > radius && dist < radius / 2) {
@@ -266,101 +229,87 @@ namespace TankBattle
 
                 }
             }
-		}
+        }
 
-		public bool Gravity() //double check
-		{
+        public bool Gravity() //double check
+        {
             bool anyMovement = false;
             newTerrain.Gravity();
             if (newTerrain.Gravity() == true) //if gravity applied to terrain, set bool to true
             {
                 anyMovement = true;
             }
-            for (int i = 0; i < TheTank.Length; i++)
-            {
+            for (int i = 0; i < TheTank.Length; i++) {
                 newTerrain.Gravity();
-                if (TheTank[i].Gravity() == true)
-                {
-                    return true;
+                if (TheTank[i].Gravity() == true) {
+                    anyMovement = true;
                 }
-				else{
-					anyMovement = false;
-				}
             }
             return anyMovement;
-		}
-        
-		public bool TurnOver() //double check
-		{
-			bool tanksExists = false;
-			int howManyExists = 0;
+        }
 
-			for (int i = 0; i < TheTank.Length; i++)
-			{
-				if (TheTank[i].Exists()) //checks to see how many tanks there are
-				{
-					howManyExists++;
-				}
-			}
+        public bool TurnOver() //double check
+        {
+            bool tanksExists = false;
+            int howManyExists = 0;
 
-			if (howManyExists >= 2) //if there is two or more tanks, continue the round
-			{
-				currentPlayer++;
-				if (currentPlayer == numPlayers.Length ) { currentPlayer = 0; }
-				while (!TheTank[currentPlayer].Exists()) {
-					currentPlayer++;
-					if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
-				}
-				Wind += rnd.Next(-10, 10);
-				if (Wind <= -100) { Wind = -100; }
-				else if (Wind >= 100) { Wind = 100; }
-				return true;
-			}
-			else if (howManyExists < 2) //if there is one tank left
-			{
-				RewardWinner();
-				return false;
-			}
-			return tanksExists;
-		}
-
-		public void RewardWinner() //double check
-		{
-			for (int i = 0; i < TheTank.Length; i++)
-            {
-                if (TheTank[i].Exists())
+            for (int i = 0; i < TheTank.Length; i++) {
+                if (TheTank[i].Exists()) //checks to see how many tanks there are
                 {
+                    howManyExists++;
+                }
+            }
+
+            if (howManyExists >= 2) //if there is two or more tanks, continue the round
+            {
+                currentPlayer++;
+                if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
+                while (!TheTank[currentPlayer].Exists()) {
+                    currentPlayer++;
+                    if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
+                }
+                Wind += rnd.Next(-10, 10);
+                if (Wind <= -100) { Wind = -100; } else if (Wind >= 100) { Wind = 100; }
+                return true;
+            } else if (howManyExists < 2) //if there is one tank left
+              {
+                RewardWinner();
+                return false;
+            }
+            return tanksExists;
+        }
+
+        public void RewardWinner() //double check
+        {
+            for (int i = 0; i < TheTank.Length; i++) {
+                if (TheTank[i].Exists()) {
                     TheOppo[currentPlayer].AddScore(); //correct tank? //option 1
                     // GetPlayerNumber(TheTank[i]).AddScore(); //option 2
                 }
             }
-		}
+        }
 
-		public void NextRound() //double check
-		{
-			if (!TurnOver()){
-                if (currentRound <= numRounds) { 
+        public void NextRound() //double check
+        {
+            if (!TurnOver()) {
+                if (currentRound <= numRounds) {
                     currentRound++;
                 }
                 currentPlayer++;
-                if (currentPlayer > numPlayers.Length - 1)
-                {
+                if (currentPlayer > numPlayers.Length - 1) {
                     currentPlayer = 0;
                     BeginRound();
-                }
-                else if (currentRound > numRounds)
-                {
+                } else if (currentRound > numRounds) {
                     IntroForm introform = new IntroForm();
                     introform.Show();
                 }
             }
-		}
+        }
 
-		public int GetWindSpeed()
-		{
+        public int GetWindSpeed() {
             Random rnd = new Random();
-			Wind = rnd.Next(-100, 101);
+            Wind = rnd.Next(-100, 101);
             return Wind;
-		}
-	}
+        }
+    }
 }
