@@ -270,7 +270,7 @@ namespace TankBattle {
 				for (int i = 0; i < howManyExists; i++)
 				{
 					currentPlayer++;
-					if (currentPlayer > TheTank.Length)
+					if (currentPlayer >= TheTank.Length)
 					{
 						currentPlayer = 0;
 					}
