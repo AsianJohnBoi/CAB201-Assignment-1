@@ -112,16 +112,6 @@ namespace TankBattle {
         }
 
         public int TankYPosition(int x) {
-            //int y = HEIGHT - 2;
-            //if (x < 0 && x > WIDTH - TankModel.WIDTH){ //checks if x position is within range
-            //    for (int yp = HEIGHT - 2; yp > 0; yp--){
-            //        if (CheckTankCollision(x, yp) == true){
-            //            y--;
-            //        }
-            //    }
-            //}
-            //return y;
-
             int y = 0;
 
             for (int i = 0; i < HEIGHT; i++) {
@@ -166,25 +156,6 @@ namespace TankBattle {
 					}
 				}
 			}
-				//if (map[xrow, y] == false){
-				//	y++;
-				//	moved = false;
-				//}
-				// if (IsTileAt(xrow, y) == true && IsTileAt(xrow, y + 1) == false){
-
-				//else if (map[xrow, y] == true){
-					
-				 //}
-				//}
-				//else if (y >= HEIGHT){
-				//	y = 0;
-				//	xrow++;
-				//}
-				//else if (xrow >= WIDTH){
-				//	moved = false;
-				//	break;
-				//}
-
 			return moveDown;
 
         }

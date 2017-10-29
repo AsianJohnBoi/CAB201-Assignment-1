@@ -292,35 +292,36 @@ namespace TankBattle
         
 		public bool TurnOver() //double check
 		{
-            bool tanksExists = true;
-            int howManyExists = 0;
+			bool tanksExists = false;
+			int howManyExists = 0;
 
-            for (int i = 0; i < TheTank.Length; i++)
-            {
-                if (TheTank[i].Exists()) //checks to see how many tanks there are
-                {
-                    tanksExists = true;
-                    howManyExists++;
-                }
-            }
+			for (int i = 0; i < TheTank.Length; i++)
+			{
+				if (TheTank[i].Exists()) //checks to see how many tanks there are
+				{
+					howManyExists++;
+				}
+			}
 
-            if (howManyExists >= 2) //if there is two or more tanks, continue the round
-            {
-                currentPlayer++;
-                if (currentPlayer > numPlayers.Length - 1) { currentPlayer = 0; }
-                if (!TheTank[currentPlayer].Exists()) { currentPlayer++; }
-            }
-            else if (howManyExists < 2) //if there is one tank left
-            {
-                RewardWinner();
-                tanksExists = false;
-            }
-
-            Wind += rnd.Next(-10, 10);
-            if (Wind <= -100) { Wind = -100; }
-            else if (Wind >= 100) { Wind = 100; }
-
-            return tanksExists; // return true is round is still going
+			if (howManyExists >= 2) //if there is two or more tanks, continue the round
+			{
+				currentPlayer++;
+				if (currentPlayer == numPlayers.Length ) { currentPlayer = 0; }
+				while (!TheTank[currentPlayer].Exists()) {
+					currentPlayer++;
+					if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
+				}
+				Wind += rnd.Next(-10, 10);
+				if (Wind <= -100) { Wind = -100; }
+				else if (Wind >= 100) { Wind = 100; }
+				return true;
+			}
+			else if (howManyExists < 2) //if there is one tank left
+			{
+				RewardWinner();
+				return false;
+			}
+			return tanksExists;
 		}
 
 		public void RewardWinner() //double check

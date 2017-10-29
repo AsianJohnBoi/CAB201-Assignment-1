@@ -211,6 +211,7 @@ namespace TankBattle {
         }
 
         private void formTimer_Tick(object sender, EventArgs e) {
+			currentGame.ProcessEffects();
             if (currentGame.ProcessEffects() == false)
             {
                 currentGame.Gravity();
@@ -225,14 +226,11 @@ namespace TankBattle {
                 {
                     formTimer.Enabled = false;
                     currentGame.TurnOver();
-                    if (currentGame.TurnOver())
-                    {
-                        NewTurn();
-                    }
-                    else
+                    NewTurn();
+                    if (!currentGame.TurnOver())
                     {
                         Dispose();
-                    }
+					}
                     currentGame.NextRound();
                     return;
                 }
