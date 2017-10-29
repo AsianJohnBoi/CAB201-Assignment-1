@@ -66,3 +66,4 @@ C:\Users\xikaz\OneDrive\Documents\Year 1 - Semester 2\CAB201\CAB201-Assignment-1
 C:\Users\xikaz\OneDrive\Documents\Year 1 - Semester 2\CAB201\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.setupPlayerForm.resources
 C:\Users\John Santias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.setupGameForm.resources
 C:\Users\John Santias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.setupPlayerForm.resources
+C:\Users\John Santias\Source\Repos\CAB201-Assignment-1\TankBattle\obj\Debug\TankBattle.Rankings.resources

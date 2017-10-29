@@ -128,10 +128,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(6);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "setupGameForm";
-            this.ShowIcon = false;
             this.Text = "Setup Game";
             ((System.ComponentModel.ISupportInitialize)(this.playerAmountInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.roundAmountInput)).EndInit();

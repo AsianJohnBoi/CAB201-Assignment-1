@@ -230,6 +230,8 @@ namespace TankBattle {
                     if (!currentGame.TurnOver())
                     {
                         Dispose();
+						Rankings ranks = new Rankings();
+						ranks.Show();
 					}
                     currentGame.NextRound();
                     return;

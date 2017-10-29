@@ -28,152 +28,135 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.nextPlayerButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tank1RadioButton = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.aiRadioButton = new System.Windows.Forms.RadioButton();
-            this.humanRadioButton = new System.Windows.Forms.RadioButton();
-            this.playerNameInput = new System.Windows.Forms.TextBox();
-            this.PlayerLabel = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Silver;
-            this.panel1.Controls.Add(this.nextPlayerButton);
-            this.panel1.Controls.Add(this.groupBox2);
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.playerNameInput);
-            this.panel1.Controls.Add(this.PlayerLabel);
-            this.panel1.Location = new System.Drawing.Point(24, 23);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(830, 385);
-            this.panel1.TabIndex = 0;
-            // 
-            // nextPlayerButton
-            // 
-            this.nextPlayerButton.Enabled = false;
-            this.nextPlayerButton.Location = new System.Drawing.Point(68, 304);
-            this.nextPlayerButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.nextPlayerButton.Name = "nextPlayerButton";
-            this.nextPlayerButton.Size = new System.Drawing.Size(694, 52);
-            this.nextPlayerButton.TabIndex = 4;
-            this.nextPlayerButton.Text = "Next Player";
-            this.nextPlayerButton.UseVisualStyleBackColor = true;
-            this.nextPlayerButton.Click += new System.EventHandler(this.nextPlayerButton_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tank1RadioButton);
-            this.groupBox2.Location = new System.Drawing.Point(320, 156);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox2.Size = new System.Drawing.Size(442, 129);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tank";
-            // 
-            // tank1RadioButton
-            // 
-            this.tank1RadioButton.AutoSize = true;
-            this.tank1RadioButton.Checked = true;
-            this.tank1RadioButton.Location = new System.Drawing.Point(24, 60);
-            this.tank1RadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tank1RadioButton.Name = "tank1RadioButton";
-            this.tank1RadioButton.Size = new System.Drawing.Size(27, 26);
-            this.tank1RadioButton.TabIndex = 0;
-            this.tank1RadioButton.TabStop = true;
-            this.tank1RadioButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.aiRadioButton);
-            this.groupBox1.Controls.Add(this.humanRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(66, 156);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox1.Size = new System.Drawing.Size(222, 129);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Controller";
-            // 
-            // aiRadioButton
-            // 
-            this.aiRadioButton.AutoSize = true;
-            this.aiRadioButton.Location = new System.Drawing.Point(142, 56);
-            this.aiRadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.aiRadioButton.Name = "aiRadioButton";
-            this.aiRadioButton.Size = new System.Drawing.Size(62, 29);
-            this.aiRadioButton.TabIndex = 1;
-            this.aiRadioButton.TabStop = true;
-            this.aiRadioButton.Text = "AI";
-            this.aiRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // humanRadioButton
-            // 
-            this.humanRadioButton.AutoSize = true;
-            this.humanRadioButton.Checked = true;
-            this.humanRadioButton.Location = new System.Drawing.Point(12, 56);
-            this.humanRadioButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.humanRadioButton.Name = "humanRadioButton";
-            this.humanRadioButton.Size = new System.Drawing.Size(111, 29);
-            this.humanRadioButton.TabIndex = 0;
-            this.humanRadioButton.TabStop = true;
-            this.humanRadioButton.Text = "Human";
-            this.humanRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // playerNameInput
-            // 
-            this.playerNameInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.playerNameInput.Location = new System.Drawing.Point(386, 50);
-            this.playerNameInput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.playerNameInput.Name = "playerNameInput";
-            this.playerNameInput.Size = new System.Drawing.Size(372, 53);
-            this.playerNameInput.TabIndex = 1;
-            this.playerNameInput.TextChanged += new System.EventHandler(this.playerNameInput_TextChanged);
-            // 
-            // PlayerLabel
-            // 
-            this.PlayerLabel.AutoSize = true;
-            this.PlayerLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.PlayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.PlayerLabel.Location = new System.Drawing.Point(56, 54);
-            this.PlayerLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.PlayerLabel.Name = "PlayerLabel";
-            this.PlayerLabel.Size = new System.Drawing.Size(338, 46);
-            this.PlayerLabel.TabIndex = 0;
-            this.PlayerLabel.Text = "Player #1\'s name:";
-            this.PlayerLabel.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // setupPlayerForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Maroon;
-            this.ClientSize = new System.Drawing.Size(878, 431);
-            this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "setupPlayerForm";
-            this.ShowIcon = false;
-            this.Text = "Setup Player";
-            this.Load += new System.EventHandler(this.setupPlayerForm_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.ResumeLayout(false);
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.nextPlayerButton = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.tank1RadioButton = new System.Windows.Forms.RadioButton();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.aiRadioButton = new System.Windows.Forms.RadioButton();
+			this.humanRadioButton = new System.Windows.Forms.RadioButton();
+			this.playerNameInput = new System.Windows.Forms.TextBox();
+			this.PlayerLabel = new System.Windows.Forms.Label();
+			this.panel1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.Silver;
+			this.panel1.Controls.Add(this.nextPlayerButton);
+			this.panel1.Controls.Add(this.groupBox2);
+			this.panel1.Controls.Add(this.groupBox1);
+			this.panel1.Controls.Add(this.playerNameInput);
+			this.panel1.Controls.Add(this.PlayerLabel);
+			this.panel1.Location = new System.Drawing.Point(12, 12);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(415, 200);
+			this.panel1.TabIndex = 0;
+			// 
+			// nextPlayerButton
+			// 
+			this.nextPlayerButton.Enabled = false;
+			this.nextPlayerButton.Location = new System.Drawing.Point(34, 158);
+			this.nextPlayerButton.Name = "nextPlayerButton";
+			this.nextPlayerButton.Size = new System.Drawing.Size(347, 27);
+			this.nextPlayerButton.TabIndex = 4;
+			this.nextPlayerButton.Text = "Next Player";
+			this.nextPlayerButton.UseVisualStyleBackColor = true;
+			this.nextPlayerButton.Click += new System.EventHandler(this.nextPlayerButton_Click);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.tank1RadioButton);
+			this.groupBox2.Location = new System.Drawing.Point(160, 81);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(221, 67);
+			this.groupBox2.TabIndex = 3;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Tank";
+			// 
+			// tank1RadioButton
+			// 
+			this.tank1RadioButton.AutoSize = true;
+			this.tank1RadioButton.Location = new System.Drawing.Point(12, 31);
+			this.tank1RadioButton.Name = "tank1RadioButton";
+			this.tank1RadioButton.Size = new System.Drawing.Size(14, 13);
+			this.tank1RadioButton.TabIndex = 0;
+			this.tank1RadioButton.TabStop = true;
+			this.tank1RadioButton.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.aiRadioButton);
+			this.groupBox1.Controls.Add(this.humanRadioButton);
+			this.groupBox1.Location = new System.Drawing.Point(33, 81);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(111, 67);
+			this.groupBox1.TabIndex = 2;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Controller";
+			// 
+			// aiRadioButton
+			// 
+			this.aiRadioButton.AutoSize = true;
+			this.aiRadioButton.Location = new System.Drawing.Point(71, 29);
+			this.aiRadioButton.Name = "aiRadioButton";
+			this.aiRadioButton.Size = new System.Drawing.Size(35, 17);
+			this.aiRadioButton.TabIndex = 1;
+			this.aiRadioButton.TabStop = true;
+			this.aiRadioButton.Text = "AI";
+			this.aiRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// humanRadioButton
+			// 
+			this.humanRadioButton.AutoSize = true;
+			this.humanRadioButton.Location = new System.Drawing.Point(6, 29);
+			this.humanRadioButton.Name = "humanRadioButton";
+			this.humanRadioButton.Size = new System.Drawing.Size(59, 17);
+			this.humanRadioButton.TabIndex = 0;
+			this.humanRadioButton.TabStop = true;
+			this.humanRadioButton.Text = "Human";
+			this.humanRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// playerNameInput
+			// 
+			this.playerNameInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+			this.playerNameInput.Location = new System.Drawing.Point(193, 26);
+			this.playerNameInput.Name = "playerNameInput";
+			this.playerNameInput.Size = new System.Drawing.Size(188, 30);
+			this.playerNameInput.TabIndex = 1;
+			this.playerNameInput.TextChanged += new System.EventHandler(this.playerNameInput_TextChanged);
+			// 
+			// PlayerLabel
+			// 
+			this.PlayerLabel.AutoSize = true;
+			this.PlayerLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.PlayerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+			this.PlayerLabel.Location = new System.Drawing.Point(28, 28);
+			this.PlayerLabel.Name = "PlayerLabel";
+			this.PlayerLabel.Size = new System.Drawing.Size(168, 25);
+			this.PlayerLabel.TabIndex = 0;
+			this.PlayerLabel.Text = "Player #1\'s name:";
+			this.PlayerLabel.Click += new System.EventHandler(this.label1_Click);
+			// 
+			// setupPlayerForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Maroon;
+			this.ClientSize = new System.Drawing.Size(439, 224);
+			this.Controls.Add(this.panel1);
+			this.Name = "setupPlayerForm";
+			this.Text = "Setup Player";
+			this.Load += new System.EventHandler(this.setupPlayerForm_Load);
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			this.ResumeLayout(false);
 
 		}
 
