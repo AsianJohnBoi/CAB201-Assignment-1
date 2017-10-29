@@ -13,7 +13,7 @@ namespace TankBattle
 	public partial class setupPlayerForm : Form
 	{
 		private int playerAmount, roundAmount;
-		private int player = 0;
+		private int player = 1;
 		private List<string> playerNames = new List<string>();
 
 		private void label1_Click(object sender, EventArgs e)
@@ -28,23 +28,41 @@ namespace TankBattle
 			InitializeComponent();
 		}
 
+		private void setupPlayerForm_Load(object sender, EventArgs e)
+		{
+			BackColor = Gameplay.GetTankColour(player);
+			nextPlayerButton.Enabled = false;
+		}
+
+		private void playerNameInput_TextChanged(object sender, EventArgs e)
+		{
+			if (String.IsNullOrEmpty(playerNameInput.Text))
+				nextPlayerButton.Enabled = false;
+			else
+			{
+				nextPlayerButton.Enabled = true;
+			}
+		}
+
 		private void nextPlayerButton_Click(object sender, EventArgs e)
 		{
-			if (player < playerAmount)
-			{
-				PlayerLabel.Text = "Player #" + (player + 1) + "'s name:";
-				playerNames.Add(playerNameInput.Text);
-				playerNameInput.Clear();
+			playerNames.Add(playerNameInput.Text);
+			if (player != playerAmount)
+			{ 
 				player++;
+				PlayerLabel.Text = "Player #" + player + "'s name:";
+				playerNameInput.Clear();
+				BackColor = Gameplay.GetTankColour(player);
+				nextPlayerButton.Enabled = false;
 			}
-			else
+			else if (player == playerAmount)
 			{
 				Gameplay game = new Gameplay(playerAmount, roundAmount);
 
 				for (int i = 0; i < playerAmount; i++)
 				{
-					Opponent player = new HumanOpponent(playerNames[i], TankModel.GetTank(i + 1), Gameplay.GetTankColour(i + 1));
-					game.SetPlayer(i + 1, player);
+					Opponent a = new HumanOpponent(playerNames[i], TankModel.GetTank(1), Gameplay.GetTankColour(i+1));
+					game.SetPlayer(i + 1, a);
 				}
 				game.NewGame();
 				Close();

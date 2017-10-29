@@ -57,6 +57,7 @@
 			// 
 			// nextPlayerButton
 			// 
+			this.nextPlayerButton.Enabled = false;
 			this.nextPlayerButton.Location = new System.Drawing.Point(34, 158);
 			this.nextPlayerButton.Name = "nextPlayerButton";
 			this.nextPlayerButton.Size = new System.Drawing.Size(347, 27);
@@ -125,6 +126,7 @@
 			this.playerNameInput.Name = "playerNameInput";
 			this.playerNameInput.Size = new System.Drawing.Size(188, 30);
 			this.playerNameInput.TabIndex = 1;
+			this.playerNameInput.TextChanged += new System.EventHandler(this.playerNameInput_TextChanged);
 			// 
 			// PlayerLabel
 			// 
@@ -147,6 +149,7 @@
 			this.Controls.Add(this.panel1);
 			this.Name = "setupPlayerForm";
 			this.Text = "Setup Player";
+			this.Load += new System.EventHandler(this.setupPlayerForm_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
