@@ -229,9 +229,17 @@ namespace TankBattle {
                     NewTurn();
                     if (!currentGame.TurnOver())
                     {
-                        Dispose();
-						Rankings ranks = new Rankings();
-						ranks.Show();
+						if (currentGame.GetRound() < currentGame.GetTotalRounds())
+						{
+							currentGame.NextRound();
+						}
+						else
+						{
+							Dispose();
+							//Rankings ranks = new Rankings();
+							//ranks.Show();
+						}
+						
 					}
                     currentGame.NextRound();
                     return;

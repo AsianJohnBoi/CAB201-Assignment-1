@@ -73,7 +73,7 @@ namespace TankBattle {
                 coords[0] = spaceBetweenTanks;
                 coords[1] = spaceBetweenTanks + terrainW;
 
-                // If there are more than 2 players
+            // If there are more than 2 players
             } else {
                 for (int i = 1; i < numPlayers; i++) {
                     coords[0] = spaceBetweenTanks;
@@ -256,7 +256,6 @@ namespace TankBattle {
 
         public bool TurnOver() //double check
         {
-            bool tanksExists = false;
             int howManyExists = 0;
 
             for (int i = 0; i < TheTank.Length; i++) {
@@ -266,23 +265,36 @@ namespace TankBattle {
                 }
             }
 
-            if (howManyExists >= 2) //if there is two or more tanks, continue the round
-            {
-                currentPlayer++;
-                if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
-                while (!TheTank[currentPlayer].Exists()) {
-                    currentPlayer++;
-                    if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
-                }
-                Wind += rnd.Next(-10, 10);
-                if (Wind <= -100) { Wind = -100; } else if (Wind >= 100) { Wind = 100; }
-                return true;
-            } else if (howManyExists < 2) //if there is one tank left
+			if (howManyExists >= 2) //if there is two or more tanks, continue the round
+			{
+				for (int i = 0; i < howManyExists; i++)
+				{
+					currentPlayer++;
+					if (currentPlayer > TheTank.Length)
+					{
+						currentPlayer = 0;
+					}
+					if (TheTank[currentPlayer].Exists())
+					{
+						Wind += rnd.Next(-10, 10);
+						if (Wind <= -100) { Wind = -100; } else if (Wind >= 100) { Wind = 100; }
+						return true;
+					}
+				}
+				//    if (currentPlayer == numPlayers.Length) { currentPlayer = 0; }
+				//    if (!TheTank[currentPlayer].Exists()) {
+				//        currentPlayer++;
+				//    }
+				//    Wind += rnd.Next(-10, 10);
+				//    if (Wind <= -100) { Wind = -100; } else if (Wind >= 100) { Wind = 100; }
+				//    return true;
+			}
+			else if (howManyExists < 2) //if there is one tank left
               {
                 RewardWinner();
                 return false;
             }
-            return tanksExists;
+            return false;
         }
 
         public void RewardWinner() //double check
