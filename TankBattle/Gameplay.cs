@@ -63,16 +63,22 @@ namespace TankBattle {
         }
 
         public static int[] CalculatePlayerPositions(int numPlayers) {
-            int TerrainW = (Terrain.WIDTH / (numPlayers + 2));
-            int x = 0;
             int[] coords = new int[numPlayers];
 
-            for (int i = 0; i < coords.Length; i++) {
-                x += TerrainW;
-                if (i == 1 && numPlayers == 2) {
-                    x += TerrainW;
+            int terrainW = Terrain.WIDTH / numPlayers;
+            int spaceBetweenTanks = terrainW / 2;
+
+            // If there are 2 players
+            if (numPlayers == 2) {
+                coords[0] = spaceBetweenTanks;
+                coords[1] = spaceBetweenTanks + terrainW;
+
+                // If there are more than 2 players
+            } else {
+                for (int i = 1; i < numPlayers; i++) {
+                    coords[0] = spaceBetweenTanks;
+                    coords[i] = coords[i - 1] + terrainW;
                 }
-                coords[i] = x; //add x position to list, loops to replace the previous int
             }
 
             return coords;
