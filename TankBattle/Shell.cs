@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,8 @@ namespace TankBattle
 	/// Author John Santias and Hoang Nguyen October 2017
 	/// </summary>
 	public class Shell : WeaponEffect
-    {   
+    {
+        private const int STEP_AMOUNT = 10;
         private float x, y, gravity, xVelocity, yVelocity;
         Blast explosion;
         Opponent player;
@@ -56,16 +57,20 @@ namespace TankBattle
 		/// </summary>
 		public override void Process()
         {
-			for (int l = 0; l < 10; l++)
+			for (int step = 0; step < STEP_AMOUNT; step++)
 			{
 				x += xVelocity;
 				y += yVelocity;
 				x += x / i.GetWindSpeed() / 1000.0f;
+
+                // Return and end effect if shell is out of screen
 				if (x < 0 || x > Terrain.WIDTH || y < 0 || y > Terrain.HEIGHT)
 				{
 					i.EndEffect(this);
 					return;
 				}
+                
+                // Make effects if shell detects a collision
 				else if (i.CheckHitTank(x, y))
 				{
 					player.ProjectileHitPos(x, y);
@@ -74,6 +79,7 @@ namespace TankBattle
 					i.EndEffect(this);
 					return;
 				}
+
 				yVelocity += gravity;
 			}
             
