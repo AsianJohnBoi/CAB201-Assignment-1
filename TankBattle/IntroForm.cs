@@ -13,15 +13,25 @@ namespace TankBattle
 {
     public partial class IntroForm : Form
     {
+		/// <summary>
+		/// Title screen. The first thing you'll see upon loading the game. 
+		/// </summary>
         public IntroForm()
         {
             InitializeComponent();
         }
 
-        private void NewGameButton_Click(object sender, EventArgs e)
+		/// <summary>
+		/// When the user presses the button, a new form will show up for the user to select
+		/// how many players will be playing and how many rounds.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NewGameButton_Click(object sender, EventArgs e)
         {
             setupGameForm setupGame = new setupGameForm();
-
             setupGame.Show();
 
         }
