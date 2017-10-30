@@ -33,6 +33,14 @@ namespace TankBattle
 		private BufferedGraphics backgroundGraphics;
 		private BufferedGraphics gameplayGraphics;
 
+		/// <summary>
+		/// The constructor for GameplayForm. Setting up the gameplayForm before the InitalizedComponent() was called.
+		/// The setup includes setting the background images, the landscape colours, drawling the backgrounds, the
+		/// gameplay, and allowing the first player to start the game.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="game">The current game</param>
 		public GameplayForm(Gameplay game)
 		{
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -81,25 +89,57 @@ namespace TankBattle
 			}
 		}
 
+		/// <summary>
+		/// Enables the control panel so the human controller can control their tank. Called from
+		/// HumanOpponent.BeginTurn(). This sets the Enabled property to true.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
 		public void EnableTankButtons()
 		{
 			controlPanel.Enabled = true;
 		}
 
+		/// <summary>
+		/// This method alters the value of the UpDownNumeric used to control the angle, setting it
+		/// to the provided value.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="angle"></param>
 		public void SetAimingAngle(float angle)
 		{
 			angleSetter.Value = (int)angle;
 		}
 
+		/// <summary>
+		/// This alters the value of the TrackBar used to control the power level, setting it to the
+		/// provided value.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="power"></param>
 		public void SetPower(int power)
 		{
 			powerTrackBar.Value = power;
 		}
+
+		/// <summary>
+		/// Changes the selected item in the ComboBox, setting it to the provided value.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="weapon"></param>
 		public void SetWeaponIndex(int weapon)
 		{
 			weaponComboBox.SelectedItem = weapon;
 		}
 
+		/// <summary>
+		/// Method called both externally when the 'Fire!' button is clicked.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
 		public void Attack()
 		{
 			currentControlledTank = currentGame.GetCurrentGameplayTank();
@@ -108,6 +148,11 @@ namespace TankBattle
 			formTimer.Enabled = true;
 		}
 
+		/// <summary>
+		/// Draws the Gameplay elements of the screen. 
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
 		private void DrawGameplay()
 		{
 			backgroundGraphics.Render(gameplayGraphics.Graphics);
@@ -115,6 +160,12 @@ namespace TankBattle
 			currentGame.RenderEffects(gameplayGraphics.Graphics, displayPanel.Size);
 		}
 
+		/// <summary>
+		/// Newly-created method used to update form elemtns to reflect who the current player is. It involves 
+		/// a number of things like changing the colours, angles, power, round number etc.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
 		private void NewTurn()
 		{
 			currentControlledTank = currentGame.GetCurrentGameplayTank();
@@ -148,6 +199,11 @@ namespace TankBattle
 			currentOpponent.BeginTurn(this, currentGame);
 		}
 
+		/// <summary>
+		/// Draws the background image on the form.
+		/// 
+		/// Author AMS 2017
+		/// </summary>
 		private void DrawBackground()
 		{
 			Graphics graphics = backgroundGraphics.Graphics;
@@ -173,6 +229,12 @@ namespace TankBattle
 			}
 		}
 
+		/// <summary>
+		/// Graphics rendered.
+		/// 
+		/// Author AMS 2017
+		/// </summary>
+		/// <returns>The buffered graphics</returns>
 		public BufferedGraphics InitRenderBuffer()
 		{
 			BufferedGraphicsContext context = BufferedGraphicsManager.Current;
@@ -182,12 +244,27 @@ namespace TankBattle
 			return bufferedGraphics;
 		}
 
+		/// <summary>
+		/// The space underneath the control area. Where it will be replaced with the selected background image. 
+		/// This area is occupied by the background image, terrain, and tanks.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void displayPanel_Paint(object sender, PaintEventArgs e)
 		{
 			Graphics graphics = displayPanel.CreateGraphics();
 			gameplayGraphics.Render(graphics);
 		}
 
+		/// <summary>
+		/// The NumericUpDown used for selecting the angle. Angle Minimum and maximum to 5 and 100.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void angleSetter_ValueChanged(object sender, EventArgs e)
 		{
 			angleSet = (int)angleSetter.Value;
@@ -196,12 +273,27 @@ namespace TankBattle
 			displayPanel.Invalidate();
 		}
 
+		/// <summary>
+		/// ComboBox used for selecting weapons associated with the Tank
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			weaponSet = weaponComboBox.SelectedIndex;
 			currentControlledTank.SetWeaponIndex(weaponSet);
 		}
 
+		/// <summary>
+		/// Tick event for the timer. Handles much of the animation and physics. This also handles the forms,
+		/// whether to close the current form or create a new gameplay form.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void formTimer_Tick(object sender, EventArgs e)
 		{
 			currentGame.ProcessEffects();

@@ -11,9 +11,9 @@ namespace TankBattle
     abstract public class Opponent
     {
         private string name;
-        private TankModel tank;
+		private int roundswon;
+		private TankModel tank;
         private Color colour;
-        private int roundswon;
 
 		/// <summary>
 		/// The constructor that passes the opponent's name, TankModel and colour. These values are stored
