@@ -19,18 +19,7 @@ namespace TankBattle
 		public Rankings(int numPlayers, Opponent[] opponent)
 		{
 			this.numPlayers = numPlayers;
-			this.opponent = opponent;
-			for (int i = 0; i < numPlayers; i++)
-			{
-				int score = opponent[i].GetScore();
-				string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
-				scores.Add(scoreStr);
-			}
-			scores.OrderBy(num => num).ToList();
-
-			//listBox1.DataSource = scores;
-
-			//whoWon.Text = scores[0] + "Won!";
+            this.opponent = opponent;
 
 			InitializeComponent();
 		}
@@ -39,5 +28,20 @@ namespace TankBattle
 		{
 			Close();
 		}
-	}
+
+        private void Rankings_Load(object sender, EventArgs e) {
+
+            for (int i = 0; i < numPlayers; i++) {
+                int score = opponent[i].GetScore();
+                string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
+                scores.Add(scoreStr);
+
+            }
+
+            scores.OrderBy(num => num).ToList();
+            listBox1.DataSource = scores;
+
+            whoWon.Text = scores[0] + "Won!";
+        }
+    }
 }
