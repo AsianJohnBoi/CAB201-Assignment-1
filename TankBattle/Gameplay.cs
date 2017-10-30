@@ -10,11 +10,11 @@ using System.Diagnostics;
 namespace TankBattle {
     public class Gameplay {
 		private int[] numPlayers;
-		private int numRounds, currentPlayer, currentRound, opponent, Wind;
+		private int numRounds, currentPlayer, currentRound, opponent, wind;
         private List<WeaponEffect> WeaponsEffect;
         private Terrain newTerrain;
-        private Opponent[] TheOppo;
-        private ControlledTank[] TheTank;
+        private Opponent[] theOppo;
+        private ControlledTank[] theTank;
         private Random rnd = new Random();
 
 		private bool winnerFound = false;
@@ -33,7 +33,7 @@ namespace TankBattle {
 		{
             this.numPlayers = new int[numPlayers];
             this.numRounds = numRounds;
-            TheOppo = new Opponent[numPlayers];
+            theOppo = new Opponent[numPlayers];
             WeaponsEffect = new List<WeaponEffect>();
         }
 
@@ -80,7 +80,7 @@ namespace TankBattle {
 		/// <param name="player">A reference of Opponent stored as player</param>
 		public void SetPlayer(int playerNum, Opponent player)
 		{
-            TheOppo[playerNum - 1] = player;
+            theOppo[playerNum - 1] = player;
         }
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace TankBattle {
 		/// <returns>The opponent's player number</returns>
 		public Opponent GetPlayerNumber(int playerNum)
 		{
-            return TheOppo[playerNum - 1];
+            return theOppo[playerNum - 1];
         }
 
 		/// <summary>
@@ -106,7 +106,7 @@ namespace TankBattle {
 		/// <returns>ControlledTank associated with the opponent</returns>
 		public ControlledTank PlayerTank(int playerNum)
 		{
-            return TheTank[playerNum - 1];
+            return theTank[playerNum - 1];
         }
 
 		/// <summary>
@@ -173,8 +173,8 @@ namespace TankBattle {
 					number2 = rndB.Next(0, array.Length);
                 }
 
-                int tmp = array[number1];
-                array[number1] = array[number2];
+                int tmp = array[number1]; //gets the first number in list for swapping
+                array[number1] = array[number2]; //swaps with the second selected number in list
                 array[number2] = tmp;
             }
         }
@@ -205,18 +205,18 @@ namespace TankBattle {
 		{
             currentPlayer = opponent;
             newTerrain = new Terrain();
-            int[] thepos = CalculatePlayerPositions(TheOppo.Length);
+            int[] thepos = CalculatePlayerPositions(theOppo.Length);
 
-            for (int i = 0; i < TheOppo.Length - 1; i++)
+            for (int i = 0; i < theOppo.Length - 1; i++)
 			{
-                TheOppo[i].StartRound();
+                theOppo[i].StartRound();
             }
 
             Shuffle(thepos);
-            TheTank = new ControlledTank[TheOppo.Length];
-            for (int i = 0; i < TheTank.Length; i++)
+            theTank = new ControlledTank[theOppo.Length];
+            for (int i = 0; i < theTank.Length; i++)
 			{
-                TheTank[i] = new ControlledTank(TheOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
+                theTank[i] = new ControlledTank(theOppo[i], thepos[i], newTerrain.TankYPosition(thepos[i]), this);
             }
 
             GetWindSpeed();
@@ -249,11 +249,11 @@ namespace TankBattle {
 		/// <param name="displaySize">Size of the display look of tank</param>
 		public void DrawPlayers(Graphics graphics, Size displaySize)
 		{
-            for (int i = 0; i < TheTank.Length; i++)
+            for (int i = 0; i < theTank.Length; i++)
 			{ 
-                if (TheTank[i].Exists())
+                if (theTank[i].Exists())
 				{
-                    TheTank[i].Draw(graphics, displaySize);
+                    theTank[i].Draw(graphics, displaySize);
                 }
             }
         }
@@ -266,7 +266,7 @@ namespace TankBattle {
 		/// <returns>ControlledTank of the player</returns>
 		public ControlledTank GetCurrentGameplayTank()
 		{
-            return TheTank[currentPlayer];
+            return theTank[currentPlayer];
         }
 
 		/// <summary>
@@ -349,7 +349,7 @@ namespace TankBattle {
 		/// <returns></returns>
 		public bool CheckHitTank(float projectileX, float projectileY) 
         {
-            if (projectileX < 0 || projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT)
+            if (projectileX < 0 || projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) //if projectile offscreen 
 			{
 				return false;
 			}
@@ -357,17 +357,17 @@ namespace TankBattle {
 			{
                 return true;
             }
-			if (GetCurrentGameplayTank().Exists() && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY))
+			if (GetCurrentGameplayTank().Exists() && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY)) //projectile in same position as the tank
 			{
 				return true;
 			}
 
-			for (int i = 0; i < TheTank.Length; i++)
+			for (int i = 0; i < theTank.Length; i++)
 			{
 				//if shell hits tank inside its rectangle
-				if ((projectileX >= TheTank[i].GetX() && projectileX <= TheTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer) 
-				{
-					if ((projectileY >= TheTank[i].GetYPos() && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer)
+				if ((projectileX >= theTank[i].GetX() && projectileX <= theTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer)  //projectile is in between the left and the right side of the tank
+				{ 
+					if ((projectileY >= theTank[i].GetYPos() && projectileY <= theTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer) //projectile is in between the top and bottom of the tank
 					{ 
 						return true;
 					}
@@ -388,9 +388,9 @@ namespace TankBattle {
 		/// <param name="radius">The radius of the explosion</param>
 		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
         {
-            for (int i = 0; i < TheTank.Length; i++)
+            for (int i = 0; i < theTank.Length; i++)
 			{
-                if (TheTank[i].Exists())
+                if (theTank[i].Exists())
 				{
                     float dist;
                     double tempDist;
@@ -399,8 +399,8 @@ namespace TankBattle {
 					float tankPositionX;
 					float tankPositionY;
 
-					tankPositionX = (TheTank[i].GetX() + (TankModel.WIDTH / 2));
-                    tankPositionY = (TheTank[i].GetYPos() + (TankModel.HEIGHT / 2));
+					tankPositionX = (theTank[i].GetX() + (TankModel.WIDTH / 2));
+                    tankPositionY = (theTank[i].GetYPos() + (TankModel.HEIGHT / 2));
 
                     tempDist = Math.Sqrt(Math.Pow(damageX - tankPositionX, 2) + Math.Pow(damageY - tankPositionY, 2));
                     dist = (float)tempDist;
@@ -419,7 +419,7 @@ namespace TankBattle {
                     }
 
                     damageDone = (int)tempDamage;
-                    TheTank[i].InflictDamage(damageDone);
+                    theTank[i].InflictDamage(damageDone);
 
                 }
             }
@@ -437,14 +437,14 @@ namespace TankBattle {
         {
             bool anyMovement = false;
             newTerrain.Gravity();
-			if (newTerrain.Gravity() == true)
+			if (newTerrain.Gravity())
             {
                 anyMovement = true;
             }
-            for (int i = 0; i < TheTank.Length; i++)
+            for (int i = 0; i < theTank.Length; i++)
 			{
                 newTerrain.Gravity();
-                if (TheTank[i].Gravity() == true)
+                if (theTank[i].Gravity())
 				{
                     anyMovement = true;
                 }
@@ -465,9 +465,9 @@ namespace TankBattle {
         {
             int howManyExists = 0;
 
-            for (int i = 0; i < TheTank.Length; i++)
+            for (int i = 0; i < theTank.Length; i++)
 			{
-                if (TheTank[i].Exists())
+                if (theTank[i].Exists())
                 {
                     howManyExists++;
                 }
@@ -478,20 +478,20 @@ namespace TankBattle {
 				for (int i = 0; i < howManyExists; i++)
 				{
 					currentPlayer++;
-					if (currentPlayer >= TheTank.Length)
+					if (currentPlayer >= theTank.Length)
 					{
 						currentPlayer = 0;
 					}
-					if (TheTank[currentPlayer].Exists())
+					if (theTank[currentPlayer].Exists())
 					{
-						Wind += rnd.Next(-10, 10);
-						if (Wind <= -100)
+						wind += rnd.Next(-10, 10);
+						if (wind <= -100)
 						{
-							Wind = -100;
+							wind = -100;
 						}
-						else if (Wind >= 100)
+						else if (wind >= 100)
 						{
-							Wind = 100;
+							wind = 100;
 						}
 						return true;
 					}
@@ -512,20 +512,20 @@ namespace TankBattle {
 		/// </summary>
 		public void RewardWinner() 
         {
-			if (winnerFound)
+			if (winnerFound) 
 			{
-				return;
+				return; //prevents multiple counts in addings scores
 			}
-            for (int i = 0; i < TheTank.Length; i++)
+            for (int i = 0; i < theTank.Length; i++)
 			{
 				if (winnerFound)
 				{
 					break;
 				}
-                else if (TheTank[i].Exists())
+                else if (theTank[i].Exists())
 				{
 					winnerFound = true;
-                    TheOppo[i].AddScore();
+                    theOppo[i].AddScore();
                 }
             }
         }
@@ -540,7 +540,7 @@ namespace TankBattle {
         {
 			if (currentRound == numRounds)
 			{
-				Rankings ranks = new Rankings(numPlayers.Length, TheOppo);
+				Rankings ranks = new Rankings(numPlayers.Length, theOppo);
 				ranks.Show();
 			}
 			else if (!TurnOver())
@@ -550,7 +550,7 @@ namespace TankBattle {
                 BeginRound();
 				if (winnerFound)
 				{
-					winnerFound = false;
+					winnerFound = false; //resets the bool for the TurnOver() method
 				}
             }
         }
@@ -564,8 +564,8 @@ namespace TankBattle {
 		public int GetWindSpeed()
 		{
             Random rnd = new Random();
-            Wind = rnd.Next(-100, 101);
-            return Wind;
+            wind = rnd.Next(-100, 101);
+            return wind;
         }
     }
 }
