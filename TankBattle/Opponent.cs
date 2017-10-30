@@ -8,7 +8,12 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
-    abstract public class Opponent
+	/// <summary>
+	/// Abstract class represents either a computer of human player. The AIOpponent and HumanOpponent inherit from Opponent
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	abstract public class Opponent
     {
         private string name;
 		private int roundswon;
