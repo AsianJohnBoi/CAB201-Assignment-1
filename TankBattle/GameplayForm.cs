@@ -177,7 +177,7 @@ namespace TankBattle
 		{
 			currentControlledTank = currentGame.GetCurrentGameplayTank();
 			currentOpponent = currentControlledTank.GetPlayerNumber();
-			Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds(); 
+			Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
 			controlPanel.BackColor = currentOpponent.GetColour();
 			playerLabel.Text = currentOpponent.Name();
 			currentControlledTank.SetAimingAngle(angleSet);
@@ -196,7 +196,7 @@ namespace TankBattle
 			currentTankModel = currentControlledTank.GetTank(); 
 			string[] weapons = currentTankModel.WeaponList();
 
-			for (int i = 0; i < weapons.Length; i++)
+			for (int i = 0; i < weapons.Length; i++) //Add each weapon name in the list to the ComboBox.
 			{
 				weaponComboBox.Items.Add(weapons[i]);
 			}
@@ -319,7 +319,7 @@ namespace TankBattle
 					formTimer.Enabled = false;
 					bool turnOver = currentGame.TurnOver();
 					NewTurn();
-					spacePressed = false; //prevents the player from pressing the space bar multiple times
+					spacePressed = false;
 					if (!turnOver)
 					{
 						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
@@ -388,7 +388,7 @@ namespace TankBattle
 			if (e.KeyCode == Keys.Space && !spacePressed)
 			{
 				spacePressed = true;
-				controlPanel.Enabled = false; //prevents the space pressing the attack button multiple times
+				controlPanel.Enabled = false;
 
 				Attack();
 			}

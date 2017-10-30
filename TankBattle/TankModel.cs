@@ -43,13 +43,13 @@ namespace TankBattle {
             int dx = X2 - X1;
             int dy = Y2 - Y1;
 
-            if (X1 > X2) //If X1 position is on the right side of X2 (or angle is positive), draw from X1 to X2
+            if (X1 > X2) //If X1 starts on very right of line
             {
                 for (int x = X1; x != X2 - 1; x--) {
                     int y = Y1 + dy * (x - X1) / dx;
                     graphic[x, y] = 1;
                 }
-            } else if (X2 > X1) //If X1 starts is on the left side of X2 (or angle is negative), draw from X1 to X2
+            } else if (X2 > X1) //If X1 starts on very left of line
               {
                 for (int x = X1; x != X2 - 1; x++) {
                     int y = Y1 + dy * (x - X1) / dx;

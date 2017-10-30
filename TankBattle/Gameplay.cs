@@ -173,8 +173,8 @@ namespace TankBattle {
 					number2 = rndB.Next(0, array.Length);
                 }
 
-                int tmp = array[number1]; //gets the first number in list for swapping
-                array[number1] = array[number2]; //swaps with the second selected number in list
+                int tmp = array[number1];
+                array[number1] = array[number2];
                 array[number2] = tmp;
             }
         }
@@ -349,7 +349,7 @@ namespace TankBattle {
 		/// <returns></returns>
 		public bool CheckHitTank(float projectileX, float projectileY) 
         {
-            if (projectileX < 0 || projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT) //if projectile offscreen 
+            if (projectileX < 0 || projectileX > Terrain.WIDTH || projectileY < 0 || projectileY > Terrain.HEIGHT)
 			{
 				return false;
 			}
@@ -357,7 +357,7 @@ namespace TankBattle {
 			{
                 return true;
             }
-			if (GetCurrentGameplayTank().Exists() && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY)) //projectile in same position as the tank
+			if (GetCurrentGameplayTank().Exists() && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY))
 			{
 				return true;
 			}
@@ -365,9 +365,9 @@ namespace TankBattle {
 			for (int i = 0; i < TheTank.Length; i++)
 			{
 				//if shell hits tank inside its rectangle
-				if ((projectileX >= TheTank[i].GetX() && projectileX <= TheTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer)  //projectile is in between the left and the right side of the tank
-				{ 
-					if ((projectileY >= TheTank[i].GetYPos() && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer) //projectile is in between the top and bottom of the tank
+				if ((projectileX >= TheTank[i].GetX() && projectileX <= TheTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer) 
+				{
+					if ((projectileY >= TheTank[i].GetYPos() && projectileY <= TheTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer)
 					{ 
 						return true;
 					}
@@ -437,14 +437,14 @@ namespace TankBattle {
         {
             bool anyMovement = false;
             newTerrain.Gravity();
-			if (newTerrain.Gravity())
+			if (newTerrain.Gravity() == true)
             {
                 anyMovement = true;
             }
             for (int i = 0; i < TheTank.Length; i++)
 			{
                 newTerrain.Gravity();
-                if (TheTank[i].Gravity())
+                if (TheTank[i].Gravity() == true)
 				{
                     anyMovement = true;
                 }
@@ -512,9 +512,9 @@ namespace TankBattle {
 		/// </summary>
 		public void RewardWinner() 
         {
-			if (winnerFound) 
+			if (winnerFound)
 			{
-				return; //prevents multiple counts in addings scores
+				return;
 			}
             for (int i = 0; i < TheTank.Length; i++)
 			{
@@ -550,7 +550,7 @@ namespace TankBattle {
                 BeginRound();
 				if (winnerFound)
 				{
-					winnerFound = false; //resets the bool for the TurnOver() method
+					winnerFound = false;
 				}
             }
         }
