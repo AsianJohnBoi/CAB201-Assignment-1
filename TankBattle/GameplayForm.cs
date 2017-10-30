@@ -324,15 +324,12 @@ namespace TankBattle
 					{
 						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
 						{
+                            currentGame.NextRound();
 							Dispose();
 						}
-						else
-						{
-							Dispose();
-							currentGame.NextRound();
+						else {
 							return;
 						}
-
 					}
 				}
 			}
