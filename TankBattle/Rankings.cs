@@ -14,26 +14,23 @@ namespace TankBattle
 	{
 		private int numPlayers;
 		private Opponent[] opponent;
+		private List<string> scores = new List<string>();
 
 		public Rankings(int numPlayers, Opponent[] opponent)
 		{
 			this.numPlayers = numPlayers;
 			this.opponent = opponent;
-			List<string> scores = new List<string>();
 			for (int i = 0; i < numPlayers; i++)
 			{
 				int score = opponent[i].GetScore();
-				string scoreStr = score.ToString();
-				scores.Add(opponent[i].Name() + "(" + scoreStr + "wins)");
+				string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
+				scores.Add(scoreStr);
 			}
 			scores.OrderBy(num => num).ToList();
 
-			for (int i = 0; i < scores.Count; i++)
-			{
-				listBox1.Items.Add(scores[i]);
-			}
+			//listBox1.DataSource = scores;
 
-			whoWon.Text = scores[0] + "Won!";
+			//whoWon.Text = scores[0] + "Won!";
 
 			InitializeComponent();
 		}
