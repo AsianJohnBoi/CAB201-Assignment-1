@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,14 +8,43 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
+    /// <summary>
+    /// 
+    /// This is an abstract class representing a generic tank model.
+    /// 
+    /// Author John Santias and Hoang Nguyen October 2017
+    /// 
+    /// </summary>
     public abstract class TankModel
     {
         public const int WIDTH = 4;
         public const int HEIGHT = 3;
         public const int NUM_TANKS = 1;
 
+        /// <summary>
+        /// 
+        /// This method draws the tank into an array and returns it.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="angle"> Angle that tank is set to </param>
+        /// <returns> Tank's turret set at set angle </returns>
         public abstract int[,] DisplayTank(float angle);
 
+        /// <summary>
+        ///
+        /// This method draws a line on the row-major two-dimensional array 'graphic'
+        /// connecting X1, Y1 to X2, Y2.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="graphic"> 2D array graphic </param>
+        /// <param name="X1"> X1 - first x coordinate </param>
+        /// <param name="Y1"> Y1 - first y coordinate </param>
+        /// <param name="X2"> X2 - second x coordinate </param>
+        /// <param name="Y2"> Y2 - second y coordinate </param>
 		public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
 		{
 			int dx = X2 - X1;
@@ -38,6 +67,17 @@ namespace TankBattle
 				}
 			}
 		}
+
+        /// <summary>
+        /// 
+        /// This method creates the Tank's bitmap.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="tankColour"> Colour of tank </param>
+        /// <param name="angle"> Set angle of tank </param>
+        /// <returns> Bitmap of tank </returns>
         public Bitmap CreateBitmap(Color tankColour, float angle)
         {
             int[,] tankGraphic = DisplayTank(angle);
@@ -89,10 +129,36 @@ namespace TankBattle
             return bmp;
         }
 
+        /// <summary>
+        /// 
+        /// This abstract method gets the starting durability of this type of tank.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <returns> The durability rating for this type of tank </returns>
         public abstract int GetArmour();
 
+        /// <summary>
+        /// 
+        /// This abstract method returns an array containing a list of weapons that this tank has.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <returns> Array containing list of weapons </returns>
         public abstract string[] WeaponList();
 
+        /// <summary>
+        /// 
+        /// This abstract method is used to handle firing the specified weapon from the tank playerTank.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="weapon"> Weapon index </param>
+        /// <param name="playerTank"> The playerTank in reference to ControlledTank </param>
+        /// <param name="currentGame"> The currentGame in reference to Gameplay </param>
         public abstract void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame);
 
         public static TankModel GetTank(int tankNumber)
