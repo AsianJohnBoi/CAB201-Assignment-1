@@ -8,6 +8,11 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
+	/// <summary>
+	/// Concrete class that extends the Opponents class, providing functionality specific to human-controlled Opponents.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
 	public class HumanOpponent : Opponent
 	{
 		private string name;
