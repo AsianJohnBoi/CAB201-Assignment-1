@@ -8,8 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TankBattle
-{
+namespace TankBattle {
     /// <summary>
     /// 
     /// This is the game setup screen. The amount of players and
@@ -17,19 +16,17 @@ namespace TankBattle
     /// 
     /// Author John Santias and Hoang Nguyen October 2017
     /// </summary>
-	public partial class setupGameForm : Form
-	{
-		private int playerAmount, roundAmount;
+	public partial class setupGameForm : Form {
+        private int playerAmount, roundAmount;
 
-		/// <summary>
-		/// Initialises this form
-		/// 
-		/// Author John Santias and Hoang Nguyen October 2017
-		/// </summary>
-		public setupGameForm()
-		{
-			InitializeComponent();
-		}
+        /// <summary>
+        /// Initialises this form
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// </summary>
+        public setupGameForm() {
+            InitializeComponent();
+        }
 
         /// <summary>
         /// 
@@ -40,13 +37,14 @@ namespace TankBattle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void setupPlayersButton_Click(object sender, EventArgs e)
-		{
+        private void setupPlayersButton_Click(object sender, EventArgs e) {
             playerAmount = (int)playerAmountInput.Value;
             roundAmount = (int)roundAmountInput.Value;
-			Hide();
-			setupPlayerForm setupPlayer = new setupPlayerForm(playerAmount, roundAmount);
-			setupPlayer.Show();
-		}
-	}
+
+            Hide();
+
+            setupPlayerForm setupPlayer = new setupPlayerForm(playerAmount, roundAmount);
+            setupPlayer.Show();
+        }
+    }
 }
