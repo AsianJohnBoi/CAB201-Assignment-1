@@ -25,8 +25,8 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias and Hoang Nguyen September 2017
 		/// </summary>
-		/// <param name="numPlayers"></param>
-		/// <param name="numRounds"></param>
+		/// <param name="numPlayers">The number of players in the game</param>
+		/// <param name="numRounds">The number of rounds in the game</param>
         public Gameplay(int numPlayers, int numRounds)
 		{
             this.numPlayers = new int[numPlayers];
@@ -74,8 +74,8 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias and Hoang Nguyen September 2017
 		/// </summary>
-		/// <param name="playerNum"></param>
-		/// <param name="player"></param>
+		/// <param name="playerNum">The current player number</param>
+		/// <param name="player">A reference of Opponent stored as player</param>
 		public void SetPlayer(int playerNum, Opponent player)
 		{
             TheOppo[playerNum - 1] = player;
@@ -87,7 +87,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias and Hoang Nguyen September 2017
 		/// </summary>
-		/// <param name="playerNum"></param>
+		/// <param name="playerNum">The current player number</param>
 		/// <returns>The opponent's player number</returns>
 		public Opponent GetPlayerNumber(int playerNum)
 		{
@@ -100,7 +100,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias and Hoang Nguyen September 2017
 		/// </summary>
-		/// <param name="playerNum"></param>
+		/// <param name="playerNum">The current player number</param>
 		/// <returns>ControlledTank associated with the opponent</returns>
 		public ControlledTank PlayerTank(int playerNum)
 		{
@@ -114,7 +114,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias September 2017
 		/// </summary>
-		/// <param name="playerNum"></param>
+		/// <param name="playerNum">The current player number</param>
 		/// <returns>Colour associated with the playernum</returns>
 		public static Color GetTankColour(int playerNum)
 		{
@@ -128,7 +128,7 @@ namespace TankBattle {
 		/// 
 		/// Author Hoang Nguyen October 2017
 		/// </summary>
-		/// <param name="numPlayers"></param>
+		/// <param name="numPlayers">The current player number</param>
 		/// <returns>Array of player's coordinates</returns>
 		public static int[] CalculatePlayerPositions(int numPlayers)
 		{
@@ -157,7 +157,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias September 2017
 		/// </summary>
-		/// <param name="array"></param>
+		/// <param name="array">Any array to be shuffled</param>
 		public static void Shuffle(int[] array)
 		{
             Random rndA = new Random();
@@ -243,8 +243,8 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias October 2017
 		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="displaySize"></param>
+		/// <param name="graphics">Kind of graphics to use on the player's tank</param>
+		/// <param name="displaySize">Size of the display look of tank</param>
 		public void DrawPlayers(Graphics graphics, Size displaySize)
 		{
             for (int i = 0; i < TheTank.Length; i++)
@@ -273,7 +273,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias October 2017
 		/// </summary>
-		/// <param name="weaponEffect"></param>
+		/// <param name="weaponEffect">The weapon's effect to be used by the tank</param>
 		public void AddWeaponEffect(WeaponEffect weaponEffect)
 		{
 
@@ -308,8 +308,8 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias October 2017
 		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="displaySize"></param>
+		/// <param name="graphics">Kind of graphics to use on the player's tank</param>
+		/// <param name="displaySize">The size of the display look of tank</param>
 		public void RenderEffects(Graphics graphics, Size displaySize)
 		{
             if (ProcessEffects()) {
@@ -326,7 +326,7 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias October 2017
 		/// </summary>
-		/// <param name="weaponEffect"></param>
+		/// <param name="weaponEffect">The weapon's effect to be used by the tank</param>
 		public void EndEffect(WeaponEffect weaponEffect)
 		{
             if (WeaponsEffect.Contains(weaponEffect))
@@ -342,8 +342,8 @@ namespace TankBattle {
 		/// 
 		/// Author John Santias October 2017
 		/// </summary>
-		/// <param name="projectileX"></param>
-		/// <param name="projectileY"></param>
+		/// <param name="projectileX">X position of the projectile/shell</param>
+		/// <param name="projectileY">Y position of the projectile/shell</param>
 		/// <returns></returns>
 		public bool CheckHitTank(float projectileX, float projectileY) 
         {
@@ -380,10 +380,10 @@ namespace TankBattle {
 		/// 
 		/// Author Hoang Nguyen October 2017
 		/// </summary>
-		/// <param name="damageX"></param>
-		/// <param name="damageY"></param>
-		/// <param name="explosionDamage"></param>
-		/// <param name="radius"></param>
+		/// <param name="damageX">The X position of where the explosion starts</param>
+		/// <param name="damageY">The Y position of where the explosion starts</param>
+		/// <param name="explosionDamage">The damage amount the explosion can cause</param>
+		/// <param name="radius">The radius of the explosion</param>
 		public void InflictDamage(float damageX, float damageY, float explosionDamage, float radius)
         {
             for (int i = 0; i < TheTank.Length; i++)
