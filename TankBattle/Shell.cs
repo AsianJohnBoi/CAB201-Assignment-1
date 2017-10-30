@@ -8,7 +8,13 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
-    public class Shell : WeaponEffect
+	/// <summary>
+	/// Type of WeaponEffect represents the projectile or shell launched by a ControlledTank. A shell
+	/// is launched at a certain angle and velocity and is affected by gravity and wind.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public class Shell : WeaponEffect
     {   
         private float x, y, gravity, xVelocity, yVelocity;
         Blast explosion;

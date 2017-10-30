@@ -8,7 +8,13 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
-    public abstract class WeaponEffect
+	/// <summary>
+	/// Abstract class represents a generic effect created by a ControlledTank's attack. Both Blast and Shell come
+	/// under this umbrella.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public abstract class WeaponEffect
     {
         protected Gameplay i;
 

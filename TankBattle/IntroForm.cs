@@ -11,7 +11,12 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
-    public partial class IntroForm : Form
+	/// <summary>
+	/// Windows application form. When game starts, this form is the first to show up to introduce what the game is.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public partial class IntroForm : Form
     {
 		/// <summary>
 		/// Title screen. The first thing you'll see upon loading the game. 

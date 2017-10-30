@@ -8,7 +8,13 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
-    public class Blast : WeaponEffect
+	/// <summary>
+	/// Type of WeaponEffect that represents the payload attached to a Shell. An Blast will inflict damage on tanks
+	/// and destroy terrain within a radius.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public class Blast : WeaponEffect
     {
         private int explosionDamage, explosionRadius, earthDestructionRadius;
         private float x, y, lifespan;

@@ -16,7 +16,6 @@ namespace TankBattle
     /// rounds can be set here.
     /// 
     /// Author John Santias and Hoang Nguyen October 2017
-    /// 
     /// </summary>
 	public partial class setupGameForm : Form
 	{

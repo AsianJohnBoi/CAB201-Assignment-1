@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TankBattle {
-    public partial class Rankings : Form {
+	/// <summary>
+	/// Windows form application. Opens after game is finished. Shows the scoreboard and who won.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public partial class Rankings : Form {
         private int numPlayers;
         private Opponent[] opponent;
         private List<string> scores = new List<string>();
