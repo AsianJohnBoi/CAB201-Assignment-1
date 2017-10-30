@@ -12,11 +12,27 @@ namespace TankBattle
     {
         protected Gameplay i;
 
-        public void RecordCurrentGame(Gameplay game)
+		/// <summary>
+		/// Called in Gameplay's AddWeaponEffect. The value of 'game' should be assigned to a 
+		/// protected field in WeaponEffect so that methods in Blast and Shell can use it.
+		/// 
+		/// Author John Santias September 2017
+		/// </summary>
+		/// <param name="game">The current game played</param>
+		public void RecordCurrentGame(Gameplay game)
         {
             i = game;
         }
+		/// <summary>
+		/// This moved the given projectile according to its angle, power, gravity and the wind. 
+		/// </summary>
         public abstract void Process();
+
+		/// <summary>
+		/// Draws the Shells as a small white circle
+		/// </summary>
+		/// <param name="graphics">The looks of the shell</param>
+		/// <param name="displaySize">The size of the shell</param>
         public abstract void Draw(Graphics graphics, Size displaySize);
     }
 }
