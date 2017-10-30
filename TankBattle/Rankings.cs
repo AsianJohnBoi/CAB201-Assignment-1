@@ -15,9 +15,10 @@ namespace TankBattle {
 	/// Author John Santias and Hoang Nguyen October 2017
 	/// </summary>
 	public partial class Rankings : Form {
-        private int numPlayers;
+        private int numPlayers, highestScore;
         private Opponent[] opponent;
         private List<string> scores = new List<string>();
+        private List<int> compareScores = new List<int>();
 
 		/// <summary>
 		/// Constructor, gets the number of players in the game and the list of opponents.
@@ -58,19 +59,39 @@ namespace TankBattle {
 			for (int i = 0; i < numPlayers; i++)
 			{
 				int score = opponent[i].GetScore();
-				string scoreStr = (score.ToString() + " Win/s - " + opponent[i].Name());
+                compareScores.Add(score);
+
+                string scoreStr = (score.ToString() + " Win/s - " + opponent[i].Name());
 				scores.Add(scoreStr);
 			}
 
-            // List is sorted in descending order
+            // Scores list is sorted in descending order
 			scores.Sort();
 			scores.Reverse();
 
             // Display list items in listBox
 			listBox1.DataSource = scores;
 
-            // Display winner's name on top of box
-			whoWon.Text = scores[0] + " Won!";
-		}
+            // Compare scores list is sorted in descending order
+            compareScores.Sort();
+            compareScores.Reverse();
+
+            // Get the highest score by using first index
+            highestScore = compareScores[0];
+
+            // Display winner's name on top of box depending on comparison of scores
+            for (int i = 1; i < compareScores.Count - 1; i++) 
+            {
+                if (highestScore == compareScores[i]) 
+                {
+                    whoWon.Text = "It's a tie!";
+                    break;
+                } 
+                else 
+                {
+                    whoWon.Text = scores[0] + " Won!";
+                }
+            }
+        }
     }
 }
