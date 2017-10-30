@@ -319,17 +319,21 @@ namespace TankBattle
 					formTimer.Enabled = false;
 					bool turnOver = currentGame.TurnOver();
 					NewTurn();
-                    spacePressed = false;
+					spacePressed = false;
 					if (!turnOver)
 					{
 						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
 						{
-                            currentGame.NextRound();
+							currentGame.NextRound();
 							Dispose();
 						}
-						else {
+						else
+						{
+							Dispose();
+							currentGame.NextRound();
 							return;
 						}
+
 					}
 				}
 			}

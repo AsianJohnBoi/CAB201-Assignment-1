@@ -531,20 +531,16 @@ namespace TankBattle {
 		/// </summary>
 		public void NextRound() 
         {
-            if (!TurnOver())
+			if (currentRound == numRounds)
 			{
-    //            if (currentRound <= numRounds)
-				//{
-                    currentRound++;
-                //}
-
+				Rankings ranks = new Rankings(numPlayers.Length, TheOppo);
+				ranks.Show();
+			}
+			else if (!TurnOver())
+			{
+                currentRound++;
                 currentPlayer = 0;
                 BeginRound();
-				if (currentRound > numRounds)
-				{
-					Rankings ranks = new Rankings(numPlayers.Length, TheOppo);
-					ranks.Show();
-				}
 				if (winnerFound)
 				{
 					winnerFound = false;
