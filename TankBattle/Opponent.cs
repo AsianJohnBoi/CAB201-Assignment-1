@@ -20,7 +20,7 @@ namespace TankBattle
             this.name = name;
             this.tank = tank;
             this.colour = colour;
-            this.roundswon = 0;
+            roundswon = 0;
 
         }
         public TankModel GetTank()

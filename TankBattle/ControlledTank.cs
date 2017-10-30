@@ -10,15 +10,11 @@ namespace TankBattle
 {
     public class ControlledTank
     {
-        private Opponent player;
-        private int tankX;
-        private int tankY;
-        private Gameplay game;
+		private int tankX, tankY, currentDur, power, angle, tankWeapon;
+		private Opponent player;
+		private Gameplay game;
         private TankModel tankModel;
-        private int currentDur;
-        private int power;
-        private int angle;
-        private int tankWeapon;
+        
         private Bitmap colour;
 
 		public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game)
@@ -51,7 +47,10 @@ namespace TankBattle
 
         public void SetAimingAngle(float angle)
         {
-            if (angle >= -90 && angle <= 180){ this.angle = (int)angle; }
+            if (angle >= -90 && angle <= 180)
+			{
+				this.angle = (int)angle;
+			}
 			colour = tankModel.CreateBitmap(player.GetColour(), angle);
         }
 
@@ -72,7 +71,7 @@ namespace TankBattle
 
         public void SetWeaponIndex(int newWeapon)
         {
-            this.tankWeapon = newWeapon;
+            tankWeapon = newWeapon;
         }
 
 		public void Draw(Graphics graphics, Size displaySize)

@@ -19,7 +19,8 @@ namespace TankBattle
 			InitializeComponent();
 		}
 
-        private void setupPlayersButton_Click(object sender, EventArgs e) {
+        private void setupPlayersButton_Click(object sender, EventArgs e)
+		{
             playerAmount = (int)playerAmountInput.Value;
             roundAmount = (int)roundAmountInput.Value;
 			Hide();

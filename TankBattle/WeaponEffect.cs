@@ -16,7 +16,6 @@ namespace TankBattle
         {
             i = game;
         }
-
         public abstract void Process();
         public abstract void Draw(Graphics graphics, Size displaySize);
     }

@@ -21,7 +21,6 @@ namespace TankBattle
 		private int levelHeight = 120;
 		private Gameplay currentGame;
 
-		//added
 		private ControlledTank currentControlledTank;
 		private TankModel currentTankModel;
 		private Opponent currentOpponent;
@@ -56,13 +55,11 @@ namespace TankBattle
 
 			int randNumber = rng.Next(4);
 
-			//Set random background image and colour 
 			backgroundImage = Image.FromFile(imageFilenames[randNumber]);
 			landscapeColour = (landscapeColours[randNumber]);
 
 			InitializeComponent();
 
-			//Initialise graphic buffers
 			backgroundGraphics = InitRenderBuffer();
 			gameplayGraphics = InitRenderBuffer();
 
@@ -71,6 +68,17 @@ namespace TankBattle
 			DrawGameplay();
 
 			NewTurn();
+		}
+
+		// From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+				return cp;
+			}
 		}
 
 		public void EnableTankButtons()
@@ -95,8 +103,7 @@ namespace TankBattle
 		public void Attack()
 		{
 			currentControlledTank = currentGame.GetCurrentGameplayTank();
-			currentControlledTank.Attack(); //Calls currentGame's GetCurrentGameplayTank() method to get a reference to the current player's
-											//ControlledTank, then calls its Attack() method.
+			currentControlledTank.Attack();
 			controlPanel.Enabled = false;
 			formTimer.Enabled = true;
 		}
@@ -110,31 +117,13 @@ namespace TankBattle
 
 		private void NewTurn()
 		{
-			//First, get a reference to the current ControlledTank with currentGame.GetCurrentGameplayTank()
 			currentControlledTank = currentGame.GetCurrentGameplayTank();
-
-			//Likewise, get a reference to the current Opponent by calling the ControlledTank's GetPlayerNumber()
 			currentOpponent = currentControlledTank.GetPlayerNumber();
-
-			//Set the form caption to "Tank Battle - Round ? of ?", using methods in currentGame to get the current and
-			//total rounds.
-			this.Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
-
-			//Set the BackColor property of controlPanel to the current Opponent's colour.
+			Text = "Tank Battle - Round " + currentGame.GetRound() + " of " + currentGame.GetTotalRounds();
 			controlPanel.BackColor = currentOpponent.GetColour();
-
-			//Set the player name label to the current Opponent's name.
 			playerLabel.Text = currentOpponent.Name();
-
-			//Call SetAimingAngle() to set the current angle to the current ControlledTank's angle.
 			currentControlledTank.SetAimingAngle(angleSet);
-
-			//Call SetPower() to set the current turret power to the current ControlledTank's power.
 			currentControlledTank.SetPower(powerSet);
-
-			//Update the wind speed label to show the current wind speed, retrieved from currentGame.
-			//Positive values should be shown as E winds, negative values as W winds.
-			//For example, 50 would be displayed as "50 E" while -38 would be displayed as "38 W".
 			windSpeed = currentGame.GetWindSpeed();
 
 			if (windSpeed > 0)
@@ -145,39 +134,18 @@ namespace TankBattle
 			{
 				windStatusLabel.Text = -windSpeed + " W";
 			}
-
-			//Clear the current weapon names from the ComboBox.
 			weaponComboBox.Items.Clear();
-
-			//Get a reference to the current TankModel with ControlledTank's GetTank() method, then get a list of
-			//weapons available to that TankModel.
-			currentTankModel = currentControlledTank.GetTank(); //not stored anywhere
+			currentTankModel = currentControlledTank.GetTank(); 
 			string[] weapons = currentTankModel.WeaponList();
 
-			//Add each weapon name in the list to the ComboBox.
-			for (int i = 0; i < weapons.Length; i++)
+			for (int i = 0; i < weapons.Length; i++) //Add each weapon name in the list to the ComboBox.
 			{
 				weaponComboBox.Items.Add(weapons[i]);
 			}
 
-			//Call SetWeaponIndex() to set the current weapon to the current ControlledTank's weapon.
 			weaponSet = currentControlledTank.GetWeaponIndex();
 			SetWeaponIndex(weaponSet);
-
-			//Call the current Opponent's BeginTurn() method, passing in this and currentGame.
 			currentOpponent.BeginTurn(this, currentGame);
-		}
-
-
-		// From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
-				return cp;
-			}
 		}
 
 		private void DrawBackground()
@@ -291,7 +259,7 @@ namespace TankBattle
 			powerLevelLabel.Text = powerTrackBar.Value.ToString();
 		}
 
-		private bool spacePressed = false;
+		private bool spacePressed = false; 
 
 		private void GameplayForm_KeyDown(object sender, KeyEventArgs e)
 		{

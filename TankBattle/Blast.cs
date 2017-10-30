@@ -10,11 +10,8 @@ namespace TankBattle
 {
     public class Blast : WeaponEffect
     {
-        private int explosionDamage;
-        private int explosionRadius;
-        private int earthDestructionRadius;
-        private float x, y;
-        private float lifespan;
+        private int explosionDamage, explosionRadius, earthDestructionRadius;
+        private float x, y, lifespan;
         
 
         public Blast(int explosionDamage, int explosionRadius, int earthDestructionRadius)

@@ -34,7 +34,8 @@ namespace TankBattle
 				x += xVelocity;
 				y += yVelocity;
 				x += x / i.GetWindSpeed() / 1000.0f;
-				if (x < 0 || x > Terrain.WIDTH || y < 0 || y > Terrain.HEIGHT) {
+				if (x < 0 || x > Terrain.WIDTH || y < 0 || y > Terrain.HEIGHT)
+				{
 					i.EndEffect(this);
 					return;
 				}
@@ -51,7 +52,7 @@ namespace TankBattle
             
         }
 
-        public override void Draw(Graphics graphics, Size size) //double check this method
+        public override void Draw(Graphics graphics, Size size)
         {
             float x = (float)this.x * size.Width / Terrain.WIDTH;
             float y = (float)this.y * size.Height / Terrain.HEIGHT;

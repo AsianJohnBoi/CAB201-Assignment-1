@@ -178,7 +178,6 @@
 			this.PlayerLabel.Size = new System.Drawing.Size(168, 25);
 			this.PlayerLabel.TabIndex = 0;
 			this.PlayerLabel.Text = "Player #1\'s name:";
-			this.PlayerLabel.Click += new System.EventHandler(this.label1_Click);
 			// 
 			// pictureBox2
 			// 

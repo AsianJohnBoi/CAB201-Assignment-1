@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TankBattle
 {
 	public partial class setupPlayerForm : Form
 	{
-		private int playerAmount, roundAmount;
-		private int player = 1;
+		private int playerAmount, roundAmount, player = 1;
 		private List<string> playerNames = new List<string>();
-
-		private void label1_Click(object sender, EventArgs e)
-		{
-
-		}
 
 		public setupPlayerForm(int playerAmount, int roundAmount)
 		{
@@ -65,10 +53,8 @@ namespace TankBattle
 					game.SetPlayer(i + 1, a);
 				}
 				game.NewGame();
-				
 				Close();
 			}
-			
 		}
 	}
 }

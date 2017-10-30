@@ -16,20 +16,12 @@ namespace TankBattle
 
         public abstract int[,] DisplayTank(float angle);
 
-		//private int X1, X2, Y1, Y2;
 		public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2)
 		{
 			int dx = X2 - X1;
 			int dy = Y2 - Y1;
-
-			//for (int x = Math.Min(X1, X2); x <= Math.Max(X1,X2); x++)
-			//{
-			//	int y = Y1 + dy * (x - X1) / dx;
-			//	graphic[x, y] = 1;
-			//}
-
-			//If X1 starts on very right of line
-			if (X1 > X2)
+		
+			if (X1 > X2) //If X1 starts on very right of line
 			{
 				for (int x = X1; x != X2 - 1; x--)
 				{
@@ -37,9 +29,7 @@ namespace TankBattle
 					graphic[x, y] = 1;
 				}
 			}
-
-			//If X1 starts on very left of line
-			else if (X2 > X1)
+			else if (X2 > X1) //If X1 starts on very left of line
 			{
 				for (int x = X1; x != X2 - 1; x++)
 				{
@@ -72,26 +62,30 @@ namespace TankBattle
                     }
                 }
             }
-
-            // Outline each pixel
-            for (int y = 1; y < height - 1; y++)
+           
+            for (int y = 1; y < height - 1; y++) // Outline each pixel
             {
                 for (int x = 1; x < width - 1; x++)
                 {
                     if (tankGraphic[y, x] != 0)
                     {
-                        if (tankGraphic[y - 1, x] == 0)
-                            bmp.SetPixel(x, y - 1, tankOutline);
+						if (tankGraphic[y - 1, x] == 0)
+						{
+							bmp.SetPixel(x, y - 1, tankOutline);
+						}
                         if (tankGraphic[y + 1, x] == 0)
-                            bmp.SetPixel(x, y + 1, tankOutline);
+						{
+							bmp.SetPixel(x, y + 1, tankOutline);
+						}
                         if (tankGraphic[y, x - 1] == 0)
-                            bmp.SetPixel(x - 1, y, tankOutline);
+						{
+							bmp.SetPixel(x - 1, y, tankOutline);
+						}
                         if (tankGraphic[y, x + 1] == 0)
                             bmp.SetPixel(x + 1, y, tankOutline);
                     }
                 }
             }
-
             return bmp;
         }
 
@@ -127,7 +121,7 @@ namespace TankBattle
 				   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
 				   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-			float radians = (180 - angle) * (float)Math.PI / 180;
+			float radians = (180 - angle) * (float)Math.PI / 180; //Math.Cos/Sin takes radians not angles
 
 			X1 = 7;
 			Y1 = 6;
@@ -140,7 +134,7 @@ namespace TankBattle
 
         public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame)
         {
-            float centerPosX = (float)playerTank.GetX() + (TankModel.WIDTH / 2), centerPosY = (float)playerTank.GetYPos() + (TankModel.HEIGHT / 2);
+            float centerPosX = (float)playerTank.GetX() + (WIDTH / 2), centerPosY = (float)playerTank.GetYPos() + (HEIGHT / 2);
             Opponent op = playerTank.GetPlayerNumber();
             Blast blast = new Blast(100, 4, 4);
             Shell shell = new Shell(centerPosX, centerPosY, playerTank.GetAim(), playerTank.GetCurrentPower(), 0.01f, blast, op);
