@@ -153,7 +153,7 @@ namespace TankBattle
 			currentControlledTank.Attack();
 			controlPanel.Enabled = false;
 			formTimer.Enabled = true;
-		}
+        }
 
 		/// <summary>
 		/// Draws the Gameplay elements of the screen. 
@@ -319,9 +319,11 @@ namespace TankBattle
 					formTimer.Enabled = false;
 					currentGame.TurnOver();
 					NewTurn();
-					if (!currentGame.TurnOver())
+                    spacePressed = false;
+                    if (!currentGame.TurnOver())
 					{
-						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
+
+                        if (currentGame.GetRound() >= currentGame.GetTotalRounds())
 						{
 							Dispose();
 						}
@@ -374,14 +376,15 @@ namespace TankBattle
 			powerLevelLabel.Text = powerTrackBar.Value.ToString();
 		}
 
-		/// <summary>
-		/// Keyboard controls of the attack button, angles and power. The Up and down keys sets the power.
-		/// The Left and Right keys sets the angle and the space bar fires the shell.
-		/// 
-		/// Author Hoang Nguyen October 2017
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+        /// <summary>
+        /// Keyboard controls of the attack button, angles and power. The Up and down keys sets the power.
+        /// The Left and Right keys sets the angle and the space bar fires the shell.
+        /// 
+        /// Author Hoang Nguyen October 2017
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
 		private void GameplayForm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Space && !spacePressed)
@@ -428,23 +431,6 @@ namespace TankBattle
 					currentControlledTank.SetPower(powerSet);
 					powerLevelLabel.Text = powerTrackBar.Value.ToString();
 				}
-			}
-		}
-
-		/// <summary>
-		/// The second control for the space button. This prevents the player attacking multiple times
-		/// when the button is hold down.
-		/// 
-		/// Author Hoang Nguyen October 2017
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameplayForm_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Space)
-			{
-				spacePressed = false;
-				controlPanel.Enabled = true;
 			}
 		}
 	}
