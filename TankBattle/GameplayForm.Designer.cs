@@ -240,6 +240,7 @@ namespace TankBattle
             this.Name = "GameplayForm";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameplayForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameplayForm_KeyUp);
             this.controlPanel.ResumeLayout(false);
             this.controlPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.powerTrackBar)).EndInit();
