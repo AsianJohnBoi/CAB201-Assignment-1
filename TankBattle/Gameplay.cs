@@ -7,8 +7,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace TankBattle {
-    public class Gameplay {
+namespace TankBattle 
+{
+    public class Gameplay 
+{
 		private int[] numPlayers;
 		private int numRounds, currentPlayer, currentRound, opponent, wind;
         private List<WeaponEffect> WeaponsEffect;
