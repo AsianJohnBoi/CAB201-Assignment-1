@@ -12,6 +12,11 @@ using System.Diagnostics;
 
 namespace TankBattle
 {
+	/// <summary>
+	/// This is an partial class using the GameplayForm to play the game.
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
 	public partial class GameplayForm : Form
 	{
 		private Color landscapeColour;
@@ -29,6 +34,8 @@ namespace TankBattle
 		private int angleSet = 0;
 		private int powerSet = 0;
 		private int weaponSet = 0;
+
+		private bool spacePressed = false;
 
 		private BufferedGraphics backgroundGraphics;
 		private BufferedGraphics gameplayGraphics;
@@ -337,11 +344,27 @@ namespace TankBattle
 			}
 		}
 
+		/// <summary>
+		/// When the button is clicked, the Attack() method is called.
+		/// 
+		/// Author John Santias October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void fireButton_Click(object sender, EventArgs e)
 		{
 			Attack();
 		}
 
+		/// <summary>
+		/// The trackbar adjusts the power of the tank. This trackbar is linked to the powerLevelLabel
+		/// changing its text everytime the trackbar changes its value. Its value is also stored in the
+		/// private variable.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void trackBar1_Scroll(object sender, EventArgs e)
 		{
 			powerSet = powerTrackBar.Value;
@@ -351,8 +374,14 @@ namespace TankBattle
 			powerLevelLabel.Text = powerTrackBar.Value.ToString();
 		}
 
-		private bool spacePressed = false; 
-
+		/// <summary>
+		/// Keyboard controls of the attack button, angles and power. The Up and down keys sets the power.
+		/// The Left and Right keys sets the angle and the space bar fires the shell.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void GameplayForm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Space && !spacePressed)
@@ -402,6 +431,14 @@ namespace TankBattle
 			}
 		}
 
+		/// <summary>
+		/// The second control for the space button. This prevents the player attacking multiple times
+		/// when the button is hold down.
+		/// 
+		/// Author Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void GameplayForm_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Space)
