@@ -29,7 +29,7 @@ namespace TankBattle {
         /// This constructor randomly generates the terrain the tanks will battle on.
         /// The map has a width of 160 and a height of 120.
         /// 
-        /// Author John Santias and Hoang Nguyen October 2017
+        /// Author Hoang Nguyen October 2017
         /// 
         /// </summary>
         public Terrain()
