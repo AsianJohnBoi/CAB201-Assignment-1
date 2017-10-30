@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,15 +34,18 @@ namespace TankBattle {
 
             for (int i = 0; i < numPlayers; i++) {
                 int score = opponent[i].GetScore();
-                string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
+                string scoreStr = (score.ToString() + " - " + opponent[i].Name());
                 scores.Add(scoreStr);
+
+                Console.WriteLine(scoreStr);
 
             }
 
-            scores.OrderBy(num => num).ToList();
+            scores.Sort();
+            scores.Reverse();
             listBox1.DataSource = scores;
 
-            whoWon.Text = scores[0] + "Won!";
+            whoWon.Text = scores[0] + " Won!";
         }
     }
 }
