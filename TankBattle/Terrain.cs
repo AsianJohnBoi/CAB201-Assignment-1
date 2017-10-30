@@ -5,6 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TankBattle {
+    /// <summary>
+    /// 
+    /// This class represents the landscape, the arena of on which the tanks battle.
+    /// It is randomly generated each round and can be destroyed during the round.
+    /// 
+    /// Author John Santias and Hoang Nguyen October 2017
+    /// 
+    /// </summary>
     public class Terrain {
         public const int WIDTH = 160; 
         public const int HEIGHT = 120; 
@@ -16,6 +24,14 @@ namespace TankBattle {
         private int roundedTerrainAmount;
         private bool[,] map;
 
+        /// <summary>
+        /// 
+        /// This constructor randomly generates the terrain the tanks will battle on.
+        /// The map has a width of 160 and a height of 120.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
         public Terrain()
 		{
             Random rnd = new Random();
@@ -98,6 +114,16 @@ namespace TankBattle {
             }
         }
 
+        /// <summary>
+        /// 
+        /// This method returns whether there is any terrain at the given coordinates.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="x"> X coordinate </param>
+        /// <param name="y"> Y coordinate </param>
+        /// <returns> Whether there is terrain at given coordinates </returns>
         public bool IsTileAt(int x, int y)
 		{
             if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
@@ -117,6 +143,17 @@ namespace TankBattle {
             }
         }
 
+        /// <summary>
+        /// 
+        /// This method returns whether there is room for a tank-sized object at
+        /// given coordinates.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="x"> X coordinate </param>
+        /// <param name="y"> Y coordinate </param>
+        /// <returns> Returns true if there is room for tank at given coordinates, otherwise returns false </returns>
         public bool CheckTankCollision(int x, int y)
 		{
             bool collision = false;
@@ -144,6 +181,15 @@ namespace TankBattle {
             return collision;
         }
 
+        /// <summary>
+        /// 
+        /// This method returns y position of tank at given x position.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="x"> X coordinate </param>
+        /// <returns> Y position of tank </returns>
         public int TankYPosition(int x)
 		{
             int y = 0;
@@ -159,6 +205,16 @@ namespace TankBattle {
             return y;
         }
 
+        /// <summary>
+        /// 
+        /// This method destroys all terrain within a circle centred around destroyX and destroyY.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <param name="destroyX"> X coordinate </param>
+        /// <param name="destroyY"> Y coordinate </param>
+        /// <param name="radius"> Radius of explosion </param>
         public void DestroyGround(float destroyX, float destroyY, float radius)
 		{
             for (int y = 0; y <= HEIGHT - 1; y++) //loop through every coord of the map
@@ -179,6 +235,14 @@ namespace TankBattle {
             }
         }
 
+        /// <summary>
+        /// 
+        /// This method moves any loose terrain down one tile.
+        /// 
+        /// Author John Santias and Hoang Nguyen October 2017
+        /// 
+        /// </summary>
+        /// <returns> Return true if any terrain was moved, otherwise returns false </returns>
         public bool Gravity()
 		{
             bool moveDown = false;
