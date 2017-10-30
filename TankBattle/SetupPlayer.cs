@@ -100,7 +100,6 @@ namespace TankBattle {
                 PlayerLabel.Text = "Player #" + player + "'s name:";
 				playerNameInput.Text = "Player " + player;
 				BackColor = Gameplay.GetTankColour(player);
-                nextPlayerButton.Enabled = false;
 
             // If all players have put in their details, game starts
             } else if (player == playerAmount) {

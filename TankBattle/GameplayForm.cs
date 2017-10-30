@@ -33,7 +33,7 @@ namespace TankBattle
 		private int windSpeed = 0;
 		private int angleSet = 0;
 		private int powerSet = 0;
-		private int weaponSet = 0;
+		private int weaponSet = 1;
 
 		private bool spacePressed = false;
 
@@ -128,7 +128,14 @@ namespace TankBattle
 		/// <param name="power"></param>
 		public void SetPower(int power)
 		{
-			powerTrackBar.Value = power;
+			if (power < 5)
+			{
+				power = 5;
+			}
+			else
+			{
+				powerTrackBar.Value = power;
+			}
 		}
 
 		/// <summary>
@@ -397,7 +404,7 @@ namespace TankBattle
 			{
 				if (angleSetter.Value < 90)
 				{
-					angleSetter.Value = angleSetter.Value + 5;
+					angleSetter.Value += 1;
 				}
 			}
 
@@ -405,7 +412,7 @@ namespace TankBattle
 			{
 				if (angleSetter.Value > -90)
 				{
-					angleSetter.Value = angleSetter.Value - 5;
+					angleSetter.Value -= 1;
 				}
 			}
 
@@ -413,7 +420,7 @@ namespace TankBattle
 			{
 				if (powerTrackBar.Value < 100)
 				{
-					powerTrackBar.Value = powerTrackBar.Value + 1;
+					powerTrackBar.Value += 1;
 					powerSet = powerTrackBar.Value;
 					currentControlledTank.SetPower(powerSet);
 					powerLevelLabel.Text = powerTrackBar.Value.ToString();
@@ -424,7 +431,7 @@ namespace TankBattle
 			{
 				if (powerTrackBar.Value > 5)
 				{
-					powerTrackBar.Value = powerTrackBar.Value - 1;
+					powerTrackBar.Value -= 1;
 					powerSet = powerTrackBar.Value;
 					currentControlledTank.SetPower(powerSet);
 					powerLevelLabel.Text = powerTrackBar.Value.ToString();

@@ -50,7 +50,7 @@ namespace TankBattle
 		/// Called when it's this player's turn. The player will need to call methods in gameplayForm 
 		/// such as SetWeaponIndex(), SetAimingAngle(), SetPower() and finally Attack() to aim and fire the weapon.
 		/// 
-		/// Author John Santias and Hoang Nguyen October 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="gameplayForm"></param>
 		/// <param name="currentGame"></param>
@@ -68,6 +68,7 @@ namespace TankBattle
 		/// <summary>
 		/// Called each time a shot fired by this player hits, allowing the computer to adjust its aim.
 		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
