@@ -14,22 +14,28 @@ namespace TankBattle {
 	public partial class setupPlayerForm : Form {
         private int playerAmount, roundAmount;
         private int player = 1;
+		private int Aiplayers = 0;
         private List<string> playerNames = new List<string>();
+		private string[] humans;
+		private string[] AIs;
 
-        /// <summary>
-        /// 
-        /// This constructor takes in the player amount and round amount
-        /// specified in the setup game form.
-        /// 
-        /// Author John Santias and Hoang Nguyen October 2017
-        ///     
-        /// </summary>
-        /// <param name="playerAmount"> Amount of players </param>
-        /// <param name="roundAmount"> Amount of rounds </param>
+
+		/// <summary>
+		/// 
+		/// This constructor takes in the player amount and round amount
+		/// specified in the setup game form.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		///     
+		/// </summary>
+		/// <param name="playerAmount"> Amount of players </param>
+		/// <param name="roundAmount"> Amount of rounds </param>
 		public setupPlayerForm(int playerAmount, int roundAmount) {
             this.playerAmount = playerAmount;
             this.roundAmount = roundAmount;
-            InitializeComponent();
+			humans = new string[playerAmount];
+			AIs = new string[playerAmount];
+			InitializeComponent();
         }
 
         /// <summary>
@@ -44,8 +50,8 @@ namespace TankBattle {
         /// <param name="e"></param>
 		private void setupPlayerForm_Load(object sender, EventArgs e) {
             BackColor = Gameplay.GetTankColour(player);
-            nextPlayerButton.Enabled = true;
-        }
+			nextPlayerButton.Enabled = true;
+		}
 
         /// <summary>
         /// 
@@ -79,9 +85,17 @@ namespace TankBattle {
 		private void nextPlayerButton_Click(object sender, EventArgs e) {
 
             playerNames.Add(playerNameInput.Text);
+			if (humanRadioButton.Checked)
+			{
+				humans[player - 1] = "human";
+			}
+			else if (aiRadioButton.Checked)
+			{
+				AIs[player - 1] = "Ai";
+			}
 
-            // If not all players have not assign player name, tank types and controller 
-            if (player != playerAmount) {
+			// If not all players have not assign player name, tank types and controller 
+			if (player != playerAmount) {
                 player++;
                 PlayerLabel.Text = "Player #" + player + "'s name:";
 				playerNameInput.Text = "Player " + player;
@@ -92,9 +106,18 @@ namespace TankBattle {
             } else if (player == playerAmount) {
                 Gameplay game = new Gameplay(playerAmount, roundAmount);
 
+				//create human players
                 for (int i = 0; i < playerAmount; i++) {
-                    Opponent a = new HumanOpponent(playerNames[i], TankModel.GetTank(1), Gameplay.GetTankColour(i + 1));
-                    game.SetPlayer(i + 1, a);
+					if (humans[i] == "human")
+					{
+						Opponent a = new HumanOpponent(playerNames[i], TankModel.GetTank(1), Gameplay.GetTankColour(i + 1));
+						game.SetPlayer(i + 1, a);
+					}
+					else if (AIs[i] == "Ai")
+					{
+						Opponent a = new AIOpponent(playerNames[i], TankModel.GetTank(1), Gameplay.GetTankColour(i + 1));
+						game.SetPlayer(i + 1, a);
+					}
                 }
                 game.NewGame();
                 Close();

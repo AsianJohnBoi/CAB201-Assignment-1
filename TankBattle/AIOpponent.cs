@@ -68,13 +68,12 @@ namespace TankBattle
 		/// <summary>
 		/// Called each time a shot fired by this player hits, allowing the computer to adjust its aim.
 		/// 
-		/// Author John Santias and Hoang Nguyen October 2017
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		public override void ProjectileHitPos(float x, float y)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
