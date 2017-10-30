@@ -14,13 +14,14 @@ namespace TankBattle {
     /// 
     /// </summary>
     public class Terrain {
-        public const int WIDTH = 160; 
-        public const int HEIGHT = 120; 
+        public const int WIDTH = 160;
+        public const int HEIGHT = 120;
 
         private const double MULTIPLIER = 3.0;
         private const double MULTIPLIER_MINIMUM = 0.5;
 
-        private double randomTerrainAmount, randomTerrainMultiplier;
+        private double randomTerrainAmount;
+        private double randomTerrainMultiplier;
         private int roundedTerrainAmount;
         private bool[,] map;
 
@@ -32,52 +33,47 @@ namespace TankBattle {
         /// Author Hoang Nguyen October 2017
         /// 
         /// </summary>
-        public Terrain()
-		{
+        public Terrain() {
+            // Initialize random number gen
             Random rnd = new Random();
             map = new bool[WIDTH, HEIGHT];
 
             randomTerrainMultiplier = (rnd.NextDouble() * MULTIPLIER);
 
-            while (randomTerrainMultiplier < MULTIPLIER_MINIMUM)
-			{
+            // Go through loop until a suitable number is found
+            while (randomTerrainMultiplier < MULTIPLIER_MINIMUM) {
                 randomTerrainMultiplier = (rnd.NextDouble() * MULTIPLIER);
             }
 
+            // Calculation for random terrain amount
             randomTerrainAmount = (WIDTH * HEIGHT / randomTerrainMultiplier);
-      
             roundedTerrainAmount = Convert.ToInt32(randomTerrainAmount);
 
-            for (int y = 0; y <= HEIGHT - 1; y++) //Create empty map
-			{ 
-				for (int x = 0; x <= WIDTH - 1; x++)
-				{
+            // Create an empty map
+            for (int y = 0; y <= HEIGHT - 1; y++) {
+                for (int x = 0; x <= WIDTH - 1; x++) {
                     map[x, y] = false;
                 }
             }
 
-            for (int i = 0; i < roundedTerrainAmount; i++) //Random positions for terrain
-			{ 
+            // Go through map assigning terrain randomly
+            for (int i = 0; i < roundedTerrainAmount; i++) {
                 int randyPos = rnd.Next(HEIGHT);
                 int randxPos = rnd.Next(WIDTH);
 
                 map[randxPos, randyPos] = true;
             }
 
-            
-            for (int i = 0; i < WIDTH; i++) //Fill in pits
-			{
+            // Fill in pits (guarantees no pits)
+            for (int i = 0; i < WIDTH; i++) {
                 map[i, HEIGHT - 1] = true;
             }
-            
-            for (int i = 0; i < HEIGHT; i++) //Move floating terrain down
-			{ 
-                for (int y = 0; y <= HEIGHT - 2; y++)
-				{
-                    for (int x = 0; x <= WIDTH - 1; x++)
-					{
-                        if (map[x, y] == true && map[x, y + 1] == false)
-						{
+
+            // Move floating terrain down
+            for (int i = 0; i < HEIGHT; i++) {
+                for (int y = 0; y <= HEIGHT - 2; y++) {
+                    for (int x = 0; x <= WIDTH - 1; x++) {
+                        if (map[x, y] == true && map[x, y + 1] == false) {
                             map[x, y] = false;
                             map[x, y + 1] = true;
                         }
@@ -85,27 +81,23 @@ namespace TankBattle {
                 }
             }
 
-            
-            for (int i = 0; i < HEIGHT; i++) //Smooth out terrain
-			{
-                for (int y = 0; y <= HEIGHT - 2; y++) //Smooth out to the right
-				{
-                    for (int x = 0; x <= WIDTH - 2; x++)
-					{
-                        if (map[x, y] == true && map[x + 1, y + 1] == false)
-						{
+            //Smooth out terrain
+            for (int i = 0; i < WIDTH; i++) {
+                // Smooth out to the right
+                for (int y = 0; y <= HEIGHT - 2; y++) {
+                    for (int x = 0; x <= WIDTH - 2; x++) {
+                        if (map[x, y] == true && map[x + 1, y + 1] == false) {
                             map[x, y] = false;
                             map[x + 1, y + 1] = true;
                         }
                     }
                 }
-               
-                for (int y = 0; y <= HEIGHT - 2; y++) //Smooth out to the left
-				{  
-                    for (int x = 1; x <= WIDTH - 1; x++) //x starts at 1 since first x value starts at 0 (index cannot be -1)
-					{
-                        if (map[x, y] == true && map[x - 1, y + 1] == false)
-						{
+
+                //Smooth out to the left
+                for (int y = 0; y <= HEIGHT - 2; y++) {
+                    // x starts at 1 since first x value starts at 0 (index cannot be -1)
+                    for (int x = 1; x <= WIDTH - 1; x++) {
+                        if (map[x, y] == true && map[x - 1, y + 1] == false) {
                             map[x, y] = false;
                             map[x - 1, y + 1] = true;
                         }
@@ -124,22 +116,16 @@ namespace TankBattle {
         /// <param name="x"> X coordinate </param>
         /// <param name="y"> Y coordinate </param>
         /// <returns> Whether there is terrain at given coordinates </returns>
-        public bool IsTileAt(int x, int y)
-		{
-            if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
-			{
-				return false;
-			}
-			else
-			{
-                if (map[x, y] == true)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
+        public bool IsTileAt(int x, int y) {
+            // Check if x or y coord is out of range
+            if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT) {
+                return false;
+            } else {
+                if (map[x, y] == true) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -154,26 +140,22 @@ namespace TankBattle {
         /// <param name="x"> X coordinate </param>
         /// <param name="y"> Y coordinate </param>
         /// <returns> Returns true if there is room for tank at given coordinates, otherwise returns false </returns>
-        public bool CheckTankCollision(int x, int y)
-		{
+        public bool CheckTankCollision(int x, int y) {
             bool collision = false;
-            int width = x + TankModel.WIDTH; //tank's width is 4
-            int height = y + TankModel.HEIGHT; //tank's height is 3
+            int width = x + TankModel.WIDTH;
+            int height = y + TankModel.HEIGHT;
 
-            for (int xp = x; xp < width; xp++)
-			{ 
-                for (int yp = y; yp < height; yp++)
-				{ 
-                    if (xp >= width) //reset xp
-					{
-						xp = x;
-					} 
-                    else if (yp >= height) //reset yp
-					{
-						yp = y;
-					}
-                    else if (IsTileAt(xp, yp))
-					{
+            for (int xPosition = x; xPosition < width; xPosition++) {
+                for (int yPosition = y; yPosition < height; yPosition++) {
+                    // Reset xp
+                    if (xPosition >= width) {
+                        xPosition = x;
+                    }
+
+                    // Reset yp
+                    else if (yPosition >= height) {
+                        yPosition = y;
+                    } else if (IsTileAt(xPosition, yPosition)) {
                         collision = true;
                     }
                 }
@@ -190,14 +172,12 @@ namespace TankBattle {
         /// </summary>
         /// <param name="x"> X coordinate </param>
         /// <returns> Y position of tank </returns>
-        public int TankYPosition(int x)
-		{
+        public int TankYPosition(int x) {
             int y = 0;
 
-            for (int i = 0; i < HEIGHT; i++)
-			{
-                if (CheckTankCollision(x, i))
-				{
+            // Loop through height checking x position given
+            for (int i = 0; i < HEIGHT; i++) {
+                if (CheckTankCollision(x, i)) {
                     y = i - 1;
                     break;
                 }
@@ -215,20 +195,18 @@ namespace TankBattle {
         /// <param name="destroyX"> X coordinate </param>
         /// <param name="destroyY"> Y coordinate </param>
         /// <param name="radius"> Radius of explosion </param>
-        public void DestroyGround(float destroyX, float destroyY, float radius)
-		{
-            for (int y = 0; y <= HEIGHT - 1; y++) //loop through every coord of the map
-			{
-                for (int x = 0; x <= WIDTH - 1; x++)
-				{
+        public void DestroyGround(float destroyX, float destroyY, float radius) {
+            // Loop through every coordinate in the map
+            for (int y = 0; y <= HEIGHT - 1; y++) {
+                for (int x = 0; x <= WIDTH - 1; x++) {
                     double temp;
                     float dist;
 
+                    // Calculate distance between damageX, damageY and the ControlledTank's position
                     temp = Math.Sqrt(Math.Pow(x - destroyX, 2) + Math.Pow(y - destroyY, 2));
                     dist = (float)temp;
 
-                    if (dist < radius)
-					{
+                    if (dist < radius) {
                         map[x, y] = false;
                     }
                 }
@@ -243,23 +221,21 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> Return true if any terrain was moved, otherwise returns false </returns>
-        public bool Gravity()
-		{
+        public bool Gravity() {
             bool moveDown = false;
 
-			for (int y = HEIGHT - 2; y > 0; y--)
-			{
-				for (int x = 0; x < WIDTH; x++)
-				{
-					if (IsTileAt(x, y + 1) == false && IsTileAt(x, y) == true )
-					{
-						map[x, y] = false;
-						map[x, y + 1] = true;
-						moveDown = true;
-					}
-				}
-			}
-			return moveDown;
+            // Loop through every coordinate in the map
+            for (int y = HEIGHT - 2; y > 0; y--) {
+                for (int x = 0; x < WIDTH; x++) {
+                    // Check if Tile is floating, if it is move down
+                    if (IsTileAt(x, y + 1) == false && IsTileAt(x, y) == true) {
+                        map[x, y] = false;
+                        map[x, y + 1] = true;
+                        moveDown = true;
+                    }
+                }
+            }
+            return moveDown;
         }
     }
 }
