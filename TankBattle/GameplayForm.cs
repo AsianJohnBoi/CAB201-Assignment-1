@@ -322,13 +322,17 @@ namespace TankBattle
                     spacePressed = false;
 					if (!turnOver)
 					{
-						Dispose();
-						currentGame.NextRound();
-						if (currentGame.GetRound() > currentGame.GetTotalRounds())
+						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
 						{
 							Dispose();
 						}
-						return;
+						else
+						{
+							Dispose();
+							currentGame.NextRound();
+							return;
+						}
+
 					}
 				}
 			}
@@ -339,6 +343,7 @@ namespace TankBattle
 				return;
 			}
 		}
+
 
 		/// <summary>
 		/// When the button is clicked, the Attack() method is called.
