@@ -44,7 +44,7 @@ namespace TankBattle {
         /// <param name="e"></param>
 		private void setupPlayerForm_Load(object sender, EventArgs e) {
             BackColor = Gameplay.GetTankColour(player);
-            nextPlayerButton.Enabled = false;
+            nextPlayerButton.Enabled = true;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace TankBattle {
         /// <param name="sender"></param>
         /// <param name="e"></param>
 		private void playerNameInput_TextChanged(object sender, EventArgs e) {
-            if (String.IsNullOrEmpty(playerNameInput.Text))
+            if (String.IsNullOrWhiteSpace(playerNameInput.Text))
                 nextPlayerButton.Enabled = false;
             else {
                 nextPlayerButton.Enabled = true;
@@ -84,8 +84,8 @@ namespace TankBattle {
             if (player != playerAmount) {
                 player++;
                 PlayerLabel.Text = "Player #" + player + "'s name:";
-                playerNameInput.Clear();
-                BackColor = Gameplay.GetTankColour(player);
+				playerNameInput.Text = "Player " + player;
+				BackColor = Gameplay.GetTankColour(player);
                 nextPlayerButton.Enabled = false;
 
             // If all players have put in their details, game starts

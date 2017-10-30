@@ -122,7 +122,8 @@ namespace TankBattle
 		/// <returns>Colour associated with the playernum</returns>
 		public static Color GetTankColour(int playerNum)
 		{
-			Color[] TheColor = new Color[] { Color.Blue, Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Indigo, Color.Violet, Color.Turquoise };
+			Color[] TheColor = new Color[] {
+				Color.Blue, Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Indigo, Color.Violet, Color.Turquoise };
             return TheColor[playerNum - 1];
         }
 
@@ -359,7 +360,9 @@ namespace TankBattle
 			{
                 return true;
             }
-			if (GetCurrentGameplayTank().Exists() && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY)) //projectile in same position as the tank
+			//projectile in same position as the tank
+			bool tankExist = GetCurrentGameplayTank().Exists();
+			if (tankExist && (GetCurrentGameplayTank().GetX() == projectileX && GetCurrentGameplayTank().GetYPos() == projectileY)) 
 			{
 				return true;
 			}
@@ -367,9 +370,11 @@ namespace TankBattle
 			for (int i = 0; i < theTank.Length; i++)
 			{
 				//if shell hits tank inside its rectangle
-				if ((projectileX >= theTank[i].GetX() && projectileX <= theTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer)  //projectile is in between the left and the right side of the tank
-				{ 
-					if ((projectileY >= theTank[i].GetYPos() && projectileY <= theTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer) //projectile is in between the top and bottom of the tank
+				//projectile is in between the left and the right side of the tank
+				if ((projectileX >= theTank[i].GetX() && projectileX <= theTank[i].GetX() + TankModel.WIDTH) && i != currentPlayer)
+				{
+					//projectile is in between the top and bottom of the tank
+					if ((projectileY >= theTank[i].GetYPos() && projectileY <= theTank[i].GetYPos() + TankModel.HEIGHT) && i != currentPlayer) 
 					{ 
 						return true;
 					}
