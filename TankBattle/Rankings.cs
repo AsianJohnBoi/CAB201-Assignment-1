@@ -8,36 +8,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TankBattle
-{
-	public partial class Rankings : Form
-	{
-		private int numPlayers;
-		private Opponent[] opponent;
-		private List<string> scores = new List<string>();
+namespace TankBattle {
+    public partial class Rankings : Form {
+        private int numPlayers;
+        private Opponent[] opponent;
+        private List<string> scores = new List<string>();
 
-		public Rankings(int numPlayers, Opponent[] opponent)
-		{
-			this.numPlayers = numPlayers;
-			this.opponent = opponent;
-			for (int i = 0; i < numPlayers; i++)
-			{
-				int score = opponent[i].GetScore();
-				string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
-				scores.Add(scoreStr);
-			}
-			scores.OrderBy(num => num).ToList();
+        public Rankings(int numPlayers, Opponent[] opponent) {
+            this.numPlayers = numPlayers;
+            this.opponent = opponent;
 
-			//listBox1.DataSource = scores;
+            InitializeComponent();
+        }
 
-			//whoWon.Text = scores[0] + "Won!";
+        private void closeButton_Click(object sender, EventArgs e) {
+            Close();
+        }
 
-			InitializeComponent();
-		}
+        private void Rankings_Load(object sender, EventArgs e) {
 
-		private void closeButton_Click(object sender, EventArgs e)
-		{
-			Close();
-		}
-	}
+            for (int i = 0; i < numPlayers; i++) {
+                int score = opponent[i].GetScore();
+                string scoreStr = (opponent[i].Name() + "(" + score.ToString() + "wins)");
+                scores.Add(scoreStr);
+
+            }
+
+            scores.OrderBy(num => num).ToList();
+            listBox1.DataSource = scores;
+
+            whoWon.Text = scores[0] + "Won!";
+        }
+    }
 }
