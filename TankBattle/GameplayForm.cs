@@ -196,7 +196,7 @@ namespace TankBattle
 			currentTankModel = currentControlledTank.GetTank(); 
 			string[] weapons = currentTankModel.WeaponList();
 
-			for (int i = 0; i < weapons.Length; i++) //Add each weapon name in the list to the ComboBox.
+			for (int i = 0; i < weapons.Length; i++)
 			{
 				weaponComboBox.Items.Add(weapons[i]);
 			}
@@ -304,7 +304,7 @@ namespace TankBattle
 		private void formTimer_Tick(object sender, EventArgs e)
 		{
 			currentGame.ProcessEffects();
-			if (currentGame.ProcessEffects() == false)
+			if (!currentGame.ProcessEffects())
 			{
 				currentGame.Gravity();
 				DrawBackground();
@@ -319,7 +319,7 @@ namespace TankBattle
 					formTimer.Enabled = false;
 					bool turnOver = currentGame.TurnOver();
 					NewTurn();
-					spacePressed = false;
+					spacePressed = false; //prevents the player from pressing the space bar multiple times
 					if (!turnOver)
 					{
 						if (currentGame.GetRound() >= currentGame.GetTotalRounds())
@@ -388,7 +388,7 @@ namespace TankBattle
 			if (e.KeyCode == Keys.Space && !spacePressed)
 			{
 				spacePressed = true;
-				controlPanel.Enabled = false;
+				controlPanel.Enabled = false; //prevents the space pressing the attack button multiple times
 
 				Attack();
 			}

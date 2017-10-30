@@ -35,7 +35,6 @@ namespace TankBattle
             this.tank = tank;
             this.colour = colour;
             roundswon = 0;
-
         }
 
 		/// <summary>

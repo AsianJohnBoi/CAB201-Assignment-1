@@ -16,16 +16,12 @@ namespace TankBattle {
     /// Author John Santias and Hoang Nguyen October 2017
     /// 
     /// </summary>
-    public class ControlledTank {
+    public class ControlledTank 
+	{
+		private int tankX, tankY, currentDur, power, angle, tankWeapon;
         private Opponent player;
-        private int tankX;
-        private int tankY;
         private Gameplay game;
         private TankModel tankModel;
-        private int currentDur;
-        private int power;
-        private int angle;
-        private int tankWeapon;
         private Bitmap colour;
 
         /// <summary>
@@ -42,7 +38,8 @@ namespace TankBattle {
         /// <param name="tankX"> The x coordinate of the tank </param>
         /// <param name="tankY"> The y coordinate of the tank </param>
         /// <param name="game"> A reference of Gameplay stored as game </param>
-		public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game) {
+		public ControlledTank(Opponent player, int tankX, int tankY, Gameplay game) 
+		{
             this.player = player;
             this.tankX = tankX;
             this.tankY = tankY;
@@ -63,7 +60,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> player </returns>
-        public Opponent GetPlayerNumber() {
+        public Opponent GetPlayerNumber() 
+		{
             return player;
         }
 
@@ -75,7 +73,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> player's TankModel </returns>
-        public TankModel GetTank() {
+        public TankModel GetTank() 
+		{
             return player.GetTank();
         }
 
@@ -87,7 +86,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The angle of tank </returns>
-        public float GetAim() {
+        public float GetAim() 
+		{
             return angle;
         }
 
@@ -99,8 +99,12 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <param name="angle"> Sets the angle of the Controlled Tank </param>
-        public void SetAimingAngle(float angle) {
-            if (angle >= -90 && angle <= 180) { this.angle = (int)angle; }
+        public void SetAimingAngle(float angle) 
+		{
+            if (angle >= -90 && angle <= 180) 
+			{ 
+				this.angle = (int)angle; 
+			}
             colour = tankModel.CreateBitmap(player.GetColour(), angle);
         }
 
@@ -113,7 +117,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The power currently set of tank </returns>
-        public int GetCurrentPower() {
+        public int GetCurrentPower() 
+		{
             return power;
         }
 
@@ -125,7 +130,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <param name="power"> The amount of power set </param>
-        public void SetPower(int power) {
+        public void SetPower(int power) 
+		{
             this.power = (power < 5) ? 5 : (power > 100) ? 100 : power;
         }
 
@@ -138,7 +144,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The index of the weapon </returns>
-        public int GetWeaponIndex() {
+        public int GetWeaponIndex() 
+		{
             return tankWeapon;
         }
 
@@ -150,7 +157,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <param name="newWeapon"> The weapon number </param>
-        public void SetWeaponIndex(int newWeapon) {
+        public void SetWeaponIndex(int newWeapon) 
+		{
             this.tankWeapon = newWeapon;
         }
 
@@ -165,7 +173,8 @@ namespace TankBattle {
         /// </summary>
         /// <param name="graphics"> The bitmap of the tank </param>
         /// <param name="displaySize"> Size of display </param>
-        public void Draw(Graphics graphics, Size displaySize) {
+        public void Draw(Graphics graphics, Size displaySize) 
+		{
             int x = tankX;
             int y = tankY;
             int drawX1 = displaySize.Width * x / Terrain.WIDTH;
@@ -192,7 +201,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The x coordinate of tank </returns>
-        public int GetX() {
+        public int GetX() 
+		{
             return tankX;
         }
 
@@ -204,7 +214,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The y coordinate of tank </returns>
-        public int GetYPos() {
+        public int GetYPos() 
+		{
             return tankY;
         }
 
@@ -215,7 +226,8 @@ namespace TankBattle {
         /// Author John Santias and Hoang Nguyen October 2017
         /// 
         /// </summary>
-        public void Attack() {
+        public void Attack() 
+		{
             GetTank().FireWeapon(tankWeapon, this, game);
         }
 
@@ -228,7 +240,8 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <param name="damageAmount"> The amount of damage taken </param>
-        public void InflictDamage(int damageAmount) {
+        public void InflictDamage(int damageAmount) 
+		{
             currentDur -= damageAmount;
         }
 
@@ -243,10 +256,14 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> The durability of the tank </returns>
-        public bool Exists() {
-            if (currentDur > 0) {
+        public bool Exists() 
+		{
+            if (currentDur > 0) 
+			{
                 return true;
-            } else {
+            } 
+			else 
+			{
                 return false;
             }
         }
@@ -261,19 +278,25 @@ namespace TankBattle {
         /// 
         /// </summary>
         /// <returns> Returns true if tank is moved, otherwise returns false </returns>
-        public bool Gravity() {
-            if (!Exists()) {
+        public bool Gravity()
+		{
+            if (!Exists()) 
+			{
                 return false;
             }
             Terrain t = game.GetLevel();
             int x = GetX();
             int y = GetYPos();
-            if (t.CheckTankCollision(x, y + 1)) {
+            if (t.CheckTankCollision(x, y + 1)) 
+			{
                 return false;
-            } else {
+            } 
+			else 
+			{
                 tankY++;
                 currentDur--;
-                if (tankY == Terrain.HEIGHT - TankModel.HEIGHT) {
+                if (tankY == Terrain.HEIGHT - TankModel.HEIGHT) 
+				{
                     currentDur = 0;
                     return true;
                 }

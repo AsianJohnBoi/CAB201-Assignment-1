@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace TankBattle {
+namespace TankBattle 
+{
     /// <summary>
     /// 
     /// This is an abstract class representing a generic tank model.
@@ -14,7 +15,8 @@ namespace TankBattle {
     /// Author John Santias and Hoang Nguyen October 2017
     /// 
     /// </summary>
-    public abstract class TankModel {
+    public abstract class TankModel 
+	{
         public const int WIDTH = 4;
         public const int HEIGHT = 3;
         public const int NUM_TANKS = 1;
@@ -39,17 +41,18 @@ namespace TankBattle {
         /// <param name="Y1"> Y1 - first y coordinate </param>
         /// <param name="X2"> X2 - second x coordinate </param>
         /// <param name="Y2"> Y2 - second y coordinate </param>
-		public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2) {
+		public static void DrawLine(int[,] graphic, int X1, int Y1, int X2, int Y2) 
+		{
             int dx = X2 - X1;
             int dy = Y2 - Y1;
 
-            if (X1 > X2) //If X1 starts on very right of line
+            if (X1 > X2) //If X1 position is on the right side of X2 (or angle is positive), draw from X1 to X2
             {
                 for (int x = X1; x != X2 - 1; x--) {
                     int y = Y1 + dy * (x - X1) / dx;
                     graphic[x, y] = 1;
                 }
-            } else if (X2 > X1) //If X1 starts on very left of line
+            } else if (X2 > X1) //If X1 starts is on the left side of X2 (or angle is negative), draw from X1 to X2
               {
                 for (int x = X1; x != X2 - 1; x++) {
                     int y = Y1 + dy * (x - X1) / dx;
@@ -66,7 +69,8 @@ namespace TankBattle {
         /// <param name="tankColour"> Colour of tank </param>
         /// <param name="angle"> Set angle of tank </param>
         /// <returns> Bitmap of tank </returns>
-        public Bitmap CreateBitmap(Color tankColour, float angle) {
+        public Bitmap CreateBitmap(Color tankColour, float angle) 
+		{
             int[,] tankGraphic = DisplayTank(angle);
             int height = tankGraphic.GetLength(0);
             int width = tankGraphic.GetLength(1);
@@ -87,15 +91,20 @@ namespace TankBattle {
 
             for (int y = 1; y < height - 1; y++) // Outline each pixel
             {
-                for (int x = 1; x < width - 1; x++) {
-                    if (tankGraphic[y, x] != 0) {
-                        if (tankGraphic[y - 1, x] == 0) {
+                for (int x = 1; x < width - 1; x++) 
+				{
+                    if (tankGraphic[y, x] != 0) 
+					{
+                        if (tankGraphic[y - 1, x] == 0) 
+						{
                             bmp.SetPixel(x, y - 1, tankOutline);
                         }
-                        if (tankGraphic[y + 1, x] == 0) {
+                        if (tankGraphic[y + 1, x] == 0) 
+						{
                             bmp.SetPixel(x, y + 1, tankOutline);
                         }
-                        if (tankGraphic[y, x - 1] == 0) {
+                        if (tankGraphic[y, x - 1] == 0) 
+						{
                             bmp.SetPixel(x - 1, y, tankOutline);
                         }
                         if (tankGraphic[y, x + 1] == 0)
@@ -141,7 +150,8 @@ namespace TankBattle {
         /// </summary>
         /// <param name="tankNumber"></param>
         /// <returns> New TheTank object </returns>
-        public static TankModel GetTank(int tankNumber) {
+        public static TankModel GetTank(int tankNumber) 
+		{
             return new TheTank();
         }
     }
@@ -151,9 +161,10 @@ namespace TankBattle {
     /// 
     /// Author John Santias and Hoang Nguyen October 2017
     /// </summary>
-    public class TheTank : TankModel {
+    public class TheTank : TankModel 
+	{
         public double X1, Y1, X2, Y2;
-        public String[] Weapons;
+        public String[] weapons;
 
         /// <summary>
         /// This method draws the tank into an array and returns it. This is an abstract class and will therefore be 
@@ -163,7 +174,8 @@ namespace TankBattle {
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public override int[,] DisplayTank(float angle) {
+        public override int[,] DisplayTank(float angle) 
+		{
             int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -196,7 +208,8 @@ namespace TankBattle {
         /// <param name="weapon">int based on string returned from Weaponlist()</param>
         /// <param name="playerTank">Controlledtank associated with this</param>
         /// <param name="currentGame">the current Game being played</param>
-        public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame) {
+        public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame) 
+		{
             float centerPosX = (float)playerTank.GetX() + (WIDTH / 2), centerPosY = (float)playerTank.GetYPos() + (HEIGHT / 2);
             Opponent op = playerTank.GetPlayerNumber();
             Blast blast = new Blast(100, 4, 4);
@@ -210,7 +223,8 @@ namespace TankBattle {
         /// Author John Santias and Hoang Nguyen October 2017
         /// </summary>
         /// <returns></returns>
-        public override int GetArmour() {
+        public override int GetArmour() 
+		{
             return 100;
         }
 
@@ -220,12 +234,13 @@ namespace TankBattle {
         /// Author John Santias and Hoang Nguyen October 2017
         /// </summary>
         /// <returns></returns>
-        public override string[] WeaponList() {
-            Weapons = new string[]
+        public override string[] WeaponList() 
+		{
+            weapons = new string[]
             {
                 "Standard shell", "Medium Shell", "Large Shell", "Armour Piercing Shell",
             };
-            return Weapons;
+            return weapons;
         }
     }
 }
