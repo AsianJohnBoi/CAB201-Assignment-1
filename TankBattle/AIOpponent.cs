@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace TankBattle
 {
-    public class AIOpponent : Opponent
+	/// <summary>
+	/// Concrete class extending the opponent class. This is a computer-controlled opponent/s. 
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
+	public class AIOpponent : Opponent
     {
 		private string name;
 		private TankModel tank;
