@@ -16,7 +16,7 @@ namespace TankBattle
 		/// Called in Gameplay's AddWeaponEffect. The value of 'game' should be assigned to a 
 		/// protected field in WeaponEffect so that methods in Blast and Shell can use it.
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="game">The current game played</param>
 		public void RecordCurrentGame(Gameplay game)

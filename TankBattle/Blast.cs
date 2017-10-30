@@ -17,7 +17,7 @@ namespace TankBattle
 		/// The Blast takes the explosion damage, explosion radius and earth destruction radius values it
 		/// is passed and stores them as private fields.
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="explosionDamage">The amount of damage the blast can do</param>
 		/// <param name="explosionRadius">The radius of the explosion</param>
@@ -32,7 +32,7 @@ namespace TankBattle
 		/// <summary>
 		/// Blast is detonated at the specified location. 
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="x">Center position of the explosion</param>
 		/// <param name="y">Center y position of the explosion</param>
@@ -47,7 +47,7 @@ namespace TankBattle
 		/// Reduces the Blast's lifespan by 0.02. When the Blast's life is less than or equal to zero.
 		/// The blast damages the objects at where it landed.
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		public override void Process()
         {
@@ -66,7 +66,7 @@ namespace TankBattle
 		/// Draws one frame of the Blast. Draws a circle that expands, cycling from yellow to red and then
 		/// fading out. 
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="graphics">The looks of the shell</param>
 		/// <param name="displaySize">The size of the shell</param>

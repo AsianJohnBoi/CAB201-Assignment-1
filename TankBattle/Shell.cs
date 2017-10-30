@@ -19,7 +19,7 @@ namespace TankBattle
 		/// fields of Shell. Two more field (x velocity and y velocity) are also initialised. This refers
 		/// to how much the Shell moves in 1/10 of a frame.
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="x">The starting x position of the shell</param>
 		/// <param name="y">The starting y position of the shell</param>
@@ -46,7 +46,7 @@ namespace TankBattle
 		/// done 10 times for the projectile to fire from the tank, move according to its angle,
 		/// velocity, gravity and hit the ground. 
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		public override void Process()
         {
@@ -76,7 +76,7 @@ namespace TankBattle
 		/// <summary>
 		/// Draws the shell as a small white circle.
 		/// 
-		/// Author John Santias September 2017
+		/// Author John Santias October 2017
 		/// </summary>
 		/// <param name="graphics">The looks of the shell</param>
 		/// <param name="size">The size of the shell</param>
