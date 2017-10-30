@@ -21,6 +21,11 @@ namespace TankBattle
 	{
 		private int playerAmount, roundAmount;
 
+		/// <summary>
+		/// Initialises this form
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
 		public setupGameForm()
 		{
 			InitializeComponent();

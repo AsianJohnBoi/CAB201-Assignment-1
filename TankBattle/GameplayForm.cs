@@ -333,7 +333,6 @@ namespace TankBattle
 							currentGame.NextRound();
 							return;
 						}
-
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,33 +19,53 @@ namespace TankBattle {
         private Opponent[] opponent;
         private List<string> scores = new List<string>();
 
-        public Rankings(int numPlayers, Opponent[] opponent) {
+		/// <summary>
+		/// Constructor, gets the number of players in the game and the list of opponents.
+		/// They're set on to the private fields.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="numPlayers"></param>
+		/// <param name="opponent"></param>
+		public Rankings(int numPlayers, Opponent[] opponent) {
             this.numPlayers = numPlayers;
             this.opponent = opponent;
 
             InitializeComponent();
         }
 
-        private void closeButton_Click(object sender, EventArgs e) {
+		/// <summary>
+		/// The button closes this Form when clicked.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void closeButton_Click(object sender, EventArgs e) {
             Close();
         }
 
-        private void Rankings_Load(object sender, EventArgs e) {
+		/// <summary>
+		/// Loads all the players, their scores and adds to the ListBox on the form in descending order.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Rankings_Load(object sender, EventArgs e) {
 
-            for (int i = 0; i < numPlayers; i++) {
-                int score = opponent[i].GetScore();
-                string scoreStr = (score.ToString() + " - " + opponent[i].Name());
-                scores.Add(scoreStr);
+			for (int i = 0; i < numPlayers; i++)
+			{
+				int score = opponent[i].GetScore();
+				string scoreStr = (score.ToString() + " Win/s - " + opponent[i].Name());
+				scores.Add(scoreStr);
+			}
 
-                Console.WriteLine(scoreStr);
+			scores.Sort();
+			scores.Reverse();
+			listBox1.DataSource = scores;
 
-            }
-
-            scores.Sort();
-            scores.Reverse();
-            listBox1.DataSource = scores;
-
-            whoWon.Text = scores[0] + " Won!";
-        }
+			whoWon.Text = scores[0] + " Won!";
+		}
     }
 }

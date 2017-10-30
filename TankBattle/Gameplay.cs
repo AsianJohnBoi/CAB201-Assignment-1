@@ -485,7 +485,14 @@ namespace TankBattle {
 					if (TheTank[currentPlayer].Exists())
 					{
 						Wind += rnd.Next(-10, 10);
-						if (Wind <= -100) { Wind = -100; } else if (Wind >= 100) { Wind = 100; }
+						if (Wind <= -100)
+						{
+							Wind = -100;
+						}
+						else if (Wind >= 100)
+						{
+							Wind = 100;
+						}
 						return true;
 					}
 				}
