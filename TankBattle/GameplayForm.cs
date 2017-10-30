@@ -319,6 +319,7 @@ namespace TankBattle
 					formTimer.Enabled = false;
 					bool turnOver = currentGame.TurnOver();
 					NewTurn();
+                    spacePressed = false;
 					if (!turnOver)
 					{
 						Dispose();
@@ -423,23 +424,6 @@ namespace TankBattle
 					currentControlledTank.SetPower(powerSet);
 					powerLevelLabel.Text = powerTrackBar.Value.ToString();
 				}
-			}
-		}
-
-		/// <summary>
-		/// The second control for the space button. This prevents the player attacking multiple times
-		/// when the button is hold down.
-		/// 
-		/// Author Hoang Nguyen October 2017
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameplayForm_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Space)
-			{
-				spacePressed = false;
-				controlPanel.Enabled = true;
 			}
 		}
 	}
