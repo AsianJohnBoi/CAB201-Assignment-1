@@ -167,11 +167,24 @@ namespace TankBattle
         }
     }
 
+	/// <summary>
+	/// Abstract class representing a generic tank model. Different tanks have different graphics, weapons, armour etc. 
+	/// 
+	/// Author John Santias and Hoang Nguyen October 2017
+	/// </summary>
 	public class TheTank : TankModel
     {
         public double X1, Y1, X2, Y2;
         public String[] Weapons;
 
+		/// <summary>
+		/// This method draws the tank into an array and returns it. This is an abstract class and will therefore be 
+		/// implemented by each tank that inherits from TankModel.
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <returns></returns>
 		public override int[,] DisplayTank(float angle)
 		{
 			int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -198,7 +211,15 @@ namespace TankBattle
 			return graphic;
         }
 
-        public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame)
+		/// <summary>
+		/// Handles firing the specified weapon from the tank. 
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <param name="weapon">int based on string returned from Weaponlist()</param>
+		/// <param name="playerTank">Controlledtank associated with this</param>
+		/// <param name="currentGame">the current Game being played</param>
+		public override void FireWeapon(int weapon, ControlledTank playerTank, Gameplay currentGame)
         {
             float centerPosX = (float)playerTank.GetX() + (WIDTH / 2), centerPosY = (float)playerTank.GetYPos() + (HEIGHT / 2);
             Opponent op = playerTank.GetPlayerNumber();
@@ -207,12 +228,24 @@ namespace TankBattle
             currentGame.AddWeaponEffect(shell);
         }
 
-        public override int GetArmour()
+		/// <summary>
+		/// Gets starting durability of this type of tank. 
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <returns></returns>
+		public override int GetArmour()
         {
             return 100;
         }
 
-        public override string[] WeaponList()
+		/// <summary>
+		/// Returns an array containing a list of weapons that this tank has. 
+		/// 
+		/// Author John Santias and Hoang Nguyen October 2017
+		/// </summary>
+		/// <returns></returns>
+		public override string[] WeaponList()
         {
             Weapons = new string[] 
             {

@@ -444,6 +444,7 @@ namespace TankBattle
 			if (e.KeyCode == Keys.Space)
 			{
 				spacePressed = false;
+				controlPanel.Enabled = true;
 			}
 		}
 	}
