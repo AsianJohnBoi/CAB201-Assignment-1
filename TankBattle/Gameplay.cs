@@ -17,6 +17,8 @@ namespace TankBattle {
         private ControlledTank[] TheTank;
         private Random rnd = new Random();
 
+		private bool winnerFound = false;
+
 		/// <summary>
 		/// This is the gameplay's constructor. Called with number of players and the number of rounds in the game
 		/// The constructor creates an array with the number of players (numPlayers) and stores it on to a private 
@@ -27,7 +29,7 @@ namespace TankBattle {
 		/// </summary>
 		/// <param name="numPlayers">The number of players in the game</param>
 		/// <param name="numRounds">The number of rounds in the game</param>
-        public Gameplay(int numPlayers, int numRounds)
+		public Gameplay(int numPlayers, int numRounds)
 		{
             this.numPlayers = new int[numPlayers];
             this.numRounds = numRounds;
@@ -488,9 +490,9 @@ namespace TankBattle {
 					}
 				}
 			}
-			else if (howManyExists < 2) 
+			if (howManyExists < 2) 
             {
-                RewardWinner();
+				RewardWinner();
                 return false;
             }
             return false;
@@ -503,11 +505,20 @@ namespace TankBattle {
 		/// </summary>
 		public void RewardWinner() 
         {
+			if (winnerFound)
+			{
+				return;
+			}
             for (int i = 0; i < TheTank.Length; i++)
 			{
-                if (TheTank[i].Exists())
+				if (winnerFound)
 				{
-                    TheOppo[currentPlayer].AddScore();
+					break;
+				}
+                else if (TheTank[i].Exists())
+				{
+					winnerFound = true;
+                    TheOppo[i].AddScore();
                 }
             }
         }
@@ -522,20 +533,21 @@ namespace TankBattle {
         {
             if (!TurnOver())
 			{
-                if (currentRound <= numRounds)
-				{
+    //            if (currentRound <= numRounds)
+				//{
                     currentRound++;
-                }
-                currentPlayer++;
-                if (currentPlayer > numPlayers.Length - 1)
-				{
-                    currentPlayer = 0;
-                    BeginRound();
-				}
-				else if (currentRound > numRounds)
+                //}
+
+                currentPlayer = 0;
+                BeginRound();
+				if (currentRound > numRounds)
 				{
 					Rankings ranks = new Rankings(numPlayers.Length, TheOppo);
 					ranks.Show();
+				}
+				if (winnerFound)
+				{
+					winnerFound = false;
 				}
             }
         }
