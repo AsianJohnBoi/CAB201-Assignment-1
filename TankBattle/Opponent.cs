@@ -79,9 +79,10 @@ namespace TankBattle
 
 		/// <summary>
 		/// Returns the number of rounds won by the player.
+		/// Author John Santias and Hoang Nguyen September 2017
 		/// </summary>
 		/// <returns>Rounds won by player</returns>
-        public int GetScore()
+		public int GetScore()
         {
             return roundswon;
         }
