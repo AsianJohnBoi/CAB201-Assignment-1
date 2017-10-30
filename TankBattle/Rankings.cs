@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,6 +54,7 @@ namespace TankBattle {
 		/// <param name="e"></param>
 		private void Rankings_Load(object sender, EventArgs e) {
 
+            // Go through all players adding their scores and names to a list
 			for (int i = 0; i < numPlayers; i++)
 			{
 				int score = opponent[i].GetScore();
@@ -61,10 +62,14 @@ namespace TankBattle {
 				scores.Add(scoreStr);
 			}
 
+            // List is sorted in descending order
 			scores.Sort();
 			scores.Reverse();
+
+            // Display list items in listBox
 			listBox1.DataSource = scores;
 
+            // Display winner's name on top of box
 			whoWon.Text = scores[0] + " Won!";
 		}
     }
